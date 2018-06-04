@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QBALDECL_subreport1" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_year" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_company" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_inv_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select f.sr_no,f.ref_type,f.ref_no, f.io_norms, F.B_E_NO ,f.qty, F.QTY* F.io_norms sqm,   B.be_desc
+  from pi_imp_awbl_mast A, pi_imp_cinv_lic_dtls b, pi_imp_awbl_cinv c, pi_imp_boe_dtls d , pi_imp_lic_dtls e,
+    ei_endors_lc_lic_dtls F , PI_IMP_BOE_MAST G, pi_imp_lic_mast h
+   where a.ref_no=c.ref_no and b.ind_no = c.ind_no and b.cinv_no = c.cinv_no
+   and d.ref_no = a.ref_No AND G.BE_NO = D.BE_NO and
+  e.ref_type = b.lic_type and e.ref_no = b.lic_no and e.item_no = b.item_no
+   AND D.be_no=F.b_e_no and   B.lic_TYPE = F.REF_TYPE AND B.lic_NO = F.REF_NO AND B.ITEM_NO =F.imp_ref_ctrl_no
+ and h.ref_type = e.ref_type and h.ref_no = e.ref_no
+and f.year=$P{p_year} and f.company=$P{p_company} and f.inv_no=$P{p_inv_no}
+order by 1]]>
+	</queryString>
+	<field name="SR_NO" class="java.math.BigDecimal"/>
+	<field name="REF_TYPE" class="java.lang.String"/>
+	<field name="REF_NO" class="java.lang.String"/>
+	<field name="IO_NORMS" class="java.math.BigDecimal"/>
+	<field name="B_E_NO" class="java.lang.String"/>
+	<field name="QTY" class="java.math.BigDecimal"/>
+	<field name="SQM" class="java.math.BigDecimal"/>
+	<field name="BE_DESC" class="java.lang.String"/>
+	<variable name="p_cnt" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{SR_NO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="25"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="20" height="25"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Sl No.  ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="23" y="0" width="123" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Description    ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="258" y="0" width="53" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Licence # ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="359" y="0" width="39" height="25"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Qnty Per Pcs SQM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="318" y="0" width="36" height="20"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[B/E No ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="402" y="0" width="39" height="25"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Total Ship Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="504" y="0" width="49" height="25"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Imported/
+Indigenious]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="443" y="0" width="59" height="25"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Total Qnty
+Gram Sq.Mtrs ]]></text>
+				</staticText>
+				<line>
+					<reportElement x="253" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="19" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="313" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="356" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="400" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="443" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="503" y="0" width="1" height="25"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="19" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{p_cnt}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="20" y="0" width="222" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BE_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="316" y="0" width="40" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{B_E_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="257" y="0" width="57" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REF_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.0000">
+				<reportElement stretchType="RelativeToBandHeight" x="441" y="0" width="61" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SQM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.0000">
+				<reportElement stretchType="RelativeToBandHeight" x="355" y="0" width="42" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IO_NORMS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="398" y="0" width="42" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="504" y="0" width="51" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Imported]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

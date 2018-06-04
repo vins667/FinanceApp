@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GSPPRINT_subreport1" pageWidth="500" pageHeight="802" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_userid" class="java.lang.String"/>
+	<parameter name="p_inv" class="java.lang.String"/>
+	<parameter name="p_boxdesc" class="java.lang.String"/>
+	<parameter name="p_report" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select qty,inv_desc,rem1 from ei_inv_temp where rem3='GSP' and seh_user=$P{p_userid} and rem2=$P{p_inv}]]>
+	</queryString>
+	<field name="QTY" class="java.math.BigDecimal"/>
+	<field name="INV_DESC" class="java.lang.String"/>
+	<field name="REM1" class="java.lang.String"/>
+	<variable name="cnt_rec" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{INV_DESC}]]></variableExpression>
+	</variable>
+	<variable name="p_ch" class="java.lang.String">
+		<variableExpression><![CDATA[( $P{p_report}.equals("GSP") ?" 'P'" :
+    "INDIAN ORIGIN")]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="129" y="0" width="234" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="0" width="34" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="0" width="19" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REM1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="0" width="23" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cnt_rec}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="59" y="0" width="70" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_boxdesc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="378" y="0" width="44" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{p_ch}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

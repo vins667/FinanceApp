@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GoodDsptchdNotUpdRprt" language="groovy" pageWidth="1000" pageHeight="595" orientation="Landscape" columnWidth="960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_loct" class="java.lang.String"/>
+	<parameter name="COSTCENTER" class="java.lang.String"/>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BUYER" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.year,a.company,a.inv_no,decode(a.location,'100',a.tto_date,a.tto_date-1) tto_date,a.cost_centre,a.buyer,a.plan_no,a.CTNS,
+a.excs_inv_no ,a.mode_of_ship,a.loading,a.agent,b.sr_no,b.currency crncy,t_o_date,
+case when t_o_date is not null then sysdate-t_o_date else 0 end delay,
+nvl(b.qty_endors,0)-nvl(b.add_back_qty,0) eqty,(nvl(b.qty_endors,0)-nvl(b.add_back_qty,0)) * (nvl(price_fc,0)+nvl(price_misc,0)) fob_fc ,
+c.control_numb plist,upper(c.seh_user) plan_user,merchant_name,c1.del_numb
+from ei_endors_mast a,ei_endors_dtls b,seplweb.pr_ship_plan_master c,seplweb.pr_ship_plan_detail c1,shahiweb.pch_master P1
+where a.year=b.year and a.company=b.company and a.inv_no=b.inv_no
+and a.type='E' and
+a.plan_no=c.plan_numb and
+tto_date is not null and a.year>=2015 and
+a.location like $P{p_loct} and
+a.cost_centre=p1.pch1 and
+p1.pch like $P{COSTCENTER} and
+a.buyer like $P{BUYER} and
+nvl(surrender_yn,'N')<>'Y' and
+c.plan_numb=c1.plan_numb  and
+b.co_no=c1.co_numb and
+b.co_line=c1.co_line and
+b.item_no=c1.item_numb  and
+nvl(a.ship_qty,0)=0  and
+nvl(c1.plan_qnty,0)+nvl(c1.extra_qnty,0)>0  and
+c1.del_numb not in (select uadlix from seplweb.odhead_view115 where uacono=111) $P!{p_query}]]>
+	</queryString>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="TTO_DATE" class="java.sql.Timestamp"/>
+	<field name="COST_CENTRE" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="PLAN_NO" class="java.math.BigDecimal"/>
+	<field name="CTNS" class="java.math.BigDecimal"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="MODE_OF_SHIP" class="java.lang.String"/>
+	<field name="LOADING" class="java.lang.String"/>
+	<field name="AGENT" class="java.lang.String"/>
+	<field name="SR_NO" class="java.math.BigDecimal"/>
+	<field name="CRNCY" class="java.lang.String"/>
+	<field name="T_O_DATE" class="java.sql.Timestamp"/>
+	<field name="DELAY" class="java.math.BigDecimal"/>
+	<field name="EQTY" class="java.math.BigDecimal"/>
+	<field name="FOB_FC" class="java.math.BigDecimal"/>
+	<field name="PLIST" class="java.math.BigDecimal"/>
+	<field name="PLAN_USER" class="java.lang.String"/>
+	<field name="MERCHANT_NAME" class="java.lang.String"/>
+	<field name="DEL_NUMB" class="java.math.BigDecimal"/>
+	<variable name="dely" class="java.lang.String"/>
+	<variable name="EQTY_1" class="java.math.BigDecimal" resetType="Group" resetGroup="pch" calculation="Sum">
+		<variableExpression><![CDATA[$F{EQTY}]]></variableExpression>
+	</variable>
+	<variable name="EQTY_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{EQTY}]]></variableExpression>
+	</variable>
+	<variable name="FOB_FC_1" class="java.math.BigDecimal" resetType="Group" resetGroup="pch" calculation="Sum">
+		<variableExpression><![CDATA[$F{FOB_FC}]]></variableExpression>
+	</variable>
+	<variable name="FOB_FC_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FOB_FC}]]></variableExpression>
+	</variable>
+	<group name="pch">
+		<groupExpression><![CDATA[$F{COST_CENTRE}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="523" y="0" width="69" height="14"/>
+					<box topPadding="1" rightPadding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{EQTY_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="642" y="0" width="60" height="14"/>
+					<box topPadding="1" rightPadding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{FOB_FC_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="412" y="0" width="111" height="14"/>
+					<box topPadding="1" rightPadding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[* Pch Total *]]></text>
+				</staticText>
+				<line>
+					<reportElement x="469" y="0" width="233" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="840" y="15" width="80" height="14" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="920" y="14" width="40" height="14" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="6" y="16" width="100" height="14" backcolor="#FFFFFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="0" width="797" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Goods  Despatched 66 Not Updated]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="42" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="42" y="0" width="52" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TTO_Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="94" y="0" width="60" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T_O_Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="154" y="0" width="60" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="214" y="0" width="54" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Plan_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="268" y="0" width="52" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Plan_User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="320" y="0" width="35" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PList]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="355" y="0" width="57" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inv_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="412" y="0" width="111" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merchant Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="523" y="0" width="69" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qnty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="592" y="0" width="50" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Crncy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="642" y="0" width="60" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fob_Fc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="702" y="0" width="37" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mode ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="774" y="0" width="52" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="739" y="0" width="35" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ctns]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="826" y="0" width="48" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="874" y="0" width="35" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="0" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="909" y="0" width="51" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Loct]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="42" height="14" isPrintInFirstWholeBand="true"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COST_CENTRE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="42" y="0" width="52" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TTO_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="94" y="0" width="60" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_O_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="154" y="0" width="60" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="214" y="0" width="54" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAN_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="268" y="0" width="52" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAN_USER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="320" y="0" width="35" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLIST}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="355" y="0" width="57" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="412" y="0" width="111" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MERCHANT_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="523" y="0" width="69" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EQTY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="592" y="0" width="50" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRNCY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="642" y="0" width="60" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOB_FC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="702" y="0" width="37" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODE_OF_SHIP}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="774" y="0" width="52" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOADING}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="739" y="0" width="35" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CTNS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="826" y="0" width="48" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="874" y="0" width="35" height="14"/>
+				<box topPadding="1" leftPadding="0" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELAY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="909" y="0" width="51" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_loct}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="34" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="523" y="0" width="69" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{EQTY_2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="642" y="0" width="60" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{FOB_FC_2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="412" y="0" width="111" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[* Report Total *]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="19" width="960" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_query}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="4" width="49" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{COSTCENTER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="5" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BUYER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

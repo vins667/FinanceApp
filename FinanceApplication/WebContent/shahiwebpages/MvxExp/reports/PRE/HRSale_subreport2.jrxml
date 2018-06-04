@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HRSale_subreport2" language="groovy" pageWidth="300" pageHeight="802" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_SBNO" class="java.lang.String"/>
+	<parameter name="P_SBDATE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select b.bos_no,sum(qnty) bos_qnty , (c.totqty) totqty, d.product_desc,d.frt_amt,
+ d.frt_amt /(c.totqty) *sum(qnty) avg_frt
+ from ei_shipment_dtls a,ei_bos_dtls b, (select bos_no bosno ,bos_location bosloct, sum(qnty) totqty from ei_bos_dtls where dispatch_yn='Y' group by bos_no,bos_location) c,
+ (select  PRODUCT_DESC,sum(PRODUCT_AMOUNT) frt_amt,c1.BOS_NO,c1.BOS_DATE,c1.bos_loct
+ from shahiweb.m3_bill_master a1,shahiweb.m3_bill_detail b1,shahiweb.M3_BILL_PRODUCT_MASTER d1,
+ (select distinct bill_sl_no,bos_no,bos_date,bos_loct from shahiweb.M3_BILL_ADD_MASTER) c1
+ where a1.sl_no=b1.bill_sl_no
+ and a1.sl_no=c1.bill_sl_no and c1.bos_no is not null --and bos_no=58558
+ and b1.SUB_TYPE_SL_NO=d1.SUB_TYPE_SL_NO and b1.PRODUCT_SL_NO =d1.sl_no
+  group by PRODUCT_DESC,c1.BOS_NO,c1.BOS_DATE,c1.bos_loct
+ ) d
+  where a.year=b.year and a.company=b.company and a.inv_no=b.inv_no and  b.dispatch_yn='Y'
+ and c.bosno = b.bos_no
+ and c.bosloct=b.bos_location
+ and d.bos_no = b.bos_no
+ and d.bos_loct=b.bos_location
+ and a.shp_bill_no=$P{P_SBNO}
+AND TO_CHAR(a.SHP_BILL_DATE,'dd/mm/yyyy')=$P{P_SBDATE}
+group by b.bos_no,c.totqty, d.frt_amt,d.product_desc]]>
+	</queryString>
+	<field name="BOS_NO" class="java.math.BigDecimal"/>
+	<field name="BOS_QNTY" class="java.math.BigDecimal"/>
+	<field name="TOTQTY" class="java.math.BigDecimal"/>
+	<field name="PRODUCT_DESC" class="java.lang.String"/>
+	<field name="FRT_AMT" class="java.math.BigDecimal"/>
+	<field name="AVG_FRT" class="java.math.BigDecimal"/>
+	<variable name="b_frt" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVG_FRT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="7" y="0" width="34" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOS_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="0" width="30" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTQTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="30" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOS_QNTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="109" y="0" width="30" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FRT_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="143" y="0" width="41" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AVG_FRT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="190" y="0" width="105" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRODUCT_DESC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

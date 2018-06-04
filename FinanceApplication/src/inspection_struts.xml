@@ -1,0 +1,94 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="inspection" extends="struts-default"> 
+        <action name="GrnfileUploadAction"  class="shahi.Action.Grninspection.GrnFileUploadAction">
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">10485760</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result name="success">/shahiwebpages/Grninspection/GrnFileUpload.jsp</result>
+            <result name="error">/shahiwebpages/Grninspection/GrnFileUpload.jsp</result>
+            <result name="input">/shahiwebpages/Grninspection/GrnFileUpload.jsp</result>
+        </action>
+
+        <action name="*GRNDisplayAction" method="{1}" class="shahi.Action.Grninspection.GRNDisplay">
+            <result name="success">/shahiwebpages/Grninspection/GRNDisplay.jsp</result>
+            <result name="error">/shahiwebpages/Grninspection/GRNDisplay.jsp</result>
+            <result name="input">/shahiwebpages/Grninspection/GRNDisplay.jsp</result>
+            <result name="listpage">/shahiwebpages/Grninspection/GRNDisplay.jsp</result>
+        </action>
+
+        <action name="grninsSessionNewG" class="shahi.Action.Grninspection.SessionCallAction" >
+            <result name="error">/shahiwebpages/Grninspection/ReceipthomeNewG.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/ReceipthomeNewG.jsp</result>
+        </action>
+        <action name="grninsdetailActionNewG" class="shahi.Action.Grninspection.GreigeinspectionMovexDetailNewAction" >
+            <result name="error">/shahiwebpages/Grninspection/ReceipthomeNewG.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/grninspectionMovexDetailNewG.jsp</result>
+        </action>
+        <action name="grninsdetailUpdateActionNewG" class="shahi.Action.Grninspection.GreigeinspectionMovexDetailNewAction" >
+            <result name="error">/shahiwebpages/Grninspection/grninspectionMovexDetailNewG.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/grninspectionMovexDetailNewG.jsp</result>
+        </action>
+
+        <action name="grnmanuldebitAction" class="shahi.Action.Grninspection.GrnDebitManualSaveAction" >
+            <result name="error">/shahiwebpages/Grninspection/GrnDebitManualSaveJsp.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/GrnDebitManualSaveJsp.jsp</result>
+        </action>
+        
+        <action name="grninsSessionNew" class="shahi.Action.Grninspection.SessionCallAction" >
+            <result name="error">/shahiwebpages/Grninspection/ReceipthomeNew.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/ReceipthomeNew.jsp</result>
+        </action>
+        <action name="grninsdetailActionNew" class="shahi.Action.Grninspection.grninspectionMovexDetailNewAction" >
+            <result name="error">/shahiwebpages/Grninspection/ReceipthomeNew.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/grninspectionMovexDetailNew.jsp</result>
+        </action>
+        <action name="grninsdetailUpdateActionNew" class="shahi.Action.Grninspection.grninspectionMovexDetailNewAction" >
+            <result name="error">/shahiwebpages/Grninspection/grninspectionMovexDetailNew.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/grninspectionMovexDetailNew.jsp</result>
+        </action>
+
+        <action name="grninsSession" class="shahi.Action.Grninspection.SessionCallAction" >
+            <result name="error">/shahiwebpages/Grninspection/Receipthome.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/Receipthome.jsp</result>
+        </action>
+
+        <action name="grninsdetailAction" class="shahi.Action.Grninspection.grninspectionMovexDetailAction" >
+            <result name="error">/shahiwebpages/Grninspection/Receipthome.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/grninspectionMovexDetail.jsp</result>
+        </action>
+
+        <action name="grninsdetailUpdateAction" class="shahi.Action.Grninspection.grninspectionMovexDetailAction" >
+            <result name="error">/shahiwebpages/Grninspection/grninspectionMovexDetail.jsp</result>
+            <result name="success" >/shahiwebpages/Grninspection/grninspectionMovexDetail.jsp</result>
+        </action>
+        <action name="*MovexPutwayUpdationReport" method="{1}" class="shahi.Action.Grninspection.MovexPutwayUpdationReport">
+            <result name="success">/shahiwebpages/Grninspection/MovexPutwayUpdationReport.jsp</result>
+            <result name="input">/shahiwebpages/Grninspection/MovexPutwayUpdationReport.jsp</result>
+            <result name="error">/shahiwebpages/Grninspection/MovexPutwayUpdationReport.jsp</result>
+        </action>
+
+        <action name="*grnclsoeupdationreport" method="{1}" class="shahi.Action.Grninspection.GrnClosedUpdationReport">
+            <result name="success">/shahiwebpages/Grninspection/GrnCloseUpdationReport.jsp</result>
+            <result name="input">/shahiwebpages/Grninspection/GrnCloseUpdationReport.jsp</result>
+            <result name="error">/shahiwebpages/Grninspection/GrnCloseUpdationReport.jsp</result>
+        </action>
+        <action name="*LabTestBacklog" method="{1}" class="shahi.Action.Grninspection.LabTestBacklog">
+            <result name="success">/shahiwebpages/Grninspection/LabTestBacklog.jsp</result>
+            <result name="input">/shahiwebpages/Grninspection/LabTestBacklog.jsp</result>
+            <result name="error">/shahiwebpages/Grninspection/LabTestBacklog.jsp</result>
+        </action>
+	<action name="*GrnRollEntryReport" method="{1}" class="shahi.Action.Grninspection.GrnRollEntryReport">
+            <result name="success">/shahiwebpages/Grninspection/GrnRollEntryReport.jsp</result>
+            <result name="input">/shahiwebpages/Grninspection/GrnRollEntryReport.jsp</result>
+            <result name="error">/shahiwebpages/Grninspection/GrnRollEntryReport.jsp</result>
+        </action>
+
+    </package>
+</struts>
+

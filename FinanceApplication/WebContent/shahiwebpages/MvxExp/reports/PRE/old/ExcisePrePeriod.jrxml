@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ExcisePrePeriod" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="net.sf.jasperreports.engine.JRDefaultScriptlet">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="347"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="buyer_name" class="java.lang.String"/>
+	<field name="buyer_address" class="java.lang.String"/>
+	<field name="excs_inv_no" class="java.lang.String"/>
+	<field name="cons_name" class="java.lang.String"/>
+	<field name="cons_address" class="java.lang.String"/>
+	<field name="INVLINELIST" class="java.util.List"/>
+	<field name="MRP_AMT" class="java.lang.Double"/>
+	<field name="UP_AMT" class="java.lang.Double"/>
+	<field name="CAL_VAL" class="java.lang.Integer"/>
+	<field name="TFOB" class="java.lang.Double"/>
+	<field name="TAXABLE_VALUE" class="java.lang.Double"/>
+	<field name="TAX_TYPE" class="java.lang.String"/>
+	<field name="INV_FC" class="java.lang.Double"/>
+	<field name="TAX_AMT" class="java.lang.Double"/>
+	<field name="upcharge_per" class="java.lang.Double"/>
+	<field name="inv_qty" class="java.lang.String"/>
+	<field name="AMT_IN_WORD" class="java.lang.String"/>
+	<field name="EXCISE_DUTY" class="java.lang.Double"/>
+	<field name="TOTAL_INV" class="java.lang.Double"/>
+	<field name="AMT_IN_WORD2" class="java.lang.String"/>
+	<field name="EXCISELIST" class="java.util.List"/>
+	<variable name="total_fob" class="java.lang.Double"/>
+	<variable name="total_qty_p" class="java.lang.String"/>
+	<variable name="upcharge" class="java.lang.Double"/>
+	<variable name="svalue" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{INV_FC}+$F{UP_AMT}+$F{TAX_AMT}+((Double.parseDouble($F{inv_qty})*$F{MRP_AMT}*$F{CAL_VAL}/100)*2/100)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="703" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="205" width="168" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{buyer_address}]]></textFieldExpression>
+			</textField>
+			<subreport runToBottom="true">
+				<reportElement x="0" y="327" width="555" height="23"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{INVLINELIST})]]></dataSourceExpression>
+				<returnValue subreportVariable="fob" toVariable="total_fob" calculation="Sum"/>
+				<returnValue subreportVariable="qty_p" toVariable="total_qty_p" calculation="Sum"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/ExcisePrePeriod_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="168" y="205" width="195" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cons_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="191" width="168" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{buyer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="384" y="191" width="107" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{excs_inv_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="168" y="191" width="195" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cons_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="536" width="92" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total #]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="455" y="536" width="100" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TFOB}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="363" y="564" width="92" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Excise Duty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="592" width="92" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Invoice Value]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="455" y="550" width="100" height="14">
+					<printWhenExpression><![CDATA[$F{UP_AMT}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UP_AMT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="455" y="564" width="100" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCISE_DUTY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="455" y="578" width="100" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_AMT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;###0.00-" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="455" y="592" width="100" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_INV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="578" width="92" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAX_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="550" width="92" height="14">
+					<printWhenExpression><![CDATA[$F{UP_AMT}>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Upcharge "+$F{upcharge_per}+"%"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="120" y="676" width="435" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMT_IN_WORD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="31" y="631" width="273" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMT_IN_WORD2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="503" y="191" width="52" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="201" y="550" width="82" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BY ROAD]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="201" y="579" width="82" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="1" y="465" width="200" height="12"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{EXCISELIST})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/CommercialInvoice_exise.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

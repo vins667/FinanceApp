@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DBK_LEDGER" pageWidth="1980" pageHeight="842" columnWidth="1940" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\DBK\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_user" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_awbsb" class="java.lang.String"/>
+	<parameter name="p_cutoff" class="java.lang.String"/>
+	<parameter name="p_fromdate" class="java.lang.String"/>
+	<parameter name="p_todate" class="java.lang.String"/>
+	<parameter name="p_loct" class="java.lang.String"/>
+	<parameter name="p_invtype" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT to_char(A.SB_DATE,'YYYYMM') mnth,to_char(A.SB_date,'Mon-YY') prmnth,A.SB_NO,chq_no,to_char(chq_date,'dd/mm/yyyy') chq_date,misc_desc,misc_amt,
+to_char(A.SB_DATE,'dd/mm/yyyy') sb_date,AWB_NO,to_char(AWB_DATE,'dd/mm/yyyy') awb_date,EXCS_INV_NO,
+to_char(INV_DATE,'dd/mm/yyyy') inv_date,SHIP_QNTY,FOB_FC,DBK_CONV,INR_CONV,fob_fc*inr_conv for_inr,DBK_ADMISABLE,RECV,SUPL,ADJUST,
+WOFF_AMT,EXCESS,LESS,BALANCE,STR_DUE,STR_RECV,STR_WOFF,crncy_code,misc_fob,gr_decl,rosl_due,ROSL_RECV,
+to_char(leo_date,'dd/mm/yyyy') leodate
+ FROM pay.EI_DBK_REPORT_TEMP A where trim(user_id)=$P{p_user}
+ORDER BY 1,2,3]]>
+	</queryString>
+	<field name="MNTH" class="java.lang.String"/>
+	<field name="PRMNTH" class="java.lang.String"/>
+	<field name="SB_NO" class="java.lang.String"/>
+	<field name="CHQ_NO" class="java.lang.String"/>
+	<field name="CHQ_DATE" class="java.lang.String"/>
+	<field name="MISC_DESC" class="java.lang.String"/>
+	<field name="MISC_AMT" class="java.math.BigDecimal"/>
+	<field name="SB_DATE" class="java.lang.String"/>
+	<field name="AWB_NO" class="java.lang.String"/>
+	<field name="AWB_DATE" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="INV_DATE" class="java.lang.String"/>
+	<field name="SHIP_QNTY" class="java.math.BigDecimal"/>
+	<field name="FOB_FC" class="java.math.BigDecimal"/>
+	<field name="DBK_CONV" class="java.math.BigDecimal"/>
+	<field name="INR_CONV" class="java.math.BigDecimal"/>
+	<field name="FOR_INR" class="java.math.BigDecimal"/>
+	<field name="DBK_ADMISABLE" class="java.math.BigDecimal"/>
+	<field name="RECV" class="java.math.BigDecimal"/>
+	<field name="SUPL" class="java.math.BigDecimal"/>
+	<field name="ADJUST" class="java.math.BigDecimal"/>
+	<field name="WOFF_AMT" class="java.math.BigDecimal"/>
+	<field name="EXCESS" class="java.math.BigDecimal"/>
+	<field name="LESS" class="java.math.BigDecimal"/>
+	<field name="BALANCE" class="java.math.BigDecimal"/>
+	<field name="STR_DUE" class="java.math.BigDecimal"/>
+	<field name="STR_RECV" class="java.math.BigDecimal"/>
+	<field name="STR_WOFF" class="java.math.BigDecimal"/>
+	<field name="CRNCY_CODE" class="java.lang.String"/>
+	<field name="MISC_FOB" class="java.math.BigDecimal"/>
+	<field name="GR_DECL" class="java.math.BigDecimal"/>
+	<field name="ROSL_DUE" class="java.math.BigDecimal"/>
+	<field name="ROSL_RECV" class="java.math.BigDecimal"/>
+	<field name="LEODATE" class="java.lang.String"/>
+	<group name="sb_group">
+		<groupExpression><![CDATA[$F{SB_NO}+$F{SB_DATE}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="39" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Mnth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="0" width="84" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/Bill No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="0" width="56" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/B Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="0" width="109" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[AWB No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="56" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[AWB Date ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="406" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Admisable]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="462" y="0" width="93" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Chq No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="555" y="0" width="56" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Chq Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="611" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Recvd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="667" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Supl]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="723" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Adjust]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="779" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[W/Off]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="835" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Excess]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="891" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Less]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="947" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="997" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[STR Due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1047" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[STR Recv]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1097" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[STR W/off]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1247" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Misc Desc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1296" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Misc Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1346" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1396" y="0" width="50" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Inv Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1446" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Qnty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1523" y="0" width="61" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Total Fob FC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1696" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[INR Conv]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1798" y="0" width="90" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[DBK Sl#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1888" y="0" width="34" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Dbk %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1746" y="0" width="52" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[DBK Conv]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1584" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[GR Disc FC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1640" y="0" width="56" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Misc FobFC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1496" y="0" width="27" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Crncy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1147" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Rosl Due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1197" y="0" width="50" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Rosl Recv]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="62" height="15"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[LEO Date]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="39" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRMNTH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="39" y="0" width="84" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SB_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="123" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SB_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="241" y="0" width="109" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="350" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="406" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DBK_ADMISABLE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="462" y="0" width="93" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHQ_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="555" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHQ_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="611" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RECV}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="667" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUPL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="723" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADJUST}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="779" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{WOFF_AMT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="835" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="891" y="0" width="56" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LESS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="947" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BALANCE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="997" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STR_DUE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="1047" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STR_RECV}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="1097" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STR_WOFF}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="1247" y="0" width="49" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MISC_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="1296" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MISC_AMT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1346" y="0" width="50" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1396" y="0" width="50" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1446" y="0" width="50" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIP_QNTY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1523" y="0" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOB_FC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1696" y="0" width="50" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INR_CONV}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="1798" y="0" width="124" height="14"/>
+				<subreportParameter name="p_inv">
+					<subreportParameterExpression><![CDATA[$F{EXCS_INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/DBK_LEDGER_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1746" y="0" width="52" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DBK_CONV}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1584" y="0" width="56" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GR_DECL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1496" y="0" width="27" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRNCY_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1640" y="0" width="56" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MISC_FOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="1147" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ROSL_DUE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="1197" y="0" width="50" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ROSL_RECV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="179" y="0" width="62" height="14" printWhenGroupChanges="sb_group"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LEODATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="39" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_awbsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="39" y="0" width="84" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_fromdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="123" y="0" width="56" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_todate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="179" y="0" width="109" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuttoff Date :-]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="288" y="0" width="56" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_cutoff}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="39" y="14" width="84" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_loct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="179" y="14" width="109" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_invtype}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="14" width="39" height="15" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Loct]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="123" y="14" width="56" height="14" forecolor="#FF3333" backcolor="#FFFF00"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[InvType :]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

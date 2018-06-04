@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DrawbackDepbLedgerReport" pageWidth="700" pageHeight="842" columnWidth="660" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="date_from" class="java.lang.String"/>
+	<parameter name="date_to" class="java.lang.String"/>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="invtp" class="java.lang.String"/>
+	<parameter name="COMPLIST" class="java.lang.String"/>
+	<parameter name="loc" class="java.lang.String"/>
+	<parameter name="BASEDON" class="java.lang.String"/>
+	<parameter name="DBKSTATUS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT A.YEAR,B.AWB_NO,B.AWB_DATE,to_char(A.SHP_BILL_DATE,'YYYY-MM') mnth,A.SHP_BILL_NO,A.CURRENCY,A.FOLDER_NUMB,A.ship_qnty,
+A.SHP_BILL_DATE,A.INR_CONV,A.FOB_AMT,A.DBK_SLNO,A.COMPANY,A.INV_NO,A.ALL_NO,A.COMP_GRP_CODE, E.all_no,E.country,E.country,E.description,
+A.BANK_REF_NO
+FROM EI_SHIPMENT_DTLS A,ei_shipment_mast b,EI_ENDORS_MAST D,EI_ENDORS_DTLS e
+
+WHERE
+A.year=B.year and
+A.link_no=B.link_no and
+--A.DBK_SLNO IS NOT NULL AND
+A.year=D.year and
+A.company=d.company and
+A.inv_no=D.inv_no and
+d.location like $P{loc} and
+nvl(D.self_tp,'N') like $P{invtp}  and
+D.year=E.year and
+D.company=E.company and
+D.inv_no=E.inv_no and
+ nvl(e.DBK_TYPE,'D')= $P{DBKSTATUS} and
+decode($P{BASEDON},'AWB',B.awb_DATE,A.shp_bill_date) BETWEEN $P{date_from} AND $P{date_to}
+ $P!{p_query}
+
+
+union
+
+SELECT A.YEAR,B.AWB_NO,B.AWB_DATE,to_char(A.SHP_BILL_DATE,'YYYY-MM') mnth,A.SHP_BILL_NO,A.CURRENCY,A.FOLDER_NUMB,A.ship_qnty,
+A.SHP_BILL_DATE,A.INR_CONV,A.FOB_AMT,A.DBK_SLNO,A.COMPANY,A.INV_NO,A.ALL_NO,A.COMP_GRP_CODE, E.all_no,E.country,E.country,E.description,
+A.BANK_REF_NO
+FROM EI_SHIPMENT_DTLS A,EI_ENDORS_MAST D,ei_endors_dtls E,
+ei_shipment_mast B
+WHERE
+A.year=B.year and
+A.link_no=B.link_no and
+A.year=D.year and
+A.company=d.company and
+A.inv_no=D.inv_no and
+D.type='E' and
+nvl(D.self_tp,'N') like $P{invtp} and
+d.location like $P{loc} and
+D.year=E.year and
+D.type=E.type and
+D.company=E.company and
+D.inv_no=E.inv_no and
+ nvl(e.DBK_TYPE,'D')=$P{DBKSTATUS} and
+decode($P{BASEDON},'AWB',B.awb_DATE,A.shp_bill_date)  BETWEEN $P{date_from} AND $P{date_to}
+  $P!{p_query}]]>
+	</queryString>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="AWB_NO" class="java.lang.String"/>
+	<field name="AWB_DATE" class="java.sql.Timestamp"/>
+	<field name="MNTH" class="java.lang.String"/>
+	<field name="SHP_BILL_NO" class="java.lang.String"/>
+	<field name="CURRENCY" class="java.lang.String"/>
+	<field name="FOLDER_NUMB" class="java.math.BigDecimal"/>
+	<field name="SHIP_QNTY" class="java.math.BigDecimal"/>
+	<field name="SHP_BILL_DATE" class="java.sql.Timestamp"/>
+	<field name="INR_CONV" class="java.math.BigDecimal"/>
+	<field name="FOB_AMT" class="java.math.BigDecimal"/>
+	<field name="DBK_SLNO" class="java.lang.String"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="ALL_NO" class="java.lang.String"/>
+	<field name="COMP_GRP_CODE" class="java.math.BigDecimal"/>
+	<field name="COUNTRY" class="java.lang.String"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="BANK_REF_NO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="660" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relization Pending Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="545" y="0" width="75" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="620" y="0" width="40" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="0" width="104" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="441" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Period From "+$P{date_from}+" to "+$P{date_to}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

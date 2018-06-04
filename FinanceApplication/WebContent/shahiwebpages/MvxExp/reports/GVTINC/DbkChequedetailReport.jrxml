@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DbkChequedetailReport" pageWidth="655" pageHeight="842" columnWidth="645" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="date_from" class="java.lang.String"/>
+	<parameter name="date_to" class="java.lang.String"/>
+	<parameter name="CHQNO" class="java.lang.String"/>
+	<parameter name="CHQDATEON" class="java.lang.String"/>
+	<parameter name="port_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct a.year,a.chq_no,a.chq_amount,a.chq_date,a.chq_recv_date,
+b.shp_bill_no,b.amount,decode(b.pay_type,'S','SPC','D','CHQ','A','ADJ') paytype,c.shp_bill_no,c.shp_bill_date,pay_fin_year(f.AWB_DATE) FY,
+NVL(c.dbk_admisable,0) - nvl(dbk_misc_amount,0) dbk_admisable,str_due,b.str_amt str_recv,
+c.dbk_supl_recv,c.dbk_received, (nvl(amount,0)+nvl(str_amt,0))-nvl(bank_cr,0)  bank_charge,bank_cr,
+nvl(c.dbk_admisable,0)-nvl(b.amount,0)-nvl(dbk_misc_amount,0) balance,f.awb_no,
+f.awb_date,adjst_amount,eft_amt,A.ac_send_date,
+case when nvl(dbk_received,0)-NVL(c.dbk_admisable,0)<0 then nvl(dbk_received,0)-NVL(c.dbk_admisable,0) else 0 end less11,
+ case when nvl(dbk_received,0)-NVL(c.dbk_admisable,0)>0 then nvl(dbk_received,0)-NVL(c.dbk_admisable,0) else 0 end excess1
+from ei_dbk_chq_mast a,ei_dbk_chq_dtls b,ei_dbk_mast c, ei_shipment_dtls d,ei_shipment_mast f
+where
+a.year=b.year and
+a.chq_no =b.chq_no and
+b.shp_bill_no=c.shp_bill_no and
+b.shp_bill_date=c.shp_bill_date and
+c.shp_bill_no=d.shp_bill_no and
+c.shp_bill_date=d.shp_bill_date and
+d.year = f.year and
+d.link_no = f.link_no and
+a.chq_no like decode($P{CHQNO},null,'%',$P{CHQNO}) and
+decode($P{CHQDATEON},'Entry',trunc(a.tdate),'Received',a.chq_recv_date,'Cheque',a.chq_date) between $P{date_from} and $P{date_to}]]>
+	</queryString>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="CHQ_NO" class="java.lang.String"/>
+	<field name="CHQ_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="CHQ_DATE" class="java.sql.Timestamp"/>
+	<field name="CHQ_RECV_DATE" class="java.sql.Timestamp"/>
+	<field name="SHP_BILL_NO" class="java.lang.String"/>
+	<field name="AMOUNT" class="java.math.BigDecimal"/>
+	<field name="PAYTYPE" class="java.lang.String"/>
+	<field name="SHP_BILL_DATE" class="java.sql.Timestamp"/>
+	<field name="FY" class="java.math.BigDecimal"/>
+	<field name="DBK_ADMISABLE" class="java.math.BigDecimal"/>
+	<field name="STR_DUE" class="java.math.BigDecimal"/>
+	<field name="STR_RECV" class="java.math.BigDecimal"/>
+	<field name="DBK_SUPL_RECV" class="java.math.BigDecimal"/>
+	<field name="DBK_RECEIVED" class="java.math.BigDecimal"/>
+	<field name="BANK_CHARGE" class="java.math.BigDecimal"/>
+	<field name="BANK_CR" class="java.math.BigDecimal"/>
+	<field name="BALANCE" class="java.math.BigDecimal"/>
+	<field name="AWB_NO" class="java.lang.String"/>
+	<field name="AWB_DATE" class="java.sql.Timestamp"/>
+	<field name="ADJST_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="EFT_AMT" class="java.math.BigDecimal"/>
+	<field name="AC_SEND_DATE" class="java.sql.Timestamp"/>
+	<field name="LESS11" class="java.math.BigDecimal"/>
+	<field name="EXCESS1" class="java.math.BigDecimal"/>
+	<variable name="less_v" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{DBK_RECEIVED}.doubleValue()-$F{DBK_ADMISABLE}.doubleValue()]]></variableExpression>
+	</variable>
+	<variable name="excess_v" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{DBK_RECEIVED}.doubleValue()-$F{DBK_ADMISABLE}.doubleValue()]]></variableExpression>
+	</variable>
+	<variable name="STR_RECV_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{STR_RECV}]]></variableExpression>
+	</variable>
+	<variable name="STR_DUE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{STR_DUE}]]></variableExpression>
+	</variable>
+	<variable name="BANK_CHARGE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{BANK_CHARGE}]]></variableExpression>
+	</variable>
+	<variable name="BANK_CR_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{BANK_CR}]]></variableExpression>
+	</variable>
+	<variable name="DBK_RECEIVED_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{DBK_RECEIVED}]]></variableExpression>
+	</variable>
+	<variable name="DBK_ADMISABLE_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{DBK_ADMISABLE}]]></variableExpression>
+	</variable>
+	<variable name="less_tot" class="java.lang.Double" resetType="Group" resetGroup="CHQ_NO" calculation="Sum">
+		<variableExpression><![CDATA[$V{less_v}]]></variableExpression>
+	</variable>
+	<variable name="excess_tot" class="java.lang.Double" resetType="Group" resetGroup="CHQ_NO" calculation="Sum">
+		<variableExpression><![CDATA[$V{excess_v}]]></variableExpression>
+	</variable>
+	<variable name="LESS11_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{LESS11}]]></variableExpression>
+	</variable>
+	<variable name="EXCESS1_1" class="java.math.BigDecimal" resetType="Group" resetGroup="chqno" calculation="Sum">
+		<variableExpression><![CDATA[$F{EXCESS1}]]></variableExpression>
+	</variable>
+	<group name="CHQ_NO" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{CHQ_NO}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="38">
+				<subreport>
+					<reportElement x="0" y="3" width="427" height="35"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="chqn">
+						<subreportParameterExpression><![CDATA[$F{CHQ_NO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/DbkChequeSummarylReport.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="chqno">
+		<groupExpression><![CDATA[$F{CHQ_NO}]]></groupExpression>
+		<groupHeader>
+			<band height="14">
+				<textField>
+					<reportElement x="47" y="0" width="141" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CHQ_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="47" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cheque No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="189" y="0" width="39" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Amount]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement x="228" y="0" width="64" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CHQ_AMOUNT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="388" y="0" width="83" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CHQ_DATE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="326" y="0" width="62" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Chq Date]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="14">
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="601" y="0" width="41" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{STR_RECV_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="560" y="0" width="41" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{STR_DUE_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="520" y="0" width="40" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{BANK_CHARGE_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="471" y="0" width="47" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{BANK_CR_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="326" y="0" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{DBK_RECEIVED_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="228" y="0" width="64" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{DBK_ADMISABLE_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="189" y="0" width="39" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="0" width="639" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField isStretchWithOverflow="true" pattern="###0;-###0" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="388" y="0" width="39" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{LESS11_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0;-###0" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="427" y="0" width="44" height="14">
+						<printWhenExpression><![CDATA[$V{excess_tot}>0]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{EXCESS1_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="0" width="187" height="14">
+						<printWhenExpression><![CDATA[$F{AC_SEND_DATE}==null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PENDING FOR A/C FORWARD]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="chqdate">
+		<groupExpression><![CDATA[$F{CHQ_DATE}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="562" y="20" width="39" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="601" y="20" width="39" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="1" y="20" width="127" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="20" width="434" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CHQDATEON}+"Date  From "+$P{date_from}+" to "+$P{date_to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="640" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cheque Detail Report]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="47" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S/B No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="47" y="0" width="39" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S/B Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="228" y="0" width="64" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amt Due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="292" y="0" width="34" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="388" y="0" width="39" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Less]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="427" y="0" width="44" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Excess]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="471" y="0" width="47" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bank Cr]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="518" y="0" width="40" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bank Ch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="326" y="0" width="62" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recd.Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="558" y="0" width="41" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Str  Due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="86" y="0" width="103" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Awb/BI No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="189" y="0" width="39" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dated]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="599" y="0" width="41" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Str Recv]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="47" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHP_BILL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="47" y="0" width="39" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHP_BILL_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="228" y="0" width="64" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DBK_ADMISABLE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="292" y="0" width="34" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PAYTYPE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0;-###0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="388" y="0" width="39" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LESS11}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0;-###0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="427" y="0" width="44" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCESS1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="471" y="0" width="47" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANK_CR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="520" y="0" width="40" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANK_CHARGE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="326" y="0" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DBK_RECEIVED}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="560" y="0" width="41" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STR_DUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="86" y="0" width="103" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="189" y="0" width="39" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="601" y="0" width="41" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STR_RECV}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

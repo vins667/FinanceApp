@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/mvc	
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+  
+     
+     <!--  <task:annotation-driven /> -->
+      <context:annotation-config/>
+      
+      <bean id="voucherUpdate" class="shahi.Action.ReportFolder.EPM.Invoice.UpdateShahiVoucherFunction" />
+      
+	  <bean id="db2Source" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.ibm.as400.access.AS400JDBCDriver" />
+		<property name="url" value="jdbc:as400://172.17.3.115/M3FDBPRD" />
+		<property name="username" value="qsecofr" />
+		<property name="password" value="shahip8" />
+	</bean>
+	<!-- AMS Now  Connection-->
+	<bean id="oracleSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@172.17.3.120:1521:reportdb" />
+		<property name="username" value="amsnow" />
+		<property name="password" value="amsnow" />
+	  </bean>
+	  
+	  <!-- Shahi Web Connection -->
+	  <bean id="shahiweb" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@172.17.1.250:1521:shahi" />
+		<property name="username" value="shahiweb" />
+		<property name="password" value="shahiwebitip1" />
+	  </bean>	
+	  
+	    <!-- DataTex Sfl Purchase config -->
+    <bean id="datatexSfl" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="url" value="jdbc:db2://172.18.1.37:50000/sflprod" />
+		<property name="username" value="db2inst1" />
+		<property name="password" value="shahi123" />
+	</bean>
+	   <!-- DataTex Shimoga -->
+    <bean id="datatexshimoga" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="url" value="jdbc:db2://172.30.4.11:50000/NOWPROD" />
+		<property name="username" value="db2inst1" />
+		<property name="password" value="shahi123" />
+	</bean>
+	 <!-- DataTex WPD  -->
+   <bean id="datatexswpd" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
+		<property name="url" value="jdbc:db2://172.30.4.13:50011/nowtest" />
+		<property name="username" value="db2inst1" />
+		<property name="password" value="shahi123" />
+	</bean>
+	  
+	<bean id="db2" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="db2Source"></property>
+	</bean>
+	
+	 <bean id="shahiTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="shahiweb"></property>
+	</bean>
+	<bean id="scanTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="oracleSource"></property>
+	</bean>
+	 <bean id="shahiWeb" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="shahiweb"></property>
+	</bean>
+	<bean id="scan" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="oracleSource"></property>
+	</bean>
+	<bean id="simpleTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+		<constructor-arg ref = "oracleSource"/>
+	</bean>	
+	<bean id="excelUpload" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+		<constructor-arg ref = "oracleSource"/>
+	</bean>
+	<bean id="shahiGSTN" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+		<constructor-arg ref = "oracleSource"/>
+	</bean>
+	<bean id="gstReco" class="org.springframework.jdbc.core.simple.SimpleJdbcInsert">
+		<constructor-arg ref = "oracleSource"/>
+	</bean>
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="oracleSource"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager" />
+	
+	<bean id="db2TxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="db2Source"/>
+	</bean>
+	<tx:annotation-driven transaction-manager="db2TxManager" />
+		
+   
+	 <bean id="datatexTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="datatexSfl"></property>
+	</bean>
+	<bean id="shimogaTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="datatexshimoga"></property>
+	</bean>
+	
+	<bean id="jdbcTemplateFactory" class="shahi.Action.ReportFolder.EPM.mapper.JdbcTemplateFactory"/>
+
+	<bean id="namedTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	    <constructor-arg ref = "db2Source"/>
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <constructor-arg ref = "db2Source"/>
+	</bean>
+	<bean id="wpdTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <constructor-arg ref = "datatexswpd"/> 
+	</bean>
+	<!--Util Class Config  -->
+	<bean id="epmUtil" class="shahi.Action.ReportFolder.EPM.util.EPMDB2UtilNM"/> 
+	
+	<!-- Service Class Config -->
+	<bean id="saleLedgerService" class="shahi.Action.ReportFolder.EPM.service.SaleLedgerService"/>
+	<bean id="paymentTrackerService" class="shahi.Action.PayTracker.service.DatatexPaymentTrackerService"/>
+	<bean id="gstService" class="shahi.Action.ReportFolder.EPM.service.GSTReconciliationService"/> 
+	<bean id="shippingBillService" class="shahi.Action.ReportFolder.EPM.service.ShippingBillService"/> 
+	<bean id="movexService" class="shahi.Action.ReportFolder.EPM.service.MovexService"/>
+	<bean id="dataTexSaleGstWPDService" class="shahi.Action.ReportFolder.EPM.service.DataTexSaleGstWPDService"/>
+	<bean id="populateListService" class="shahi.Action.ReportFolder.EPM.service.PopulateListService"/>
+	<bean id="payrollPaymentService" class="shahi.Action.ReportFolder.EPM.service.PayrollPaymentService"/>
+	<bean id="dataTexVoucherUnpostService" class="shahi.Action.ReportFolder.EPM.service.DataTexVoucherUnpostService"/>
+	<bean id="chequeSearchService" class="shahi.Action.ReportFolder.EPM.service.ChequeSearchService"/>
+	<bean id="service" class="shahi.Action.ReportFolder.EPM.service.FITTUpdationService"/>
+    <bean id="fundReqReversalService" class="shahi.Action.FundReq.service.FundReqReversalService"/>
+	<bean id="invoiceDeleteService" class="shahi.Action.ReportFolder.EPM.service.InvoiceDeleteService"/>
+	<bean id="UpdateHSNForUPChargesService" class="shahi.Action.ReportFolder.EPM.service.UpdateHSNForUPChargesService"/>
+		
+	<!-- DAO Class Config -->
+	<bean id="dataTexSaleGstWPDDao" class="shahi.Action.ReportFolder.EPM.dao.DataTexSaleGstWPDDao"/>
+	<bean id="populateListDao" class="shahi.Action.ReportFolder.EPM.dao.PopulateListDao"/>
+ 	<bean id="movexDao" class="shahi.Action.ReportFolder.EPM.dao.MovexDao"/>
+	<bean id="saleLedgerDao" class="shahi.Action.ReportFolder.EPM.dao.SaleLedgerDao"/>	
+	<bean id="scanInvoiceDetailDao" class="shahi.Action.ReportFolder.EPM.dao.ScanInvoiceDetailDao"/>
+	<bean id="invoiceDao" class="shahi.Action.ReportFolder.invoicecorrection.InvoiceDao"/>
+	<bean id="shippingBillDao" class="shahi.Action.ReportFolder.EPM.dao.ShippingBillDao"/>
+	<bean id="gstDao" class="shahi.Action.ReportFolder.EPM.dao.GSTReconciliationDao"/>
+	<bean id="paymentTrackerDao" class="shahi.Action.PayTracker.dao.DatatexPaymentTrackerDao"/>	
+	<bean id="dataTexVoucherUnpostDao" class="shahi.Action.ReportFolder.EPM.dao.DataTexVoucherUnpostDao"/>
+	<bean id="payrollPaymentDao" class="shahi.Action.ReportFolder.EPM.dao.PayrollPaymentDao"/>
+    <bean id="chequeSearchDao" class="shahi.Action.ReportFolder.EPM.dao.ChequeSearchDao"/>
+	<bean id="dao" class="shahi.Action.ReportFolder.EPM.dao.FITTUpdationDao"/>
+    <bean id="fundReqReversalDao" class="shahi.Action.FundReq.dao.FundReqReversalDao"/>
+	<bean id="invoiceDeleteDao" class="shahi.Action.ReportFolder.EPM.dao.InvoiceDeleteDao"/>
+	<bean id="shahiWebDao" class="shahi.Action.ReportFolder.EPM.dao.ShahiWebDao"/>
+	<bean id="updateHSNForUPChargesDao" class="shahi.Action.ReportFolder.EPM.dao.UpdateHSNForUPChargesDao"/>
+</beans>  

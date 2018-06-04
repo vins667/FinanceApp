@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="KohlsCOOReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" scriptletClass="net.sf.jasperreports.engine.JRDefaultScriptlet">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="984"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<field name="buyer_name" class="java.lang.String"/>
+	<field name="buyer_address" class="java.lang.String"/>
+	<field name="excs_inv_no" class="java.lang.String"/>
+	<field name="cons_name" class="java.lang.String"/>
+	<field name="cons_address" class="java.lang.String"/>
+	<field name="INVLINELIST" class="java.util.List"/>
+	<field name="MRP_AMT" class="java.lang.Double"/>
+	<field name="UP_AMT" class="java.lang.Double"/>
+	<field name="CAL_VAL" class="java.lang.Integer"/>
+	<field name="TFOB" class="java.lang.Double"/>
+	<field name="TAXABLE_VALUE" class="java.lang.Double"/>
+	<field name="TAX_TYPE" class="java.lang.String"/>
+	<field name="INV_FC" class="java.lang.Double"/>
+	<field name="TAX_AMT" class="java.lang.Double"/>
+	<field name="upcharge_per" class="java.lang.Double"/>
+	<field name="inv_qty" class="java.lang.String"/>
+	<field name="AMT_IN_WORD" class="java.lang.String"/>
+	<field name="EXCISE_DUTY" class="java.lang.Double"/>
+	<field name="TOTAL_INV" class="java.lang.Double"/>
+	<field name="AMT_IN_WORD2" class="java.lang.String"/>
+	<field name="MANUF_DESC" class="java.lang.String"/>
+	<field name="pre_carriage" class="java.lang.String"/>
+	<field name="PLACE_DESC" class="java.lang.String"/>
+	<field name="PLACE" class="java.lang.String"/>
+	<field name="CNTRY_ORIGIN" class="java.lang.String"/>
+	<field name="DESTI_CNTRY" class="java.lang.String"/>
+	<field name="LOADING_PORT" class="java.lang.String"/>
+	<field name="DISCHARGE" class="java.lang.String"/>
+	<field name="DISCHARGE_DESC" class="java.lang.String"/>
+	<field name="LOADING_PORT_DESC" class="java.lang.String"/>
+	<field name="mode_of_ship" class="java.lang.String"/>
+	<field name="DESTI_CNTRY_DESC" class="java.lang.String"/>
+	<field name="inv_date" class="java.lang.String"/>
+	<field name="CNTRY_ORIGIN_DESC" class="java.lang.String"/>
+	<field name="exp_type_desc" class="java.lang.String"/>
+	<field name="ship_term" class="java.lang.String"/>
+	<field name="CRNCY_CODE" class="java.lang.String"/>
+	<field name="payment_term" class="java.lang.String"/>
+	<field name="INV_RATE" class="java.lang.Double"/>
+	<field name="UNIT" class="java.lang.String"/>
+	<field name="INV_DESC" class="java.lang.String"/>
+	<field name="BPOLIST" class="java.util.List"/>
+	<field name="STYLIST" class="java.util.List"/>
+	<field name="MANUF_ADDRESS" class="java.lang.String"/>
+	<field name="NTWT" class="java.lang.String"/>
+	<field name="GROSWT" class="java.lang.String"/>
+	<field name="CBMVAL" class="java.lang.String"/>
+	<field name="CREATIONNO" class="java.lang.String"/>
+	<field name="MODLNO" class="java.lang.String"/>
+	<field name="TGRDECL" class="java.lang.Double"/>
+	<field name="LDPRT" class="java.lang.String"/>
+	<field name="CATE" class="java.lang.String"/>
+	<field name="CRGODT" class="java.lang.String"/>
+	<field name="ERR_MSG" class="java.lang.String"/>
+	<field name="CHKBE" class="java.lang.Integer"/>
+	<field name="CTNMNT" class="java.lang.String"/>
+	<variable name="total_fob" class="java.lang.Double"/>
+	<variable name="total_qty_p" class="java.lang.String"/>
+	<variable name="upcharge" class="java.lang.Double"/>
+	<variable name="svalue" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{INV_FC}+$F{UP_AMT}+$F{TAX_AMT}+((Double.parseDouble($F{inv_qty})*$F{MRP_AMT}*$F{CAL_VAL}/100)*2/100)]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="76" width="37" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="96" width="36" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[To :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="556" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SHAHI EXPORTS PVT LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="21" width="100" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[HARYANA,  (INDIA) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="21" width="170" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[IP NO.-1, SECTOR - 28 FARIDABAD - 121008]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="37" y="76" width="78" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="556" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENDOR CERTIFICATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="148" width="115" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Vendor's Invoice No.  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="148" width="112" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{excs_inv_no}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="364" y="148" width="78" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="327" y="148" width="37" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="180" width="556" height="82"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[To undersigned Vendor hereby represents, warrants and certifies that in the  course of producing, manufacturing, representing,decribing,labeling, advertising, selling, documenting and  shipping the  goods described below onbehalf  of Kohls Department Stores, Inc. (Kohls), Vendor fully compiled with all applicable laws, including the Foreign Corrupt Practices Act and any other anti-corruption laws, as well as Kohls Terms of Engagement for Kohls Bussiness Partners, Vendors Certification of Compliance with All Legal Obligations, and Kohls Purchase Order Terms and Conditions.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="262" width="556" height="96"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Without limiting the generality of the foregoing, the undersigned Vendor also represents, warrants and certifies that (i) no child labor forced labor or prison labor (as those terms are  defined in the above-mentioned Terms of Engagement) was used to produce such goods or any components thereof and (ii) that no bribes, kickbacks or other similar unlawful or improper payments, in cash or in kind, were offered, promissed or given to obtain or retain bussiness or for any other reason. this  Vendors Certificate is issued at the request of Kohls and a copy thereof has been provided to Li & Fung (Trading), Ltd., Kohls buying agent. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="374" width="36" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="392" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Description :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="410" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Quantity :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="428" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Style :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="446" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Vessel :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="464" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Destination :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="482" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Vendor Name :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="500" width="97" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Authorised Representative :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="518" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Title :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="374" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="446" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mode_of_ship}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="127" y="392" width="427" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRGODT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="428" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ERR_MSG}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="410" width="53" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHKBE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="464" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCHARGE_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="464" width="30" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESTI_CNTRY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="192" y="464" width="5" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="146" y="410" width="30" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PCS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="482" width="237" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[SHAHI EXPORT PVT LTD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="31" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="26" y="583" width="173" height="62"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/sepl sign.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="37" y="96" width="171" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{buyer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="110" width="222" height="27"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{buyer_address}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="802">
+			<staticText>
+				<reportElement x="0" y="3" width="556" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SHAHI EXPORTS PVT LTD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="327" y="24" width="100" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[HARYANA,  (INDIA) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="24" width="170" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[IP NO.-1, SECTOR - 28 FARIDABAD - 121008]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="125" width="115" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Invoice No.  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="57" width="556" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICATION OF ORIGIN]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="365" y="125" width="78" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="125" width="112" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{excs_inv_no}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="125" width="37" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="85" width="556" height="21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[GOODS COVERED BY THIS DECLARATION ARE OF INDIAN ORIGIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="249" width="5" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="176" width="36" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="231" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Vessel :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="249" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCHARGE_DESC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="152" y="195" width="30" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PCS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="195" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Quantity :]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="129" y="145" width="426" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRGODT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="303" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Title :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="249" width="30" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESTI_CNTRY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="249" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Destination :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="213" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ERR_MSG}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="145" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Description :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="99" y="195" width="53" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHKBE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="213" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Style :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="176" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="267" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Vendor Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="129" y="231" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mode_of_ship}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="129" y="267" width="237" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[SHAHI EXPORT PVT LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="285" width="97" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Authorised Representative :]]></text>
+			</staticText>
+			<image>
+				<reportElement x="38" y="392" width="173" height="62"/>
+				<imageExpression><![CDATA[$P{SUBREPORT_DIR}+"/sepl sign.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

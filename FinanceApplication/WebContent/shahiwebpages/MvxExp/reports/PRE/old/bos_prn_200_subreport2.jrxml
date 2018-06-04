@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bos_prn_200_subreport2" pageWidth="400" pageHeight="200" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_unit" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select oaadK1 u_code,oaconm u_name,trim(oaconm)||' '||TRIM(OAADR1)||' '||TRIM(OAADR2)||' '||TRIM(OAADR3)||' '||TRIM(OAADR4) U_ADDR ,aRXCSN u_cst,aRXLSN u_tin
+FROM CIADDR_M4OFF  a ,xinddr_M4OFF b
+WHERE OACONO=111 AND OAADTH=4 and
+oacono=arcono and
+oaadth=aRADTH and
+oaadk1=ARADK1 and
+oaadk1=$P{p_unit} ]]>
+	</queryString>
+	<field name="U_CODE" class="java.lang.String"/>
+	<field name="U_NAME" class="java.lang.String"/>
+	<field name="U_ADDR" class="java.lang.String"/>
+	<field name="U_CST" class="java.lang.String"/>
+	<field name="U_TIN" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="3" y="1" width="392" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{U_ADDR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

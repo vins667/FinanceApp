@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PostDocsList_subreport1" pageWidth="350" pageHeight="700" columnWidth="350" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_excs" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.year,a.company,a.inv_no,reason_code,type_desc,e.excs_inv_no
+ from ei_endors_mast E,ei_docs_delay_Dtls a,ei_Grup_type_dtls b
+where a.year=e.year and
+a.company=e.company and
+a.inv_no=e.inv_no and
+a.reason_code=b.type_code and
+a.grup_code=b.grup_type_code and
+ grup_code='EDR' and
+e.excs_inv_no=$P{p_excs}]]>
+	</queryString>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="REASON_CODE" class="java.lang.String"/>
+	<field name="TYPE_DESC" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<variable name="p_cnt" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{EXCS_INV_NO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="62" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="62" y="0" width="250" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TYPE_DESC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

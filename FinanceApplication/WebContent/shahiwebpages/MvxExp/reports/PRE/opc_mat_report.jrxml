@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="opc_mat_report" language="groovy" pageWidth="610" pageHeight="842" columnWidth="600" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_style" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QRY_GK" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select trim(a.STYLE_CODE) style_code,STYLE_DESC,trim(MMPRGP) mmprgp,nvl(APRV_AMT,0) aprv_amt,nvl(ALOT_AMT,0) alot_amt,nvl(APRV_QTY,0) aprv_qty,nvl(ALOT_QTY,0) alot_qty,nvl(APRV_AMT,0)-nvl(ALOT_AMT,0) BAL_AMT,
+nvl(APRV_QTY,0)-nvl(ALOT_QTY,0) BAL_QTY
+   from  shahiweb.tp_style_mat_mast a, tp_Style_mast b
+where b.style_code(+) = a.style_code and b.cost_date (+)= a.user_id $P!{QRY_GK}
+order by 1,3]]>
+	</queryString>
+	<field name="STYLE_CODE" class="java.lang.String"/>
+	<field name="STYLE_DESC" class="java.lang.String"/>
+	<field name="MMPRGP" class="java.lang.String"/>
+	<field name="APRV_AMT" class="java.math.BigDecimal"/>
+	<field name="ALOT_AMT" class="java.math.BigDecimal"/>
+	<field name="APRV_QTY" class="java.math.BigDecimal"/>
+	<field name="ALOT_QTY" class="java.math.BigDecimal"/>
+	<field name="BAL_AMT" class="java.math.BigDecimal"/>
+	<field name="BAL_QTY" class="java.math.BigDecimal"/>
+	<variable name="pi_qty" class="java.math.BigDecimal" resetType="Group" resetGroup="Style" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="pi_fob" class="java.math.BigDecimal" resetType="Group" resetGroup="Style" calculation="Sum"/>
+	<variable name="err_mst" class="java.lang.String" resetType="Group" resetGroup="Style">
+		<variableExpression><![CDATA[(($F{BAL_QTY}<0 || $F{BAL_AMT}<0) ? "Excess Value/Qnty Shipped .... ":"")]]></variableExpression>
+	</variable>
+	<variable name="sty_qty" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{pi_qty}]]></variableExpression>
+	</variable>
+	<variable name="sty_fob" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{pi_fob}]]></variableExpression>
+	</variable>
+	<group name="Style">
+		<groupExpression><![CDATA[$F{STYLE_CODE}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField>
+					<reportElement x="30" y="0" width="168" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{STYLE_DESC}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="29" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{STYLE_CODE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16">
+				<textField pattern="###0.00">
+					<reportElement x="475" y="1" width="60" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pi_qty}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="535" y="1" width="60" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{pi_fob}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="599" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="355" y="0" width="120" height="13"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{STYLE_CODE}+"  Total : "]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="15" width="599" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="catg">
+		<groupExpression><![CDATA[$F{MMPRGP}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="-1" width="599" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OutHouse Production Material Sale Report]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="21" width="104" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="19" width="120" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="535" y="20" width="65" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="36" width="600" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="52" width="600" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="199" y="20" width="100" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_style}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="37" width="30" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Style]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="37" width="25" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="37" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aprv Amt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="37" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Inv Amt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="37" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bal Amt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="36" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aprv Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="37" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Inv Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="36" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bal Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="37" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="37" width="60" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="535" y="37" width="54" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fob Value]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="0" width="25" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MMPRGP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="55" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APRV_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="115" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ALOT_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="175" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BAL_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="235" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APRV_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="295" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ALOT_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="355" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BAL_QTY}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="415" y="0" width="185" height="14"/>
+				<subreportParameter name="p_catg">
+					<subreportParameterExpression><![CDATA[$F{MMPRGP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_type">
+					<subreportParameterExpression><![CDATA[$F{STYLE_CODE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="iqty" toVariable="pi_qty" calculation="Sum"/>
+				<returnValue subreportVariable="ifob" toVariable="pi_fob" calculation="Sum"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/opc_mat_report_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="30" y="14" width="267" height="12" forecolor="#FF0000"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{err_mst}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch"/>
+	</summary>
+</jasperReport>

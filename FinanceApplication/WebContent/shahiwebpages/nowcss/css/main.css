@@ -1,0 +1,441 @@
+/* 
+    Document   : main
+    Created on : Jan 2, 2016, 1:04:05 PM
+    Author     : Vivek
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body{
+    padding: 0px;
+    margin: 0px;
+}
+.main-mendad{
+    color:red;
+}
+div.centered {
+    position:absolute;
+    width:  250px;
+    height: 120px;
+    left: 50%;
+    top:  50%;
+    z-index: 999;
+    margin-left: -125px; /* 100px/2 = 50px */
+    margin-top:  -100px; /* ditto */
+}
+@media (min-width: 1200px) {
+    .nav-container{
+        width: 1340px;
+    }
+    .body-container{
+        width: 1330px;
+        padding: 0px 5px;
+    }
+    .nav-brand{
+        height: 37px;
+    }
+    .nav-fix{
+        height: 70px;
+    }
+    .nav-menu{
+        height: 70px;
+        padding-top: 10px;
+    }
+    /* .column-middle-padding{
+        padding: 0px 0px;
+    } */
+    .pn-body{
+        min-height: 237px;
+    }
+    .sub-menu > li{
+        width: 120px;
+    }
+}
+@media (min-width: none) {
+    .h5, h5{
+        font-size: 13px;
+    }
+    .calender .week{
+        font-size: 8px !important
+    }
+}
+.nav-fix{
+    /*background-color:#6BB26B;*/
+    /*border-color:#6BB26B;*/
+    /*background-color:#7aa278;
+    border-color:#7aa278;*/
+    /*background-color:#7aac68;
+        border-color:#7aac68;*/
+    background-color:#7aac6f;
+    border-color:#7aac6f;
+    /*opacity:0.8;*/
+    margin-bottom:2px;
+    border-radius:0px;
+}
+.nav-brand{
+    color:#000000 !important;
+}
+.nav-menu >li >a{
+    color:#000000 !important;
+    font-weight: bold !important;
+    font-size:14px;
+}
+.column-padding{
+    padding: 1px 2px; 
+}
+.nav-brand{
+    padding: 5px 15px;
+    font-size: 30px;
+}
+/*.body-container{
+    padding-top: 25px;
+}*/
+.pn-head{
+    /*background-color: #99ee44 !important;*/
+    /*background-color: #92df64 !important; */
+    background-color: #9aef64 !important; 
+    color: #000000 !important;
+    border-top-left-radius: 0px;
+    border-top-right-radius:0px;
+    padding: 10px 9px;
+}
+.pn-body{
+    /*background-color: #77cd66;*/
+    background-color: #7fcf55;
+}
+.panel-warning{
+    margin-bottom: 0px;
+}
+.row-padding{
+    padding: 0px 5px;
+}
+.hr-margin{
+    margin: 10px 0px;
+}
+.paragraph-margin{
+    margin-bottom: 0px;
+}
+/* .pn-margin{
+    padding: 10px 15px;
+} */
+.img-padding{
+    padding: 1px 3px 3px 3px;
+}
+/* .column-att-padding{
+        padding-right: 5px;
+        padding-left:0px;
+} */
+
+/*css for calendar*/
+
+.calender{
+    height:100px important;
+    /* width: 325px;*/
+}
+.calender .week{
+    /*display:inline-flex !important;*/
+    /*min-width:38px !important;*/
+    font-size:12px !important;
+}
+.hr-margin{
+    margin: 5px 0px !important;
+}
+.day-headers-margin{
+    margin-bottom:5px;
+}
+.btn-padding{
+    padding: 2px 3px !important;
+    font-size:12px;
+}
+.verticalLine {
+    border-left: 2px solid #ccccaa;
+    min-height:225px;
+}
+.h4-margin{
+    margin-top: 0px !important;
+    font-weight:bold;
+    text-align: center;
+}
+.date{
+    /*width: 290px !important;*/
+    text-align: center !important;
+}
+.week > p{
+    text-align:center;
+    margin-bottom :0px !important;
+}
+.date .day >a{
+    padding : 0px 0px !important;
+    font-size :12px !important;
+}
+.leavecolumn{
+    padding: 0px 2px 0px 5px;
+}
+.holiday{
+    font-weight:bold;
+}
+.responsive-calendar .controls h5{
+    display: inline;
+    font-weight:bold;
+}
+.leave> p{
+    font-size:12px;
+}
+
+/*calendar*/
+
+/* table */
+.table-row{
+    font-size: 12px;
+}
+.table-row > td{
+    padding: 1px 1px!important;
+    border-top :0px !important;
+}
+.rem-table-row > td{
+    padding: 5px 2px!important;
+    border-top :0px !important;
+}
+.column-poll-padding{
+    padding-top: 3px;
+}
+/*table*/
+.poll-pn-body >p{
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+.radio-margin{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+}
+.panel-body-height{
+    min-height:290px;
+}
+.fontsize{
+    font-size: 12px;
+}
+.submit-btn{
+    float: right;
+    background-color: #66aa66;
+    border: 0px;
+}
+/*nav header*/
+.open > .display-dropdown{
+    background-color:#3f3f3f;
+    display:flex;
+}
+.navbar .nav > li > .dropdown-menu::after {
+    border-bottom: 6px solid #ffffff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    content: "";
+    display: flex ;
+    left: 380px;
+    position: absolute;
+    top: -6px;
+}
+.display-dropdown >li >a{
+    color: #ff6600;
+}
+.sub-menu > li {
+    list-style: outside none none;
+}
+.sub-menu{
+    padding-left: 30px;
+}
+.nav > li > ul{
+    left: -215px;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover{
+    /*background-color:#69a221;*/
+    background-color:#79bd78;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a{
+    color:#ff6600;
+}
+.sub-menu > li >a{
+    color:#ffffff;
+}
+/*nav header*/
+
+.nav-footer{
+    margin-bottom:5px;
+    margin-top:10px;
+}
+
+/* carousel indicator*/
+.caro-control.right{
+    background-image: none;
+    width: 30px;
+}
+.caro-control.left{
+    background-image: none;
+    width: 30px;
+}
+
+/*carousel button*/
+.btn-align{
+    float: right;
+    background-color: #FF6633;
+    border: 0px;
+}
+.navbar {
+    position: relative;
+    min-height: 30px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+.headtitle{
+    font-size: 18px;
+    font-weight: bold;
+}
+.seaechheader{
+    width:100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+/*nav header*/
+.nav-header{
+    background-color:#7ACC52;
+    padding: 0px 0px;
+    border-radius: 0px;
+    border-color:#7ACC52;
+    margin-top:0px;
+    margin-bottom:0px;
+    text-align: center;
+    /* margin-top: 75px;*/
+}
+/*celebration page image */
+.img-padding{
+    padding: 5px 5px;
+    text-align: center;
+}
+.img{
+    margin-right: 10px;
+}
+.button-align{
+    float: right;
+    background-color:#7ACC52;
+    border: 0px;
+}
+.txt-weight{
+    font-weight:bold;
+}
+/*profile image*/
+.img-size{
+    width: 30px; 
+    /* margin-top: 9px;*/
+}
+.dropdown-color{
+    background-color:#3f3f3f;              
+}
+/*shahi title title*/
+.main-title > a{
+    font-family: Arial Black;
+    font-size: 16px;
+    color:darkblue;
+    font-weight: bold;
+}
+.main-title >a:focus ,.main-title >a:hover{
+    text-decoration: none;
+}
+/*button color of calendar*/
+.btn-color{
+    background-color: #66aa66;
+    border-color: #66aa66;
+}
+
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 0.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+    background-color: #f8f8f8;
+}
+
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+    margin-bottom: 10px;
+}
+td{
+    text-align: left;
+    font-size: 13px;
+}
+
+.tdpadding{
+    text-align: left;   
+    font-size: 13px;
+    padding: 4px;
+}
+
+img{
+    border:0;
+    margin-top: -5px;
+}
+
+.table thead>tr>th,.table tbody>tr>th,.table tfoot>tr>th,.table thead>tr>td,.table tbody>tr>td,.table tfoot>tr>td{
+   padding:2px;
+   line-height:1.428571429;
+   vertical-align:top;
+   border-top:1px solid #ddd;
+   font-size: 13px;
+}
+
+.textreadonly{
+    border: solid 1px #677788;
+    background-color:#e6e6e6;
+    height:22px;
+}
+.textsa{
+    border: solid 1px #677788;
+    height:22px;
+}
+.textsm{
+    border: solid 1px #677788;
+    height:22px;
+}
+label, input, button, select, textarea {
+	font-size: 13px;
+	font-weight: normal;
+        height:22px;
+}
+.tdalignright{
+    font-size: 13px;
+    text-align: right;
+}
+.texts{
+    border: solid 1px #677788;
+    height:22px;
+}
+.rootdriver
+{
+    position:absolute;
+    height:400px;
+    width:650px;
+    background-color:#F4F4F4;
+    border:1px solid #2a6afe;
+    padding: 0px;
+    margin: 0px
+} 
+.handle
+{
+    margin:0px;
+    padding:0px;
+    width: 100%;
+    color:white;
+    font-weight: bold;
+    font-size: 12px					
+} 
+input[type=checkbox], input[type=radio] {
+    margin: 0px 0 0;
+    margin-top: 1px \9;
+    line-height: normal;
+    height:16px;
+}

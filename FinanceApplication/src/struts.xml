@@ -1,0 +1,723 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<constant name="struts.multipart.maxSize" value="10485760" />
+	<!-- Configuration for the default package. -->
+
+	<package name="default" extends="struts-default,json-default">
+		<action name="*UtrUpdationYesAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.UtrUpdationYesAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/UTRYesUpdation.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/UTRYesUpdation.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/UTRYesUpdation.jsp
+			</result>
+		</action>
+		<action name="*UtrUpdationHdfcAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.UtrUpdationHdfcAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/UTRHdfcUpdation.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/UTRHdfcUpdation.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/UTRHdfcUpdation.jsp
+			</result>
+		</action>
+		<action name="*UtrUpdationAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.UtrUpdationAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/UTRUpdation.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/UTRUpdation.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/UTRUpdation.jsp
+			</result>
+		</action>
+		<action name="*UtrNoUploadM4Action" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.UtrNoUploadM4Action">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">2097152</param>
+				<param name="allowedTypes">text/plain</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/UtrNoUploadM4.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/UtrNoUploadM4.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/UtrNoUploadM4.jsp
+			</result>
+		</action>
+		<!-- <action name="*UploadAxnAction" method="{1}" class="shahi.Action.grninsp.Uploadtxtfiledetail"> 
+			<interceptor-ref name="fileUpload"> <param name="maximumSize">5000000</param> 
+			</interceptor-ref> <interceptor-ref name="defaultStack"></interceptor-ref> 
+			<result name="success">/shahiwebpages/grninsp/Uploadtxtfiledetail.jsp </result> 
+			<result name="input">/shahiwebpages/grninsp/Uploadtxtfiledetail.jsp </result> 
+			<result name="error">/shahiwebpages/grninsp/Uploadtxtfiledetail.jsp </result> 
+			<result name="new">/shahiwebpages/grninsp/UploadAsntxtfile.jsp </result> 
+			<result name="searchdef">/shahiwebpages/grninsp/Uploadtxtfiledefectdetail.jsp 
+			</result> </action> -->
+		<action name="*HDFTextFileUploadAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.HDFTextFileUploadAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="input">/shahiwebpages/ReportFolder/EPM/HDFTextUploadNew.jsp
+			</result>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/HDFTextUploadNew.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/HDFTextUploadNew.jsp
+			</result>
+		</action>
+		<action name="*YESBankFileUploadAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.YESBankFileUploadAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="input">/shahiwebpages/ReportFolder/EPM/YESBankFileUpload.jsp
+			</result>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/YESBankFileUpload.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/YESBankFileUpload.jsp
+			</result>
+		</action>
+		<action name="*DbkRecdAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DbkRecdAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DbkRecd.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DbkRecd.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DbkRecd.jsp
+			</result>
+		</action>
+
+		<action name="*FundRequestAction" method="{1}"
+			class="shahi.Action.FundReq.FundRequestAction">
+			<result name="input">/shahiwebpages/FundReq/FundRequest.jsp</result>
+			<result name="error">/shahiwebpages/FundReq/FundRequest.jsp</result>
+			<result name="success">/shahiwebpages/FundReq/FundRequest.jsp</result>
+		</action>
+		<action name="FundReqFileUpload" method="attach"
+			class="shahi.Action.FundReq.FundRequestNewAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">2097152</param>
+				<param name="allowedTypes">application/pdf</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="attach">/shahiwebpages/FundReq/AttachFundRequest.jsp
+			</result>
+			<result name="input">/shahiwebpages/FundReq/AttachFundRequest.jsp
+			</result>
+			<result name="error">/shahiwebpages/FundReq/AttachFundRequest.jsp
+			</result>
+			<result name="success">/shahiwebpages/FundReq/AttachFundRequest.jsp
+			</result>
+		</action>
+		<action name="FundReqFileUploadPI" method="attach1"
+			class="shahi.Action.FundReq.FundRequestNewAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">2097152</param>
+				<param name="allowedTypes">application/pdf</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="attach1">/shahiwebpages/FundReq/AttachFundRequestPI.jsp
+			</result>
+			<result name="input">/shahiwebpages/FundReq/AttachFundRequestPI.jsp
+			</result>
+			<result name="error">/shahiwebpages/FundReq/AttachFundRequestPI.jsp
+			</result>
+			<result name="success">/shahiwebpages/FundReq/AttachFundRequestPI.jsp
+			</result>
+		</action>
+		<action name="FundReqFileUploadFIN" method="attach2"
+			class="shahi.Action.FundReq.FundRequestNewAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">2097152</param>
+				<param name="allowedTypes">application/pdf</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="attach2">/shahiwebpages/FundReq/AttachFundRequestFIN.jsp
+			</result>
+			<result name="input">/shahiwebpages/FundReq/AttachFundRequestFIN.jsp
+			</result>
+			<result name="error">/shahiwebpages/FundReq/AttachFundRequestFIN.jsp
+			</result>
+			<result name="success">/shahiwebpages/FundReq/AttachFundRequestFIN.jsp
+			</result>
+		</action>
+		<action name="*FundRequestNew" method="{1}"
+			class="shahi.Action.FundReq.FundRequestNewAction">
+			<result name="input">/shahiwebpages/FundReq/EditFundRequest.jsp
+			</result>
+			<result name="error">/shahiwebpages/FundReq/EditFundRequest.jsp
+			</result>
+			<result name="success">/shahiwebpages/FundReq/FundRequestNew.jsp
+			</result>
+			<result name="view">/shahiwebpages/FundReq/EditFundRequest.jsp
+			</result>
+			<result name="update" type="redirectAction">
+				<param name="actionName">editFundRequestNew</param>
+				<param name="reqno">${reqno}</param>
+				<param name="MESSAGE">${MESSAGE}</param>
+			</result>
+			<result name="attach">/shahiwebpages/FundReq/AttachFundRequest.jsp
+			</result>
+			<result name="attach1">/shahiwebpages/FundReq/AttachFundRequestPI.jsp
+			</result>
+			<result name="attach2">/shahiwebpages/FundReq/AttachFundRequestFIN.jsp
+			</result>
+		</action>
+
+		<action name="*BuyerFundRequest" method="{1}"
+			class="shahi.Action.FundReq.FundRequestNewAction">
+			<result name="buyerlst">/shahiwebpages/FundReq/SupplierList.jsp</result>
+			<result name="podetails">/shahiwebpages/FundReq/PoLists.jsp</result>
+			<result name="podetailsnew">/shahiwebpages/FundReq/FundPoDetails.jsp</result>
+
+			<result name="error">/shahiwebpages/FundReq/SupplierList.jsp</result>
+
+		</action>
+
+		<!-- End Fund RequestData Tex Sale -->
+		<action name="*DataTexSaleAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexSaleAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexSale.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexSale.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexSale.jsp
+			</result>
+		</action>
+		<!-- Data Tex Purchase -->
+		<action name="*DataTexPurchaseAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexPurchaseAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexPurchase.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexPurchase.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexPurchase.jsp
+			</result>
+		</action>
+
+
+		<!-- Data Tex Sale Credit -->
+		<action name="*DataTexCreditAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexCreditAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexCredit.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexCredit.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexCredit.jsp
+			</result>
+		</action>
+		<!-- Data Tex Purchase GST -->
+		<action name="*DataTexPurchaseGstAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexPurchaseGstAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstPurchase.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstPurchase.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstPurchase.jsp
+			</result>
+		</action>
+		<!-- Data Tex Sale GST -->
+		<action name="*DataTexSaleGstAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexSaleGstAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstSale.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstSale.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstSale.jsp
+			</result>
+		</action>
+		<!-- Data Tex Sale Credit GST -->
+		<action name="*DataTexCreditGSTAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexCreditGSTAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGSTCredit.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGSTCredit.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGSTCredit.jsp
+			</result>
+		</action>
+
+		<!-- Data Tex Purchase GST (SFL) -->
+		<action name="*DataTexPurchaseGstSflAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexPurchaseGstSflAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstSflPurchase.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstSflPurchase.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstSflPurchase.jsp
+			</result>
+		</action>
+
+	<!-- 	Data Tex Debit Note GST (SFL) -->
+		<action name="*DataTexDebitGstSflAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexDebitGstSflAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstSflDebitNote.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstSflDebitNote.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstSflDebitNote.jsp
+			</result>
+		</action>
+
+		<!-- Data Tex Sale GST (SFL) -->
+		<action name="*DataTexSaleGstSflAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexSaleGstSflAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstSflSale.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstSflSale.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstSflSale.jsp
+			</result>
+		</action>
+
+		<!-- Start search Invoice detail -->
+		<action name="*SearchInvoiceDetail" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.SearchInvoiceDetail">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/SearchInvoiceDetail.jsp
+			</result>
+			<result name="delete">/shahiwebpages/ReportFolder/EPM/SearchInvoiceDetail.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/SearchInvoiceDetail.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/SearchInvoiceDetail.jsp
+			</result>
+		</action>
+		<!-- Start M4 Bill Unapprove -->
+		<action name="*M4BillAprDel" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.M4BillAprDel">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/M4BillAprDel.jsp
+			</result>
+			<result name="delete">/shahiwebpages/ReportFolder/EPM/M4BillAprDel.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/M4BillAprDel.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/M4BillAprDel.jsp
+			</result>
+		</action>
+
+		<action name="*PayrollPaymentsAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollPaymentsAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollPayments.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollPayments.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollPayments.jsp
+			</result>
+		</action>
+
+		<action name="*PayrollPaymentsExecuteBAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollPaymentsExecuteBAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollPaymentsBExecute.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollPaymentsBExecute.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollPaymentsBExecute.jsp
+			</result>
+		</action>
+		<action name="*PayrollPaymentsExecuteAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollPaymentsExecuteAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollPaymentsExecute.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollPaymentsExecute.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollPaymentsExecute.jsp
+			</result>
+		</action>
+		<action name="*PayrollPaymentsAutoExecuteAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollPaymentsAutoExecuteAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollPaymentAutoExecution.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollPaymentAutoExecution.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollPaymentAutoExecution.jsp
+			</result>
+		</action>
+
+		<action name="*PayrollPaymentsBAction" method="{1}" class="shahi.Action.ReportFolder.EPM.PayrollPaymentsBAction"> 
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollBPayments.jsp 
+			</result> <result name="input">/shahiwebpages/ReportFolder/EPM/PayrollBPayments.jsp 
+			</result> <result name="error">/shahiwebpages/ReportFolder/EPM/PayrollBPayments.jsp 
+			</result> </action>
+
+		<action name="*PayrollPaymentsBActionNew" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollPaymentsBActionNew">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollBPaymentsNew.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollBPaymentsNew.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollBPaymentsNew.jsp
+			</result>
+		</action>
+		<action name="*PayrollPaymentsAutoExecuteBAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollPaymentsAutoExecuteBAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollPaymentBAutoExecution.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollPaymentBAutoExecution.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollPaymentBAutoExecution.jsp
+			</result>
+		</action>
+		<action name="*SupplierPaymentUploadAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.SupplierPaymentUploadAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/SupplierPaymentUpload.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/SupplierPaymentUpload.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/SupplierPaymentUpload.jsp
+			</result>
+		</action>
+		<action name="*RefNoAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GnrtrefnoBlrFbadActionNM">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GnrtrefnoBlrFbadNM.jsp
+			</result>
+			<result name="upload">/shahiwebpages/ReportFolder/EPM/GnrtrefnoBlrFbadNM.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/GnrtrefnoBlrFbadNM.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/GnrtrefnoBlrFbadNM.jsp
+			</result>
+			<result name="searchdt">/shahiwebpages/ReportFolder/EPM/GnrtrefdtNM.jsp
+			</result>
+
+		</action>
+		<action name="*RefNoActionIcic" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GnrtrefnoFbadiciciActionNM">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadiciciNM.jsp
+			</result>
+			<result name="upload">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadiciciNM.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadiciciNM.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadiciciNM.jsp
+			</result>
+			<result name="searchdt">/shahiwebpages/ReportFolder/EPM/GnrtrefdticiciNM.jsp
+			</result>
+		</action>
+		<action name="*RefNoActionHdfc" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GnrtrefnoFbadHdfcActionNM">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadHdfcNM.jsp
+			</result>
+			<result name="upload">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadHdfcNM.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadHdfcNM.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadHdfcNM.jsp
+			</result>
+			<result name="searchdt">/shahiwebpages/ReportFolder/EPM/GnrtrefdtHdfcNM.jsp
+			</result>
+		</action>
+		<action name="*RefNoActionHdfcSMANM" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GnrtrefnoSMAHdfcActionNM">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfcNM.jsp
+			</result>
+			<result name="upload">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfcNM.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfcNM.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfcNM.jsp
+			</result>
+			<result name="searchdt">/shahiwebpages/ReportFolder/EPM/GnrtrefdtHdfcNM.jsp
+			</result>
+		</action>
+		<action name="*RefNoActionHdfcSMA" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GnrtrefnoSMAHdfcAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfc.jsp
+			</result>
+			<result name="upload">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfc.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfc.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/GnrtrefnoSMAHdfc.jsp
+			</result>
+			<result name="searchdt">/shahiwebpages/ReportFolder/EPM/Gnrtrefdt.jsp
+			</result>
+		</action>
+		<action name="*RefNoActionYes" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GnrtrefnoFbadYesActionNM">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadYesNM.jsp
+			</result>
+			<result name="upload">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadYesNM.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadYesNM.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/GnrtrefnoFbadYesNM.jsp
+			</result>
+			<result name="searchdt">/shahiwebpages/ReportFolder/EPM/Gnrtrefdt.jsp
+			</result>
+		</action>
+		<action name="SupplierReportGeneratorDNM4"
+			class="shahi.Action.ReportFolder.EPM.SupplierReportGeneratorDNM4">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/SupplierReportGeneratorDNM4.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/SupplierReportGeneratorDNM4.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/SupplierReportGeneratorDNM4.jsp
+			</result>
+		</action>
+		<action name="*BankLog" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.BankLogDownload">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/YesLogDel.jsp
+			</result>
+			<result name="HDFC">/shahiwebpages/ReportFolder/EPM/HDFCLogDel.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/YesLogDel.jsp
+			</result>
+		</action>
+
+		<!-- FITTUpdationAction -->
+		<action name="*FITTUpdationAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.FITTUpdationAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/FITTUpdation.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/FITTUpdation.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/FITTUpdation.jsp
+			</result>
+		</action>
+		<!-- InvoiceDelete Action -->
+		<action name="*InvoiceDeleteAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.InvoiceDeleteAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/InvoiceDelete.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/InvoiceDelete.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/InvoiceDelete.jsp
+			</result>
+		</action>
+		<!-- InvoiceDelete Action -->
+		<action name="*FundRequestReversal" method="{1}"
+			class="shahi.Action.FundReq.FundRequestReversal">
+			<result name="input">/shahiwebpages/FundReq/FundRequestReversal.jsp
+			</result>
+			<result name="error">/shahiwebpages/FundReq/FundRequestReversal.jsp
+			</result>
+			<result name="success">/shahiwebpages/FundReq/FundRequestReversal.jsp
+			</result>
+		</action>
+		<!-- Data Tex Voucher Unpost -->
+		<action name="*DataTexVoucherUnpost" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexVoucherUnpost">
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexVoucherUnpost.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexVoucherUnpost.jsp
+			</result>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexVoucherUnpost.jsp
+			</result>
+		</action>
+
+		<!-- Search Cheque Confi -->
+		<action name="*ChequeSearchAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.ChequeSearchAction">
+			<result name="input">/shahiwebpages/ReportFolder/EPM/ChequeSearch.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/ChequeSearch.jsp
+			</result>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/ChequeSearch.jsp
+			</result>
+		</action>
+		<!-- Data Tex Sale -->
+		<action name="*DataTexSaleGstWPDAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexSaleGstWPDAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDSale.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDSale.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDSale.jsp
+			</result>
+		</action>
+		<!-- Data Tex Purchase GST (WPD) -->
+		<action name="*DataTexPurchaseGstWPDAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexPurchaseGstWPDAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDPurchase.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDPurchase.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDPurchase.jsp
+			</result>
+		</action>
+		<!-- Data Tex Debit Note GST (WPD) -->
+		<action name="*DataTexDebitGstWPDAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexDebitGstWPDAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDDebitNote.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDDebitNote.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGstWPDDebitNote.jsp
+			</result>
+		</action>
+		<!-- Data Tex Sale Credit GST -->
+		<action name="*DataTexCreditGSTWPDAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.DataTexCreditGSTWPDAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/DataTexGSTWPDCredit.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/DataTexGSTWPDCredit.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/DataTexGSTWPDCredit.jsp
+			</result>
+		</action>
+		<!-- Data Tex Sale Credit GST -->
+		<action name="*MovexServerFileUploadAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.MovexServerFileUploadAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/shahiwebpages/ReportFolder/EPM/MovexServerFileUpload.jsp
+			</result>
+			<result name="input">/shahiwebpages/ReportFolder/EPM/MovexServerFileUpload.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/MovexServerFileUpload.jsp
+			</result>
+		</action>
+		<!-- Payroll Cheques Config -->
+		<action name="*PayrollChequesSearchAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.PayrollChequesSearchAction">
+			<result name="input">/shahiwebpages/ReportFolder/EPM/PayrollChequeSearch.jsp
+			</result>
+			<result name="error">/shahiwebpages/ReportFolder/EPM/PayrollChequeSearch.jsp
+			</result>
+			<result name="success">/shahiwebpages/ReportFolder/EPM/PayrollChequeSearch.jsp</result>
+		</action>
+		<action name="populateFileTypeAjaxAction" method="populateFileType" class="shahi.Action.ReportFolder.EPM.ajax.AjaxAction">
+			<result type="json">
+				<param name="root">fileList</param>
+			</result>
+		</action>
+		<action name="populateDivisionAjaxAction" method="populateDivision" class="shahi.Action.ReportFolder.EPM.ajax.AjaxAction">
+			<result type="json">
+				<param name="root">divisionList</param>
+			</result>
+		</action>
+		<action name="populateYearAjaxAction" method="populateYear" class="shahi.Action.ReportFolder.EPM.ajax.AjaxAction">
+			<result type="json">
+				<param name="root">yearList</param>
+			</result>
+		</action>
+		<action name="populateVoucherTypeAjaxAction" method="populateVoucherType" class="shahi.Action.ReportFolder.EPM.ajax.AjaxAction">
+			<result type="json">
+				<param name="root">voucherTypeList</param>
+			</result>
+		</action>
+		<action name="searchVendorAjaxAction" method="searchVendor" class="shahi.Action.ReportFolder.EPM.ajax.AjaxAction">
+			<result type="json">
+				<param name="root">vendorList</param>
+			</result>
+		</action>	
+		<action name="*ShippingBillAction" method="{1}" class="shahi.Action.ReportFolder.EPM.ShippingBillAction">
+			<result name="success">/shahiwebpages/ReportFolder/EPM/ShippingBillCorrection.jsp</result>
+		</action>
+		<!-- GST Recounciliation Config  -->
+		<action name="*GSTReconciliationAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.GSTReconciliationAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GSTReconciliation.jsp
+			</result>
+			
+			<result name="GSTRECON">/shahiwebpages/ReportFolder/EPM/GSTReconciliationCal.jsp
+			</result>
+			<result name="ADJUST">/shahiwebpages/ReportFolder/EPM/GSTReconciliationAdjustment.jsp
+			</result>
+		</action>
+		<action name="*BankGSTRefundAction" method="{1}"
+			class="shahi.Action.ReportFolder.EPM.BankGSTRefundAction">
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">5000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<result name="success">/shahiwebpages/ReportFolder/EPM/GSTReconciliation.jsp
+			</result>
+			
+			<result name="GSTRECON">/shahiwebpages/ReportFolder/EPM/GSTReconciliationCal.jsp
+			</result>
+			<result name="ADJUST">/shahiwebpages/ReportFolder/EPM/GSTReconciliationAdjustment.jsp
+			</result>
+		</action>
+		<action name="*AjaxPopulateGSTN" method="{1}" class="shahi.Action.ReportFolder.EPM.GSTReconciliationAction">
+		   <result type="json">
+                <param name="root">gstnList</param>
+            </result>
+		</action>
+		<action name="*CashInvoiceEntryAction" method="{1}"
+			class="shahi.Action.cashbill.CashInvoiceEntryAction">
+			<result name="success">/shahiwebpages/cashinvoice/CashInvoiceQuery.jsp
+			</result>
+			<result name="input">/shahiwebpages/cashinvoice/CashInvoiceQuery.jsp
+			</result>
+			<result name="error">/shahiwebpages/cashinvoice/CashInvoiceQuery.jsp
+			</result>
+			<result name="newpage">/shahiwebpages/cashinvoice/CashInvoiceEntry.jsp
+			</result>
+			<result name="sup">/shahiwebpages/cashinvoice/CashInvoiceSupplier.jsp
+			</result>
+			<result name="hsnsearch">/shahiwebpages/cashinvoice/CashSearchHSN.jsp
+			</result>
+		</action>
+		<action name="*CashInvoiceAjaxAction" method="{1}"
+			class="shahi.Action.cashbill.CashInvoiceEntryAction">
+			<result type="json">
+				<param name="excludeNullProperties">true</param>
+				<param name="encoding">UTF-8</param>
+				<param name="noCache">true</param>
+			</result>
+		</action>
+		<action name="*PaymentTrackerAction" method="{1}" class="shahi.Action.PayTracker.PaymentTrackerAction">
+		   <result name="success">/shahiwebpages/PayTracker/PaymentTracker.jsp</result>
+		   <result name="DATATEX">/shahiwebpages/PayTracker/DatatexPaymentTracker.jsp</result>
+		</action>
+		<action name="*CustomerTextFileGeneration" method="{1}" class="shahi.Action.ReportFolder.EPM.CustomerTextFileGeneration">
+		   <result name="success">/shahiwebpages/ReportFolder/EPM/CustomerTextFileGeneration.jsp</result>
+		   <result name="DATATEX">/shahiwebpages/ReportFolder/EPM/CustomerTextFileGeneration.jsp</result>
+		</action>
+		
+		<action name="*UTRNOUpdation" method="{1}" class="shahi.Action.FundReq.UTRNOUpdationAction">
+			<result name="input">/shahiwebpages/FundReq/UTRNOUpdation.jsp
+			</result>
+			<result name="save">/shahiwebpages/FundReq/UTRNOUpdation.jsp
+			</result>
+			<result name="success">/shahiwebpages/FundReq/UTRNOUpdation.jsp
+			</result>
+		</action>
+		
+		<action name="validateVoucherAjaxAction" method="validateVoucher" class="shahi.Action.FundReq.UTRNOUpdationAction">
+			<result type="json">
+				<param name="excludeNullProperties">true</param>
+				<param name="encoding">UTF-8</param>
+				<param name="noCache">true</param>
+			</result>
+		</action>
+	</package>
+</struts>

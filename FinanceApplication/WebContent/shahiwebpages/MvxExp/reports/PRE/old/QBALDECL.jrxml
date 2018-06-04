@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QBALDECL" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="27"/>
+	<parameter name="p_inv" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\SHAHIPROJECT\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.year,a.company,a.inv_no,decl_text from ei_licence_decl a,ei_endors_mast b
+where a.year=b.year and a.company=b.company and a.inv_no=b.inv_no and
+b.excs_inv_no=$P{p_inv}]]>
+	</queryString>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="DECL_TEXT" class="java.lang.String"/>
+	<variable name="lic_list" class="java.lang.String">
+		<variableExpression><![CDATA[$F{DECL_TEXT}+" (Name of the Licensing authority)"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="98" y="17" width="348" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SHIPMENT UNDER QUANTITY BASED DEEC SCHEME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="69" width="99" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Annexure-A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="86" width="127" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[P.N.No. 19 Dt 31.01.95  ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="2" width="434" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[I/We SHAHI EXPORTS PVT. LTD.  (name of the exporter) do hereby declare as follows : ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="41" y="0" width="494" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{lic_list}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="0" width="21" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[(A) ]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="195" y="30" width="100" height="22"/>
+				<staticText>
+					<reportElement x="37" y="2" width="21" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[OR]]></text>
+				</staticText>
+			</frame>
+		</band>
+		<band height="393">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="14" y="0" width="514" height="41"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[I/We request for registration of the shipping bill in anticipation of the grant of a Quantity based Advance Licence for which we have already applied vide our application No._______________Dt._____________ from the
+____________________________________________(Name of Authority) ]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="195" y="91" width="100" height="22"/>
+				<staticText>
+					<reportElement x="37" y="3" width="21" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[OR]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="14" y="57" width="521" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[(B)  I/We am/are not claiming not shall claim drawback under section 74 of the Customs Act,1962.       ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="79" width="521" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[(C)  I/We am/are not claiming not shall claim any drawback under Customs and Central Excise Duties Drawback Rules 1971.  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="118" width="501" height="23"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[I/We am /are claiming refund/rebate under Customs and Central Excise Duties Drawback Rules 1971 of only Central Excise duties
+pain on inputs, not allowed imports under the DEEC.    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="153" width="541" height="30"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[(D) That the export goods have been manufactured without availing facility of input stage credit under rules 56A-57A of
+       Central Excise Rules, 1944 in respect of material allowed import under DEEC    ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="210" width="521" height="43"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[That the export have been  manufactured by availing facility of input stage credit under rule 56A/57A Central Excise Rules,
+1944 in respect of materials allowed import under the DEEC and that we shall not seek transfer of the licence and the DEEC.
+The materials imported duty free shall be used in the same factory in which export goods are manufactured.   ]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="195" y="183" width="100" height="22"/>
+				<staticText>
+					<reportElement x="37" y="3" width="21" height="16"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[OR]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="15" y="270" width="521" height="27"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[That the Export goods have not been manufactured by availing Procedure under rule 191A/191B (as in force immediately
+before 1st October, 1994 Rules 12 (1)(b) or 13 (1)(b) of Central Excise Rules, 1944.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="309" width="521" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[That following materials have been used for manufacture of goods covered under this shipment, namely:-              ]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="333" width="555" height="50"/>
+				<subreportParameter name="p_company">
+					<subreportParameterExpression><![CDATA[$F{COMPANY}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_inv_no">
+					<subreportParameterExpression><![CDATA[$F{INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_year">
+					<subreportParameterExpression><![CDATA[$F{YEAR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/QBALDECL_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="177" splitType="Stretch">
+			<staticText>
+				<reportElement x="409" y="49" width="127" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE OF EXPORTER ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="23" width="44" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice # ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="58" y="23" width="100" height="17"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_inv}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="64" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="14" y="49" width="196" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[* ( Strike out inapplicable portions)  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="80" width="196" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[For use by the Customs Authorities ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="119" width="196" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Name and Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="151" width="196" height="26"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Of  Customs Officer________________________]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,166 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+   
+
+    <package name="POST" extends="struts-default">
+
+        <action name="*POSTAJAX" method="{1}" class="shahi.Action.MvxExp.POST.PostAjaxAction">
+            <result type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">inputStream</param>
+            </result> 
+        </action>
+         
+        <action name="INVDISCUPD"  class="shahi.Action.MvxExp.POST.InvDiscUpdAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/InvDiscUpd.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/InvDiscUpd.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/InvDiscUpd.jsp</result>
+        </action> 
+        
+             
+        <action name="FOLDERUPD"  class="shahi.Action.MvxExp.POST.FolderUpdAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/FolderUpd.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/FolderUpd.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/FolderUpd.jsp</result>
+        </action> 
+        
+        <action name="*FINTERMUPD" method="{1}"  class="shahi.Action.MvxExp.POST.FinTermMergeAction">
+            <result name="success">/shahiwebpages/MvxExp/POST/FinTermMerge.jsp</result>
+            <result name="fsrch">/shahiwebpages/MvxExp/POST/FinTermMerge.jsp</result>
+            <result name="ssrch">/shahiwebpages/MvxExp/POST/FinTermMerge.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/POST/FinTermMerge.jsp</result>
+           
+        </action>
+        
+        <action name="*POSTSHIPMENT" method="{1}" class="shahi.Action.MvxExp.POST.PostShipmentEntryAction">
+            <result name="success">/shahiwebpages/MvxExp/POST/PostShipmentEntryView.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/POST/PostShipmentEntry.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/PostShipmentEntry.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/POST/PostShipmentEntry.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/POST/PostShipmentEntry.jsp</result>
+            <result name="invsrch">/shahiwebpages/MvxExp/POST/invoicesearch.jsp</result>
+            <result name="LCsearch">/shahiwebpages/MvxExp/POST/LCsearch.jsp</result>
+            <result name="bck">/shahiwebpages/MvxExp/POST/PostShipmentEntryView.jsp</result>
+            <result name="prnt">/shahiwebpages/MvxExp/POST/PostShipmentEntryView.jsp</result>
+            <result name="srch">/shahiwebpages/MvxExp/POST/search_PostShippmnt.jsp</result>
+
+        </action>
+         
+        <action name="*FITTENTRY" method="{1}" class="shahi.Action.MvxExp.POST.FITTEntryAction">
+            <result name="success">/shahiwebpages/MvxExp/POST/FittEntryView.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/POST/FittEntryNew.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/POST/FittEntryNew.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/FittEntryView.jsp</result>
+        </action>
+         
+        
+        
+         
+        <action name="*MeisLicenceSale" method="{1}" class="shahi.Action.MvxExp.POST.MeisLicenceSaleAction">
+            <result name="success">/shahiwebpages/MvxExp/POST/MeisLicSaleView.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/POST/MeisSaleInv.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/POST/MeisSaleInv.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/MeisSaleInv.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/POST/MeisSaleInv.jsp</result>
+            <result name="buyersrch">/shahiwebpages/MvxExp/POST/buyersearchGST.jsp</result>
+            <result name="taxsrch">/shahiwebpages/MvxExp/POST/TaxTypeSearchGST.jsp</result> 
+            <result name="licsrch">/shahiwebpages/MvxExp/POST/MeisLicSearch.jsp</result> 
+            <result name="prnt">/shahiwebpages/MvxExp/POST/MeisLicSaleView.jsp</result>
+        </action>
+            
+            
+            
+            
+            
+        <action name="SalesLedger"  class="shahi.Action.MvxExp.Reports.POST.SalesLedgerAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/SalesLedger_REP.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/SalesLedger_REP.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/SalesLedger_REP.jsp</result>
+            <result name="buyersrch">/shahiwebpages/MvxExp/POST/buyersearch.jsp</result>
+        </action>   
+    
+    
+        <action name="*DBKMovexCharge" method="{1}" class="shahi.Action.MvxExp.POST.DBKMovexChargeAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/DBKMovexCharge.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/DBKMovexCharge.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/DBKMovexCharge.jsp</result>
+            <result name="sbview">/shahiwebpages/MvxExp/POST/sbsearch.jsp</result>  
+        </action>  
+    
+        <action name="*PostDocsFin" method="{1}" class="shahi.Action.MvxExp.POST.PostDocsFinAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/PostDocsFin.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/PostDocsFin.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/POST/PostDocsFin.jsp</result>
+            <result name="save">/shahiwebpages/MvxExp/POST/PostDocsFin.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/PostDocsFin.jsp</result>
+            <result name="bankview">/shahiwebpages/MvxExp/POST/banksearch.jsp</result>  
+            <result name="Dbankview">/shahiwebpages/MvxExp/POST/Dbanksearch.jsp</result>  
+            <result name="Awbview">/shahiwebpages/MvxExp/POST/AwbSearch.jsp</result>  
+        </action> 
+        
+        <action name="PUUPDATE"  class="shahi.Action.MvxExp.POST.PortalUpdateAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/PortalUpdation.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/PortalUpdation.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/PortalUpdation.jsp</result>
+        </action> 
+     
+     
+        <action name="*ByrPrtlDlyUpdtionA" method="{1}" class="shahi.Action.MvxExp.POST.ByrPrtlDlyUpdtionAction"> 
+            <result name="success">/shahiwebpages/MvxExp/POST/ByrPrtlDlyUpdtion.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/POST/ByrPrtlDlyUpdtion.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/ByrPrtlDlyUpdtion.jsp</result>
+        </action>
+     
+        <action name="*PendingDocReportA" class="shahi.Action.MvxExp.Reports.POST.PendingDocReportAction" method="{1}">
+            <result name="success">/shahiwebpages/MvxExp/reports/POST/PendingDocReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/POST/PendingDocReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/POST/PendingDocReport.jsp</result>
+        </action>
+     
+        <action name="*FinanceChklstA" method="{1}" class="shahi.Action.MvxExp.Reports.POST.FinanceChklstAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/POST/FinanceChklst.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/POST/FinanceChklst.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/POST/FinanceChklst.jsp</result>
+        </action>
+       
+        <action name="*UpdateSBDateA" method="{1}" class="shahi.Action.MvxExp.POST.UpdateSBDateAction"> 
+            <result name="success">/shahiwebpages/MvxExp/POST/UpdateSBDate.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/UpdateSBDate.jsp</result>
+            <result name="srch">/shahiwebpages/MvxExp/POST/search_UpdateSBHIST.jsp</result>
+            <result name="srch1">/shahiwebpages/MvxExp/POST/search_UpdateSBHIST1.jsp</result>
+            <result name="srch3">/shahiwebpages/MvxExp/POST/search_UpdateSBHIST3.jsp</result>
+            <result name="srch2">/shahiwebpages/MvxExp/POST/search_UpdateSBHIST2.jsp</result>
+            <result name="sbill">/shahiwebpages/MvxExp/POST/search_SBView.jsp</result>
+        </action>
+       
+       
+        <action name="*LcMasterA" method="{1}" class="shahi.Action.MvxExp.POST.LcMasterAction">
+            <result name="success">/shahiwebpages/MvxExp/POST/LC_Master.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/LC_Master.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/LC_Master.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/POST/LC_Master.jsp</result>
+            <result name="clr">/shahiwebpages/MvxExp/POST/LC_Master.jsp</result>
+            <result name="bankview">/shahiwebpages/MvxExp/POST/banksearch.jsp</result>
+            <result name="bankview1">/shahiwebpages/MvxExp/POST/banksearch_Benef.jsp</result>
+            <result name="lcbyr">/shahiwebpages/MvxExp/POST/Lc_buyerserch.jsp</result>
+            <result name="lccrncy">/shahiwebpages/MvxExp/POST/banksearch_crncy.jsp</result>
+            <result name="lcpaytrm">/shahiwebpages/MvxExp/POST/banksearch_paytrm.jsp</result>
+        </action>
+       
+        <action name="PUTRACK"  class="shahi.Action.MvxExp.POST.PortalInvoiceTrackAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/PortalInvoiceTrack.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/PortalInvoiceTrack.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/PortalInvoiceTrack.jsp</result>
+        </action> 
+        <action name="PUQUERY"  class="shahi.Action.MvxExp.POST.PortalInvoiceQueryAction" >
+            <result name="success">/shahiwebpages/MvxExp/POST/PortalInvoiceQuery.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/POST/PortalInvoiceQuery.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/POST/PortalInvoiceQuery.jsp</result>
+        </action> 
+    </package>
+</struts>
+  

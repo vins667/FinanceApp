@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<queryString language="SQL">
+		<![CDATA[SELECT FPLEDG.EPCONO, FPLEDG.EPDIVI, FPLEDG.EPYEA4, FPLEDG.EPVSER, FPLEDG.EPVONO,
+to_char(to_date(to_char(FPLEDG.EPACDT),'yyyymmdd'),'DD/MM/YYYY') EPACDT,
+FPLEDG.EPSINO, to_char(to_date(to_char(FPLEDG.EPIVDT),'yyyymmdd'),'DD/MM/YYYY')EPIVDT,M4_WHLO_MASTER.WHSUNM,
+NVL(M4_WHLO_MASTER.WHADR1||' ',' ')||NVL(M4_WHLO_MASTER.WHADR2||' ',' ')||NVL(M4_WHLO_MASTER.WHADR3||' ',' ')||NVL(M4_WHLO_MASTER.WHADR4||' ',' ') WHADDR,
+M4_WHLO_MASTER.GSTN,CIDADR.SASUNM,CIDADR.SAADRR,CIDADR.SAECAR,CIDADR.SACSCD,CIDADR.ARXLCN,CSYSTS.CKTX40
+FROM PRODBI.FPLEDG FPLEDG, PRODBI.FGLEDG FGLEDG,PRODBI.STAXLN STAXLN,PRODBI.ZSTAXL ZSTAXL,SEPLWEB.M4_WHLO_MASTER@IBM.WORLD@IBM M4_WHLO_MASTER,
+(SELECT SACONO,SASUNO,SAGEOC,SAECAR,SACSCD,max(ARXLCN) ARXLCN,MAX(SASUNM) SASUNM, MAX(NVL(TRIM(SAADR1)||' ','') || NVL(TRIM(SAADR2)||' ','') || NVL(TRIM(SAADR3)||' ','') || NVL(TRIM(SAADR4)||' ','') || NVL(TRIM(SATOWN)||' ','') || NVL(TRIM(SAECAR)||' ','') || NVL(TRIM(SACSCD)||' ','')) SAADRR
+FROM PRODBI.CIDADR, PRODBI.XINADR
+where SACONO=ARCONO AND SASUNO=ARSUNO AND SAADTE=ARADTE AND SAADID=ARADID AND SASTDT=ARSTDT AND
+SACONO='111' GROUP BY SACONO,SASUNO,SAGEOC,SAECAR,SACSCD) CIDADR,MOVEX.CSYSTS CSYSTS
+WHERE
+FPLEDG.EPCONO=FGLEDG.EGCONO AND FPLEDG.EPDIVI=FGLEDG.EGDIVI AND FPLEDG.EPYEA4=FGLEDG.EGYEA4 AND FPLEDG.EPJRNO=FGLEDG.EGJRNO AND
+STAXLN.T4CONO=FPLEDG.EPCONO AND STAXLN.T4DIVI=FPLEDG.EPDIVI AND STAXLN.T4INYR=FPLEDG.EPYEA4 AND STAXLN.T4SUNO=FPLEDG.EPSUNO AND STAXLN.T4SINO=FPLEDG.EPSINO AND
+STAXLN.T4CONO=ZSTAXL.T4CONO AND STAXLN.T4DIVI=ZSTAXL.T4DIVI AND STAXLN.T4SUNO=ZSTAXL.T4SUNO AND STAXLN.T4SINO=ZSTAXL.T4SINO AND STAXLN.T4INYR=ZSTAXL.T4INYR AND STAXLN.T4IVSQ=ZSTAXL.T4IVSQ AND
+STAXLN.T4CONO=M4_WHLO_MASTER.M4CONO AND STAXLN.T4DIVI=M4_WHLO_MASTER.M4DIVI AND STAXLN.T4GEOT=M4_WHLO_MASTER.M4GEOC AND M4_WHLO_MASTER.M4GEOC IS NOT NULL AND M4_WHLO_MASTER.GSTN IS NOT NULL AND
+STAXLN.T4CONO=CIDADR.SACONO AND STAXLN.T4SUNO=CIDADR.SASUNO AND STAXLN.T4GEOF=CIDADR.SAGEOC AND
+CSYSTS.CKCONO(+)='111' AND CIDADR.SAECAR=TRIM(CSYSTS.CKECAR(+)) AND CIDADR.SACSCD=TRIM(CSYSTS.CKCSCD(+)) AND
+FPLEDG.EPCONO= 111 AND FPLEDG.EPDIVI= '100' AND FPLEDG.EPYEA4= 2017 AND FPLEDG.EPVSER= '102' AND
+FPLEDG.EPVONO BETWEEN 7145 AND 7145 AND FGLEDG.EGFEID='AP10'
+order by 4,5]]>
+	</queryString>
+	<field name="EPCONO" class="java.math.BigDecimal"/>
+	<field name="EPDIVI" class="java.lang.String"/>
+	<field name="EPYEA4" class="java.math.BigDecimal"/>
+	<field name="EPVSER" class="java.lang.String"/>
+	<field name="EPVONO" class="java.math.BigDecimal"/>
+	<field name="EPACDT" class="java.lang.String"/>
+	<field name="EPSINO" class="java.lang.String"/>
+	<field name="EPIVDT" class="java.lang.String"/>
+	<field name="WHSUNM" class="java.lang.String"/>
+	<field name="WHADDR" class="java.lang.String"/>
+	<field name="GSTN" class="java.lang.String"/>
+	<field name="SASUNM" class="java.lang.String"/>
+	<field name="SAADRR" class="java.lang.String"/>
+	<field name="SAECAR" class="java.lang.String"/>
+	<field name="SACSCD" class="java.lang.String"/>
+	<field name="ARXLCN" class="java.lang.String"/>
+	<field name="CKTX40" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

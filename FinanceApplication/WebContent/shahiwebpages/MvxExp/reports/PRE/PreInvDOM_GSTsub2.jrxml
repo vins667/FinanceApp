@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PreInvDOM_GSTsub2" pageWidth="832" pageHeight="570" orientation="Landscape" columnWidth="832" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="221"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="UNIT" class="java.lang.String"/>
+	<field name="INV_DESC" class="java.lang.String"/>
+	<field name="INV_QTY" class="java.lang.String"/>
+	<field name="KGS_QTY" class="java.lang.Double"/>
+	<field name="INV_RATE" class="java.lang.Double"/>
+	<field name="FOB_FC" class="java.lang.Double"/>
+	<field name="BCGST_PER" class="java.lang.Double"/>
+	<field name="BSGST_PER" class="java.lang.Double"/>
+	<field name="BIGST_PER" class="java.lang.Double"/>
+	<field name="DISCOUNT" class="java.lang.Double"/>
+	<field name="HSN_CODE" class="java.lang.String"/>
+	<field name="UPCH_AMT" class="java.lang.Double"/>
+	<field name="CGST_AMT" class="java.lang.Double"/>
+	<field name="SGST_AMT" class="java.lang.Double"/>
+	<field name="IGST_AMT" class="java.lang.Double"/>
+	<variable name="cnt_inv" class="java.lang.Number" calculation="Count">
+		<variableExpression><![CDATA[$F{INV_DESC}]]></variableExpression>
+	</variable>
+	<variable name="INVFOB" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{FOB_FC}+$F{UPCH_AMT})-$F{DISCOUNT}]]></variableExpression>
+	</variable>
+	<variable name="inv_igst" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{INVFOB}.doubleValue()*$F{BIGST_PER}.doubleValue()/100]]></variableExpression>
+	</variable>
+	<variable name="inv_cgst" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{INVFOB}.doubleValue()*$F{BCGST_PER}.doubleValue()/100]]></variableExpression>
+	</variable>
+	<variable name="inv_sgst" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{INVFOB}.doubleValue()*$F{BSGST_PER}.doubleValue()/100]]></variableExpression>
+	</variable>
+	<variable name="line_total" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{INVFOB}+ $F{CGST_AMT}+$F{SGST_AMT}+$F{IGST_AMT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="2" width="28" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sl#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="2" width="207" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Description of Goods ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="2" width="39" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[HSN Code (GST)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="2" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="2" width="29" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[UOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="3" width="29" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Rate (INR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="2" width="56" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="2" width="35" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="501" y="2" width="46" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Taxable Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="548" y="1" width="72" height="11"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CGST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="620" y="2" width="71" height="11"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SGST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="691" y="0" width="73" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[IGST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="548" y="14" width="21" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="571" y="14" width="49" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement x="549" y="13" width="215" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="621" y="14" width="21" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="692" y="14" width="21" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="14" width="49" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="715" y="14" width="49" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="25" width="832" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="832" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="469" y="3" width="31" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[UP Charges]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="764" y="2" width="55" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Value]]></text>
+			</staticText>
+			<line>
+				<reportElement x="548" y="1" width="1" height="25"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="621" y="1" width="1" height="25"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="692" y="1" width="1" height="25"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="765" y="1" width="1" height="25"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="831" y="1" width="1" height="25"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="315" y="0" width="29" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="29" y="0" width="207" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_DESC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="275" y="0" width="40" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_QTY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="376" y="0" width="54" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOB_FC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="345" y="0" width="29" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_RATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="2" y="0" width="27" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cnt_inv}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="501" y="0" width="46" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{INVFOB}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="549" y="0" width="21" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BCGST_PER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="624" y="0" width="19" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BSGST_PER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="694" y="0" width="20" height="10"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BIGST_PER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="571" y="0" width="49" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CGST_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="643" y="0" width="48" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SGST_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="713" y="0" width="49" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IGST_AMT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="432" y="0" width="35" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="0" width="39" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HSN_CODE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="469" y="0" width="31" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UPCH_AMT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="764" y="0" width="55" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{line_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

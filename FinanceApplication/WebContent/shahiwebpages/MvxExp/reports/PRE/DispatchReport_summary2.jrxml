@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DispatchReport_summary2" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="date_from" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_to" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="loc" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ch2" class="java.lang.String"/>
+	<parameter name="port" class="java.lang.String"/>
+	<parameter name="ch2addr" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="s_query" class="java.lang.String">
+		<parameterDescription><![CDATA[""]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select b.excs_inv_no,upper(a.vehicle_no) vehicle_no,port,trim(cha) cha,decode(fy_user,null,b.pkgs,b.fy_pkgs) pkgs
+from ei_bos_mast a,ei_Bos_dtls b
+where a.bos_no=b.bos_no and
+a.bos_loct=b.bos_location and
+vch_dep_date between to_date($P{date_from},'dd-mm-yyyy hh24:mi') and to_date($P{date_to},'dd-mm-yyyy hh24:mi') and
+a.bos_loct like $P{loc} and
+nvl(b.dispatch_yn,'Y')<>'N' and
+vch_dep_date is not null and nvl(a.port,'NA')=$P{port} and
+trim(a.cha)=$P{ch2} and trim(a.cha_addr)=$P{ch2addr} $P!{s_query}
+order by 1]]>
+	</queryString>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="VEHICLE_NO" class="java.lang.String"/>
+	<field name="PORT" class="java.lang.String"/>
+	<field name="CHA" class="java.lang.String"/>
+	<field name="PKGS" class="java.math.BigDecimal"/>
+	<variable name="PKGS_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PKGS}]]></variableExpression>
+	</variable>
+	<group name="CHA">
+		<groupExpression><![CDATA[$F{CHA}]]></groupExpression>
+	</group>
+	<group name="PORT">
+		<groupExpression><![CDATA[$F{PORT}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="14">
+			<staticText>
+				<reportElement mode="Opaque" x="112" y="0" width="37" height="14" backcolor="#CCCCCC"/>
+				<box rightPadding="8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ctns #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="234" y="0" width="106" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Po No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="56" y="0" width="56" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="148" y="0" width="86" height="14" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vehicle_No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="56" height="14" backcolor="#CCCCCC"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Summary :-]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="112" y="0" width="37" height="14"/>
+				<box rightPadding="8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PKGS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="56" y="0" width="56" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="147" y="0" width="87" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VEHICLE_NO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="234" y="0" width="106" height="14"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_inv">
+					<subreportParameterExpression><![CDATA[$F{EXCS_INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/DispatchReport_subreport3.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="14">
+			<textField>
+				<reportElement x="112" y="0" width="37" height="14"/>
+				<box rightPadding="8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PKGS_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="112" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total #]]></text>
+			</staticText>
+			<line>
+				<reportElement x="56" y="0" width="91" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

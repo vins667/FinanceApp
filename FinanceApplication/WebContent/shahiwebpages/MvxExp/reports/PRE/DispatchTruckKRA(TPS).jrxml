@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DispatchTruckKRA(TPS)" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="date_from" class="java.lang.String"/>
+	<parameter name="date_to" class="java.lang.String"/>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="loc" class="java.lang.String"/>
+	<parameter name="RPORTORDR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.interunit,a.bos_no,a.bos_date,a.transporter,dispatch_via,a.port,nvl(vehicle_no,'NA') vehicle_no,vch_dep_date,vch_rep_date,
+decode(a.loct_code,'100',nvl(b.tr_hrs_100,0),nvl(b.tr_hrs,0))*60  tr_hrs,decode(a.loct_code,'100',nvl(b.perf_hrs_100,0),nvl(b.perf_hrs,0))*60 perf_hrs,nvl(actual_size,0) actual_size,
+nvl(time_in_min(vch_dep_date,vch_rep_date),0) tm,case when  nvl(time_in_min(vch_dep_date,vch_rep_date),0)<=b.tr_hrs then 1 else 0 end  ontime,
+case when  nvl(time_in_min(vch_dep_date,vch_rep_date),0)<=b.tr_hrs then 0 else 1 end  delay
+from ei_bos_mast a,ei_bos_transit b
+where
+a.port=b.port_code(+) and transporter is not null
+and  trunc(a.vch_dep_date) between $P{date_from} and $P{date_to}
+and a.bos_loct like $P{loc}
+and vehicle_no is not null $P!{p_query}]]>
+	</queryString>
+	<field name="INTERUNIT" class="java.lang.String"/>
+	<field name="BOS_NO" class="java.math.BigDecimal"/>
+	<field name="BOS_DATE" class="java.sql.Timestamp"/>
+	<field name="TRANSPORTER" class="java.lang.String"/>
+	<field name="DISPATCH_VIA" class="java.lang.String"/>
+	<field name="PORT" class="java.lang.String"/>
+	<field name="VEHICLE_NO" class="java.lang.String"/>
+	<field name="VCH_DEP_DATE" class="java.sql.Timestamp"/>
+	<field name="VCH_REP_DATE" class="java.sql.Timestamp"/>
+	<field name="TR_HRS" class="java.math.BigDecimal"/>
+	<field name="PERF_HRS" class="java.math.BigDecimal"/>
+	<field name="ACTUAL_SIZE" class="java.math.BigDecimal"/>
+	<field name="TM" class="java.math.BigDecimal"/>
+	<field name="ONTIME" class="java.math.BigDecimal"/>
+	<field name="DELAY" class="java.math.BigDecimal"/>
+	<variable name="ontme" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONTIME}]]></variableExpression>
+	</variable>
+	<variable name="dely" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{DELAY}]]></variableExpression>
+	</variable>
+	<variable name="nooftrk" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONTIME}+$F{DELAY}]]></variableExpression>
+	</variable>
+	<variable name="ontimeP" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{ontme}*100/$V{nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="delyP" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{dely}*100/$V{nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="tot_nooftrk" class="java.lang.Integer" resetType="Group" resetGroup="PORT" calculation="Sum">
+		<variableExpression><![CDATA[$V{nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="tot_ontme" class="java.lang.Integer" resetType="Group" resetGroup="PORT">
+		<variableExpression><![CDATA[$V{ontme}]]></variableExpression>
+	</variable>
+	<variable name="tot_dely" class="java.lang.Integer" resetType="Group" resetGroup="PORT">
+		<variableExpression><![CDATA[$V{dely}]]></variableExpression>
+	</variable>
+	<variable name="tot_ontimeP" class="java.lang.Integer" resetType="Group" resetGroup="PORT">
+		<variableExpression><![CDATA[$V{tot_ontme}*100/$V{tot_nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="tot_delyP" class="java.lang.Integer" resetType="Group" resetGroup="PORT">
+		<variableExpression><![CDATA[$V{tot_dely}*100/$V{tot_nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="tot_nooftrk_t" class="java.lang.Integer" resetType="Group" resetGroup="TRNASPORTER" calculation="Sum">
+		<variableExpression><![CDATA[$V{nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="tot_ontme_t" class="java.lang.Integer" resetType="Group" resetGroup="TRNASPORTER" calculation="Sum">
+		<variableExpression><![CDATA[$V{ontme}]]></variableExpression>
+	</variable>
+	<variable name="tot_dely_t" class="java.lang.Integer" resetType="Group" resetGroup="TRNASPORTER" calculation="Sum">
+		<variableExpression><![CDATA[$V{dely}]]></variableExpression>
+	</variable>
+	<variable name="tot_ontimeP_t" class="java.lang.Integer" resetType="Group" resetGroup="TRNASPORTER">
+		<variableExpression><![CDATA[$V{tot_ontme_t}*100/$V{tot_nooftrk_t}]]></variableExpression>
+	</variable>
+	<variable name="tot_delyP_t" class="java.lang.Integer" resetType="Group" resetGroup="TRNASPORTER">
+		<variableExpression><![CDATA[$V{tot_dely_t}*100/$V{tot_nooftrk_t}]]></variableExpression>
+	</variable>
+	<variable name="tot_ontme_r" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{ontme}]]></variableExpression>
+	</variable>
+	<variable name="tot_nooftrk_r" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{nooftrk}]]></variableExpression>
+	</variable>
+	<variable name="tot_dely_r" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$V{dely}]]></variableExpression>
+	</variable>
+	<variable name="tot_ontimeP_r" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{tot_ontme_r}*100/$V{tot_nooftrk_r}]]></variableExpression>
+	</variable>
+	<variable name="tot_delyP_r" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{tot_dely_r}*100/$V{tot_nooftrk_r}]]></variableExpression>
+	</variable>
+	<group name="PORT">
+		<groupExpression><![CDATA[$F{PORT}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="237" y="0" width="51" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_nooftrk}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="122" y="0" width="77" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[** Port  Total **]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+					<reportElement x="493" y="0" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_delyP}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="416" y="0" width="77" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_dely}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+					<reportElement x="352" y="0" width="64" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_ontimeP}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="288" y="0" width="64" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_ontme}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="TRNASPORTER">
+		<groupExpression><![CDATA[$F{TRANSPORTER}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<line>
+					<reportElement x="122" y="-1" width="433" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+					<reportElement x="493" y="0" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_delyP_t}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="288" y="0" width="64" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_ontme_t}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="122" y="0" width="77" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[** Transporter Total **]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+					<reportElement x="352" y="0" width="64" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_ontimeP_t}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="237" y="0" width="51" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_nooftrk_t}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="416" y="0" width="77" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tot_dely_t}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dispatch Truck KRA Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="14" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="0" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="335" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dep. Date From : "+$P{date_from}+ "To "+$P{date_to}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="122" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transporter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="122" y="0" width="77" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="199" y="0" width="38" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Size]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="288" y="0" width="64" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OnTime Delivery]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="237" y="0" width="51" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. of Trucks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="352" y="0" width="64" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OnTime  %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="416" y="0" width="77" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay Delivery]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="493" y="0" width="62" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay  %]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="122" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISPATCH_VIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="122" y="0" width="77" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="199" y="0" width="38" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACTUAL_SIZE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="237" y="0" width="51" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{nooftrk}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="288" y="0" width="64" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ontme}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+				<reportElement x="352" y="0" width="64" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ontimeP}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="77" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{dely}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+				<reportElement x="493" y="0" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{delyP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+				<reportElement x="493" y="0" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_delyP_r}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="288" y="0" width="64" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_ontme_r}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="122" y="0" width="77" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Report  Total **]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="###0.0;-###0.0" isBlankWhenNull="true">
+				<reportElement x="352" y="0" width="64" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_ontimeP_r}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="237" y="0" width="51" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_nooftrk_r}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="77" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{tot_dely_r}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

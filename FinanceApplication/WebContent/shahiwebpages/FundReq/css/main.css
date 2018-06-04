@@ -1,0 +1,291 @@
+/* 
+    Document   : main
+    Created on : Mar 22, 2010, 10:41:30 AM
+    Author     : Ranjeet Gautam
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+@CHARSET "UTF-8";
+
+.table-header{
+         font-size:9pt;
+        font-weight:bold;
+        color:white;
+}
+.header{
+    font-size:14pt;background-image:url(image/menu-gradient.jpg);font-weight:bold;
+   color:white;height:20pt;
+
+   border-bottom-style:solid;
+   border-bottom-color:black;
+}
+.hd{font-size:10pt;background-image:url(image/table-gradient.jpg);font-weight:bold;
+   text-align:left;align:left; }
+.label-1{
+margin: 10px;
+color:#006699;
+font-size:9pt;
+font-weight:bold;
+align:right;
+}
+ .cssspan{
+    color:red;
+    font-weight:bold;
+    margin:0pt;
+    font-size:14px;
+    
+}
+.lodingdiv{
+position:absolute;
+font-family:arial;
+font-size:25;
+left:300px;
+top:200px;
+background:#e6e6e6; layer-background-color:blue; height:80pt; width:300pt;
+
+}
+
+.textreadonly{
+        font-family: Arial, Sans-Serif;
+        font-size: 12px;
+        border: solid 1px #677788;
+        background-color:#e6e6e6;
+    }
+
+  .texts{
+        font-family: Arial, Sans-Serif;
+        font-size: 12px;
+        border: solid 1px #677788;
+
+    }
+
+.div1{
+   
+    margin:0pt;
+    border-style:solid;
+    border:1pt;
+    border-color:back;
+    width:300pt;
+     align:center;
+}
+
+
+body {
+font: 12px verdana, arial, helvetica, sans-serif;
+background-color:#FFFFFF;
+ margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+ 
+}
+.body1 {
+font: 10px verdana, arial, helvetica, sans-serif;
+background-color:#FFFFFF;
+ margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+   background-image: url(image/bgmain.jpg);
+   background-attachment:fixed;
+   background-position: left top;
+   background-repeat: repeat-x; 
+
+}
+
+
+table.wwFormTable {
+font: 12px verdana, arial, helvetica, sans-serif;
+border-width: 1px;
+border-color: #030;
+border-style: solid;
+color: #242;
+background-color: #ada;
+width: 30%;
+margin-left:35%;
+margin-right:35%;
+margin-top:15%;
+}
+
+table.wwFormTable th {
+}
+
+table.wwFormTable tr td {
+background-color: #dfd;
+margin: 5px;
+padding: 5px;
+}
+
+.tdLabel {
+/*
+border-width: 1px;
+border-color: #afa;
+border-style: solid;
+*/
+font-weight: bold;
+align: top;
+}
+
+.label {
+}
+
+.errorMessage {
+color: red;
+font-size: 0.8em;
+}
+
+#headerDiv {
+border-style: solid;
+border-width: 1px 1px 0px;
+border-color: black;
+padding: 5px;
+background-color: #7a7;
+/* height: 22px; */
+height: 1.8em;
+/* margin-bottom: 12px; */
+}
+
+#buttonBar {
+border-width: 0px 1px 1px;
+border-style: solid;
+border-color: black;
+color: white;
+margin-bottom: 12px;
+background-color: #7a7;
+height: 1.6em;
+padding: 5px;
+}
+
+#appName {
+color: white;
+font-size: 1.8em;
+}
+
+#pageTitle {
+font-size: 1.4em;
+color: #dfd;
+clear: none;
+}
+
+#appName, #pageTitle {
+float: right;
+}
+
+#menuContainer {
+float: left;
+}
+
+#brandingContainer {
+float: right;
+text-align: right;
+}
+
+
+.submitbutton{
+color:white;
+font-size:9pt;
+font-weight:bold;
+width:55pt;
+height:15pt;
+background-image: url(image/glossyback.gif);
+background-color: transparent;
+border-width: 0px;
+text-align: center;
+cursor: hand;
+
+
+
+}
+
+.submitbutton1{
+color:white;
+font-size:9pt;
+font-weight:bold;
+width:100pt;
+height:15pt;
+background-image: url(image/glossyback.gif);
+background-color: transparent;
+border-width: 0px;
+text-align: center;
+cursor: hand;
+
+
+
+}
+
+
+table.displaytag {
+	border: none;
+	border-collapse: collapse;
+	text-align: left;
+	width: 95%;
+	border-top: 1px solid black;
+}
+table.displaytag thead tr {
+	background-color: #ececec;
+	background: #FFFFCC url(image/table-gradient.jpg) 0 0 repeat-x;
+	font-weight: bold;
+	height: 28px;
+	border-bottom: 1px solid;
+}
+
+table.displaytag tr.even {
+	background-color: white;
+	border-bottom: 1px solid;
+}
+
+table.displaytag tr.triggered {
+
+	color: white;
+	background: #fff url(image/red-gradient.gif) 0 0 repeat-x;
+}
+
+table.displaytag tr.triggered a {
+	color: white;
+}
+
+table.displaytag tr.odd {
+	background-color: white;
+	border-bottom: 1px solid;
+}
+table.displaytag td {
+	border: none;
+	padding: 4px;
+	font-size: 10pt;
+	border-bottom: 1px solid black;
+}
+
+table.displaytag a {
+	font-size: 10pt;
+}
+
+table.displaytag th {
+	padding-left: 5px;
+	padding-right: 15px;
+	font-size: 10pt;
+	border-bottom: 1px solid black;
+}
+
+table.displaytag th.sorted a,table.displaytag th.sortable th.sortable-right a {
+	background-repeat: no-repeat;
+	background-position: right;
+	display: block;
+	width: 100%;
+}
+
+table.displaytag th.sortable-right {
+	text-align: right;
+}
+
+table.displaytag th.order1 a {
+	background-image: url(image/down-arrow.png);
+}
+
+table.displaytag th.order2 a {
+	background-image: url(image/up-arrow.png);
+}

@@ -1,0 +1,415 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+      <!-- Configuration for the default package. -->
+    <package name="pre" extends="struts-default">
+
+
+         <action name="PreInvDetail"   class="shahi.Action.MvxExp.PRE.PreInvQueryAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/PreInvQuery.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/PreInvQuery.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/PreInvQuery.jsp</result>
+         </action>
+        
+          <action name="*AJXPREAction" method="{1}" class="shahi.Action.MvxExp.PRE.PreInvoiceMvxAction">
+		   <result type="stream">
+                      <param name="contentType">text/html</param>
+                      <param name="inputName">inputStream</param>
+                   </result>
+                </action>
+                
+                
+          <action name="sessbillofpAction"  class="shahi.Action.MvxExp.PRE.SessionCallAction">
+         		<result name="success">/shahiwebpages/MvxExp/PRE/BillOfSalesQueryJsp.jsp</result>
+    	 </action>
+        
+        
+          <action name="*BOSAjaxAction" method="{1}" class="shahi.Action.MvxExp.PRE.BillOfSalesAction">
+		            <result type="stream">
+                      <param name="contentType">text/html</param>
+                      <param name="inputName">inputStream</param>
+                   </result>
+           </action>
+          
+          <action name="*billofsalesAction" method="{1}" class="shahi.Action.MvxExp.PRE.BillOfSalesAction">
+             <result name="success">/shahiwebpages/MvxExp/PRE/BillOfSalesQueryJsp.jsp</result>
+             <result name="newpage">/shahiwebpages/MvxExp/PRE/BillOfSalesEntryJsp.jsp</result>
+             <result name="challanpage">/shahiwebpages/MvxExp/PRE/BillOfSalesNew.jsp</result>
+             <result name="fybos">/shahiwebpages/MvxExp/PRE/BillofSaleFyJsp.jsp</result> 
+             <result name="error">/shahiwebpages/MvxExp/PRE/BillOfSalesQueryJsp.jsp</result>
+             <result name="byr">/shahiwebpages/MvxExp/PRE/searchbuyeraddjsp.jsp</result>
+             <result name="agentview">/shahiwebpages/MvxExp/PRE/agentsearch.jsp</result>
+             <result name="unitview">/shahiwebpages/MvxExp/PRE/unitsearch.jsp</result>
+             <result name="port">/shahiwebpages/MvxExp/PRE/Portanddesctnsearch.jsp</result>
+             <result name="shipmode">/shahiwebpages/MvxExp/PRE/Shipmodesearch.jsp</result>
+             <result name="cfs">/shahiwebpages/MvxExp/PRE/Cfssearch.jsp</result>
+             <result name="inv">/shahiwebpages/MvxExp/PRE/invsearch.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/PRE/BillOfSalesQueryJsp.jsp</result>
+        </action>
+
+        <action name="*PREINVMVX"  method="{1}" class="shahi.Action.MvxExp.PRE.PreInvoiceMvxAction" >
+            <result name="newtab">/shahiwebpages/MvxExp/PRE/ShipTabs.jsp</result>
+            <result name="success">/shahiwebpages/MvxExp/PRE/PreInvoiceMvx.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/PreInvoiceMvx.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/PreInvoiceMvx.jsp</result>
+            <result name="csytab">/shahiwebpages/MvxExp/PRE/CsytabSearch.jsp</result>
+            <result name="gruptype">/shahiwebpages/MvxExp/PRE/GruptypeSearch.jsp</result> 
+            <result name="chaview">/shahiwebpages/MvxExp/PRE/chasearch.jsp</result>  
+            <result name="notifyview">/shahiwebpages/MvxExp/PRE/notifysearch.jsp</result>  
+            <result name="unitview">/shahiwebpages/MvxExp/PRE/Manufsearch.jsp</result>
+            <result name="lcview">/shahiwebpages/MvxExp/PRE/lcsearch.jsp</result>
+            <result name="taxcodeview">/shahiwebpages/MvxExp/PRE/taxcodesearch.jsp</result>
+            <result name="preline">/shahiwebpages/MvxExp/PRE/PreInvLineDetails.jsp</result>
+            <result name="prelineprice">/shahiwebpages/MvxExp/PRE/PreInvPriceDetails.jsp</result>
+            <result name="prelicence">/shahiwebpages/MvxExp/PRE/PreInvLicence.jsp</result>
+            <result name="preinvaccr">/shahiwebpages/MvxExp/PRE/PreInvAccr.jsp</result>
+            <result name="catg">/shahiwebpages/MvxExp/PRE/precatgesearch.jsp</result>
+            <result name="predbkslview">/shahiwebpages/MvxExp/PRE/PreInvDbkSearch.jsp</result> 
+            <result name="preroslslview">/shahiwebpages/MvxExp/PRE/PreInvRoslSearch.jsp</result> 
+            <result name="prestrslview">/shahiwebpages/MvxExp/PRE/PreInvStrSearch.jsp</result> 
+            <result name="prelicview">/shahiwebpages/MvxExp/PRE/PreInvLicSearch.jsp</result>
+            <result name="prebeview">/shahiwebpages/MvxExp/PRE/PreInvBESearch.jsp</result>
+            <result name="prehscode">/shahiwebpages/MvxExp/PRE/PreInvHScode.jsp</result>
+            <result name="preexcise">/shahiwebpages/MvxExp/PRE/PreInvExcise.jsp</result>
+            <result name="gstcmpView">/shahiwebpages/MvxExp/PRE/GSTCMPSearch.jsp</result>
+              
+           </action>  
+           
+        <action name="*TOPLAN"  method="{1}" class="shahi.Action.MvxExp.PRE.TOPlanAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/TOPlan.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/TOPlan.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/TOPlan.jsp</result>
+            <result name="NEW">/shahiwebpages/MvxExp/PRE/TOPlanNew.jsp</result> 
+        </action> 
+        <action name="TOPLANSUM" class="shahi.Action.MvxExp.PRE.TOPlanSumAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/TOPlanSum.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/TOPlanSum.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/TOPlanSum.jsp</result>
+        </action> 
+        <action name="INVTRACK"  class="shahi.Action.MvxExp.PRE.InvTrackAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvTrackMast.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvTrackMast.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvTrackMast.jsp</result>
+        </action>
+        <action name="ETDUPDATE"  class="shahi.Action.MvxExp.PRE.ETDupdateAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/ETDupdate.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/ETDupdate.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/ETDupdate.jsp</result>
+        </action> 
+        <action name="INVDELAYREASON"  class="shahi.Action.MvxExp.PRE.InvDelayReasonAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvDelayReason.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvDelayReason.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvDelayReason.jsp</result>
+        </action> 
+        <action name="INVFOLLOWUP"  class="shahi.Action.MvxExp.PRE.InvFollowupAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvFollowup.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvFollowup.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvFollowup.jsp</result>
+        </action> 
+         
+        <action name="INVKGSUPD"  class="shahi.Action.MvxExp.PRE.InvKgsUpdAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvKgsUpd.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvKgsUpd.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvKgsUpd.jsp</result>
+        </action> 
+        
+        <action name="INVKGSUPD"  class="shahi.Action.MvxExp.PRE.InvKgsUpdAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvKgsUpd.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvKgsUpd.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvKgsUpd.jsp</result>
+        </action> 
+             
+        <action name="TOSTATUSREP"  class="shahi.Action.MvxExp.Reports.PRE.TOStatusRepAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/TOSTATUS_REP.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/TOSTATUS_REP.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/TOSTATUS_REP.jsp</result>
+        </action>  
+        <action name="INVGSPPRINT"  class="shahi.Action.MvxExp.Reports.PRE.GSPPrintAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/printGSP.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/printGSP.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/printGSP.jsp</result>
+        </action>  
+        <action name="ETDNOTUPDREP"  class="shahi.Action.MvxExp.Reports.PRE.ETDnotUpdAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/ETDnotUpdRep.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/ETDnotUpdRep.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/ETDnotUpdRep.jsp</result>
+        </action>    
+         
+        <action name="*EPTRACKAJAX" method="{1}" class="shahi.Action.MvxExp.PRE.EPCopyTrackAction">
+		   <result type="stream">
+                      <param name="contentType">text/html</param>
+                      <param name="inputName">inputStream</param>
+                   </result>
+        </action>
+          
+        <action name="*EPTRACK" method="{1}" class="shahi.Action.MvxExp.PRE.EPCopyTrackAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/EPCopyTrack.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/EPCopyTrack.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/EPCopyTrack.jsp</result>
+            <result name="sbview">/shahiwebpages/MvxExp/PRE/sbsearch.jsp</result>  
+        </action>   
+         
+         <action name="SalesReportAction"  class="shahi.Action.MvxExp.Reports.PRE.SalesReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/SalesReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/SalesReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/SalesReport.jsp</result>
+        </action>  
+         <action name="HRSaleReportAction"  class="shahi.Action.MvxExp.Reports.PRE.HRSaleReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/HRSaleReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/HRSaleReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/HRSaleReport.jsp</result>
+        </action> 
+        <action name="EPTrackRep"  class="shahi.Action.MvxExp.Reports.PRE.EPTrackReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/EPTrackReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/EPTrackReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/EPTrackReport.jsp</result>
+        </action>       
+       <action name="EPCopyRep"  class="shahi.Action.MvxExp.Reports.PRE.EPTrackReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/EPCopyReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/EPCopyReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/EPCopyReport.jsp</result>
+        </action>   
+         <action name="EPCopyAct"  class="shahi.Action.MvxExp.PRE.EPCopyActtypeAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/EPCopyActtype.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/EPCopyActtype.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/EPCopyActtype.jsp</result>
+        </action>   
+          <action name="BOSPrintRep"  class="shahi.Action.MvxExp.Reports.PRE.BOSPrintAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/BosPrint.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/BosPrint.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/BosPrint.jsp</result>
+          </action>   
+           <action name="KRAREP"  class="shahi.Action.MvxExp.Reports.PRE.KraRepAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/KraReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/KraReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/KraReport.jsp</result>
+          </action>      
+        
+        <action name="DeecQuery"  class="shahi.Action.MvxExp.PRE.DeecQueryAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/DeecQuery.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/DeecQuery.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/DeecQuery.jsp</result>
+        </action>       
+         
+          <action name="TRLANEMAST"  class="shahi.Action.MvxExp.Transport.TrLaneMastAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TRLaneMaster.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TRLaneMaster.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TRLaneMaster.jsp</result>
+           </action>     
+                          
+           <action name="TRFUELMAST"  class="shahi.Action.MvxExp.Transport.TrFuelAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TrFuelMaster.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TrFuelMaster.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TrFuelMaster.jsp</result>
+           </action> 
+            
+          <action name="TRFUELNEW"  class="shahi.Action.MvxExp.Transport.TrFuelAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TRFuelNew.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TRFuelNew.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TRFuelNew.jsp</result>
+           </action> 
+           
+           <action name="TRCOMPMAST"  class="shahi.Action.MvxExp.Transport.TRCompAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TrCompMast.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TrCompMast.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TrCompMast.jsp</result>
+           </action> 
+           <action name="TRCOMPNEW"  class="shahi.Action.MvxExp.Transport.TRCompAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TRCompNew.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TRCompNew.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TRCompNew.jsp</result>
+           </action> 
+           
+          <action name="TRFRTMAST"  class="shahi.Action.MvxExp.Transport.TrFrtProsAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TrFrtProsMast.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TrFrtProsMast.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TrFrtProsMast.jsp</result>
+          </action>  
+         <action name="TRFRTNEW"  class="shahi.Action.MvxExp.Transport.TrFrtProsAction" >
+             <result name="success">/shahiwebpages/MvxExp/Transport/TrFrtProsNew.jsp</result>
+             <result name="input">/shahiwebpages/MvxExp/Transport/TrFrtProsNew.jsp</result>
+             <result name="error">/shahiwebpages/MvxExp/Transport/TrFrtProsNew.jsp</result>
+          </action> 
+           
+           <action name="PrePostRep"  class="shahi.Action.MvxExp.Reports.PRE.PrePostCheckListAction" >
+                <result name="success">/shahiwebpages/MvxExp/PRE/PrePostCheckList.jsp</result>
+                <result name="input">/shahiwebpages/MvxExp/PRE/PrePostCheckList.jsp</result>
+                <result name="error">/shahiwebpages/MvxExp/PRE/PrePostCheckList.jsp</result> 
+           </action> 
+          <action name="ShipModeReport"  class="shahi.Action.MvxExp.Reports.PRE.ShipModeRepAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/ShipMosRep.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/ShipMosRep.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/ShipMosRep.jsp</result>
+         </action>
+        
+        <action name="BillPendRep"  class="shahi.Action.MvxExp.Reports.PRE.BillPendRepAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/BillPendRep.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/BillPendRep.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/BillPendRep.jsp</result>
+        </action>
+         
+         <action name="BPOQuery"  class="shahi.Action.MvxExp.PRE.BPOQueryAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/BPOQuery.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/BPOQuery.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/BPOQuery.jsp</result>
+        </action> 
+        <action name="InvMovexQry"  class="shahi.Action.MvxExp.PRE.InvMovexQryAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvMovexQry.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvMovexQry.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvMovexQry.jsp</result>
+        </action> 
+         <action name="InvMovexQryNew"  class="shahi.Action.MvxExp.PRE.InvMovexQryNewAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/InvMovexQryNew.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/InvMovexQryNew.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/InvMovexQryNew.jsp</result>
+        </action> 
+        <action name="PreChkList"  class="shahi.Action.MvxExp.Reports.PRE.PreShipChkListAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/PreShipChkList.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/PreShipChkList.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/PreShipChkList.jsp</result>
+        </action> 
+         
+        <action name="ToUpdatedRprt"  class="shahi.Action.MvxExp.Reports.PRE.ToUpdatedAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/ToUpdatedReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/ToUpdatedReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/ToUpdatedReport.jsp</result>
+        </action> 
+        
+       <action name="*ExcisePrePeriodA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.ExcisePrePeriodAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/ExcisePrePeriod.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/ExcisePrePeriod.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/ExcisePrePeriod.jsp</result>
+             <result name="clr">/shahiwebpages/MvxExp/reports/PRE/ExcisePrePeriod.jsp</result>
+        </action>
+          
+        <action name="*BabiesgarmentsInvoiceA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.BabiesgarmentsInvoiceAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/BabiesgarmentsInvoice.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/BabiesgarmentsInvoice.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/BabiesgarmentsInvoice.jsp</result>
+            <result name="clr">/shahiwebpages/MvxExp/reports/PRE/BabiesgarmentsInvoice.jsp</result>
+        </action>   
+        <action name="*DispatchReportA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.DispatchReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/DispatchReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/DispatchReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/DispatchReport.jsp</result>
+        </action>  
+         
+          <action name="*BosHltngChrgsA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.BosHaltingChargesAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/BosHaltingCharges.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/BosHaltingCharges.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/BosHaltingCharges.jsp</result>
+        </action>
+        
+        <action name="*BosCancelReportA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.BosCancelReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/BosCancelReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/BosCancelReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/BosCancelReport.jsp</result>
+        </action>
+         
+        <action name="*DispatchTruckKRA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.DispatchTruckKRAAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/DispatchTruckKRA.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/DispatchTruckKRA.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/DispatchTruckKRA.jsp</result>
+        </action>
+         <action name="*DispatchTruckKRA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.DispatchTruckKRAAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/DispatchTruckKRA.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/DispatchTruckKRA.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/DispatchTruckKRA.jsp</result>
+        </action>
+        
+          <action name="PostQuery"  class="shahi.Action.MvxExp.PRE.PostQueryAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/PostQuery.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/PostQuery.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/PostQuery.jsp</result>
+          </action> 
+        
+         <action name="BosBillBreakup"  class="shahi.Action.MvxExp.PRE.BosBillBreakupAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/BosBillBreakup.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/BosBillBreakup.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/BosBillBreakup.jsp</result>
+          </action> 
+          
+      <action name="*M4BillReportA" method="{1}" class="shahi.Action.MvxExp.Reports.PRE.M4BillReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/PRE/M4BillReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/PRE/M4BillReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/PRE/M4BillReport.jsp</result>
+            <result name="pch">/shahiwebpages/MvxExp/reports/PRE/M4BillReport.jsp</result>
+        </action>
+           
+           
+           
+      <action name="*ScrapSaleInvoiceA" method="{1}" class="shahi.Action.MvxExp.PRE.ScrapSaleInvoiceAction">
+            <result name="success">/shahiwebpages/MvxExp/PRE/ScrapSaleInvoiceView.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/PRE/ScrapSaleInvoice.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/PRE/ScrapSaleInvoice.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/PRE/ScrapSaleInvoice.jsp</result>
+            <result name="buyersrch">/shahiwebpages/MvxExp/PRE/buyersearch.jsp</result>
+            <result name="taxsrch">/shahiwebpages/MvxExp/PRE/TaxTypeSearch.jsp</result>
+            <result name="tcssrch">/shahiwebpages/MvxExp/PRE/TaxTypeSearchTCS_GST.jsp</result>
+            <result name="prnt">/shahiwebpages/MvxExp/PRE/ScrapSaleInvoiceView.jsp</result>
+            
+        </action>
+        
+        
+           <action name="*AjaxAction" method="{1}" class="shahi.Action.MvxExp.PRE.PreAjaxAction">
+            <result type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">inputStream</param>
+            </result> 
+        </action>
+          
+        
+         <action name="*ScrapSaleGSTA" method="{1}" class="shahi.Action.MvxExp.PRE.ScrapSaleGSTAction">
+            <result name="success">/shahiwebpages/MvxExp/PRE/ScrapSaleGSTView.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/PRE/ScrapSaleGST.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/PRE/ScrapSaleGST.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/PRE/ScrapSaleGST.jsp</result>
+            <result name="buyersrch">/shahiwebpages/MvxExp/PRE/buyersearchGST.jsp</result>
+            <result name="taxsrch">/shahiwebpages/MvxExp/PRE/TaxTypeSearchGST.jsp</result>
+            <result name="tcssrch">/shahiwebpages/MvxExp/PRE/TaxTypeSearchTCS.jsp</result>
+            <result name="prnt">/shahiwebpages/MvxExp/PRE/ScrapSaleGSTView.jsp</result> 
+            <result name="error">/shahiwebpages/MvxExp/PRE/ScrapSaleGST.jsp</result>
+        </action>
+       
+        <action name="MultipleInv"  class="shahi.Action.MvxExp.PRE.MultipleInvViewAction" >
+            <result name="success">/shahiwebpages/MvxExp/PRE/MultipleInvView.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/MultipleInvView.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/MultipleInvView.jsp</result>
+         </action> 
+          
+        
+         <action name="*BOSQUERY"  method="{1}" class="shahi.Action.MvxExp.PRE.BOSQueryAction">
+              <result name="success">/shahiwebpages/MvxExp/PRE/BOSQuery.jsp</result>
+              <result name="error">/shahiwebpages/MvxExp/PRE/BOSQuery.jsp</result>
+              <result name="input">/shahiwebpages/MvxExp/PRE/BOSQuery.jsp</result>
+              <result name="fybos">/shahiwebpages/MvxExp/PRE/BOSQueryFy.jsp</result> 
+         </action>
+        
+        <action name="*RexUpdationA" method="{1}" class="shahi.Action.MvxExp.PRE.RexUpdationAction" >
+           <result name="success">/shahiwebpages/MvxExp/PRE/RexUpdation.jsp</result>
+           <result name="input">/shahiwebpages/MvxExp/PRE/RexUpdation.jsp</result>
+           <result name="error">/shahiwebpages/MvxExp/PRE/RexUpdation.jsp</result>
+           <result name="updte">/shahiwebpages/MvxExp/PRE/RexUpdation.jsp</result>
+       </action>
+        
+        
+         <action name="*BuyerPortalMasterA" class="shahi.Action.MvxExp.PRE.BuyerPortalMasterAction" method="{1}">
+                    <result name="success">/shahiwebpages/MvxExp/PRE/BuyerPortalMaster.jsp</result>
+                    <result name="new">/shahiwebpages/MvxExp/PRE/BuyerPortalMasterNew.jsp</result>
+                    <result name="edit">/shahiwebpages/MvxExp/PRE/BuyerPortalMasterNew.jsp</result> 
+                     <result name="save">/shahiwebpages/MvxExp/PRE/BuyerPortalMasterNew.jsp</result>
+        </action>
+        <action name="*ExchangeRateMasterA" class="shahi.Action.MvxExp.PRE.ExchangeRateMasterAction" method="{1}">
+            <result name="success">/shahiwebpages/MvxExp/PRE/ExchangeRateMaster.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/PRE/ExchangeRateMaster.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/PRE/ExchangeRateMaster.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/PRE/ExchangeRateMasterNew.jsp</result>
+         </action>
+        <!-- close Mvxexp -->  
+   
+      
+      
+    </package>
+</struts>

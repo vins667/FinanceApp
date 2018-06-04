@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epcopy_report_subreport1" pageWidth="130" pageHeight="50" orientation="Landscape" columnWidth="130" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_company" class="java.lang.String"/>
+	<parameter name="p_year" class="java.lang.String"/>
+	<parameter name="p_inv_no" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT REF_TYPE||'-'||REF_NO LICNO FROM EI_ENDORS_LC_LIC_DTLS
+where year=$P{p_year} and company=$P{p_company} and inv_no=$P{p_inv_no}]]>
+	</queryString>
+	<field name="LICNO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="0" y="0" width="129" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LICNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

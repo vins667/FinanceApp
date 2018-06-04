@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lclist" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_lcno" class="java.lang.String"/>
+	<parameter name="p_buyer" class="java.lang.String"/>
+	<parameter name="p_loct" class="java.lang.String"/>
+	<parameter name="dat1" class="java.lang.String"/>
+	<parameter name="dat2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select location,to_char(validity,'dd/mm/yyyy') validity,ref_type, ref_no,to_char(ref_date,'dd/mm/yyyy')  ref_date,buyer,currency,value_fc,value_inr
+from ei_lc_lic_mast
+where
+
+location like $P{p_loct}
+and buyer like nvl($P{p_buyer},'%')
+and ref_no like nvl($P{p_lcno},'%')
+and ref_date between  $P{dat1} and $P{dat2}
+order by 1,2]]>
+	</queryString>
+	<field name="LOCATION" class="java.lang.String"/>
+	<field name="VALIDITY" class="java.lang.String"/>
+	<field name="REF_TYPE" class="java.lang.String"/>
+	<field name="REF_NO" class="java.lang.String"/>
+	<field name="REF_DATE" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="CURRENCY" class="java.lang.String"/>
+	<field name="VALUE_FC" class="java.math.BigDecimal"/>
+	<field name="VALUE_INR" class="java.math.BigDecimal"/>
+	<variable name="r_fobfc" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALUE_FC}]]></variableExpression>
+	</variable>
+	<variable name="r_inr" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALUE_INR}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="467" y="22" width="58" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="525" y="22" width="30" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="22" width="94" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="2" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LC List Issue Date :"+$P{dat1}+" To :"+$P{dat2}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="35" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="49" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="94" y="37" width="133" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[LC Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="36" width="60" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[LC Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="37" width="62" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Expiry Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="37" width="32" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Loct]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="287" y="36" width="69" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Buyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="36" width="44" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Crncy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="37" width="67" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Value FC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="37" width="88" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Value INR]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement x="94" y="0" width="133" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REF_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="32" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="0" width="62" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALIDITY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="0" width="60" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REF_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="0" width="69" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="0" width="44" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CURRENCY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="400" y="0" width="67" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALUE_FC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="467" y="0" width="88" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALUE_INR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="39" splitType="Stretch">
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="400" y="3" width="67" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_fobfc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="467" y="3" width="88" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_inr}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="2" width="554" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="4" width="399" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Report Total **  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="16" width="31" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_loct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="94" y="16" width="133" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_lcno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="16" width="69" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_buyer}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

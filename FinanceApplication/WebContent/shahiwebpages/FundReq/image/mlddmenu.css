@@ -1,0 +1,68 @@
+.mlddm {
+	PADDING: 0px; VISIBILITY: hidden; MARGIN: 0px;
+}
+.mlddm LI {
+	PADDING-right: 40px; 
+  DISPLAY: inline; 
+  FLOAT: left; 
+  MARGIN: 0px; 
+  LIST-STYLE-TYPE: none;
+  font: bold 14px comic sans ms;
+ 
+}
+.mlddm LI A {
+	BORDER-WIDTH: 0px 2px 0px 2px ; 
+  PADDING-RIGHT: 2px 10px 2px 10px; 
+  DISPLAY: block;   MARGIN:  0 10px 0 0;
+  COLOR:white; TEXT-ALIGN: center; 
+  BORDER-RIGHT-WIDTH: 2px;   TEXT-DECORATION: none;
+  background: none;  
+}
+
+.mlddm LI A#buttonnohover {
+	BORDER-WIDTH: 0px 2px 0px 2px; 
+  PADDING-RIGHT: 2px 10px 2px 10px; 
+  DISPLAY: block;   MARGIN:  0 10px 0 0;
+  COLOR: White; TEXT-ALIGN: center;  TEXT-DECORATION: none;
+}
+.mlddm LI A:hover {
+	BORDER-WIDTH: 0px 2px 0px 2px; 
+  color: blue;
+}
+.mlddm LI A#buttonhover {
+	BORDER-WIDTH: 0px 2px 0px 2px; 
+  BORDER-LEFT-COLOR: #bdee3a; 
+  color: blue;
+}
+.mlddm UL {
+	BORDER-RIGHT: #5970b2 0px solid; 
+  PADDING: 0px;
+  BORDER-TOP: #5970b2 0px solid; 
+  BACKGROUND: #EAEBD8; 
+  VISIBILITY: hidden; MARGIN: 0px; 
+  BORDER-LEFT: #5970b2 0px solid; 
+  BORDER-BOTTOM: #5970b2 0px solid; POSITION: absolute;
+}
+.mlddm UL LI {
+	FLOAT: none;
+  font: 14px arial;
+}
+.mlddm UL LI A {
+	BORDER-WIDTH: 0px 2px 0px 2px; 
+  PADDING: 2px 3px;
+  DISPLAY: block; BACKGROUND: #f2e0e0; 
+  MARGIN: 0px; BORDER-BOTTOM: #ffffff 1px solid; 
+  BORDER-LEFT: #ffffff 1px solid;  BORDER-RIGHT: #ffffff 1px solid; 
+  WIDTH: auto; 
+  color: black;
+  WHITE-SPACE: nowrap; 
+  TEXT-ALIGN: left;  TEXT-DECORATION: none;
+}
+.mlddm UL LI A:hover {
+	BORDER-WIDTH: 0px; 
+  BORDER-LEFT: #ffffff 2px solid; 
+  BORDER-BOTTOM: #ffffff 1px solid; 
+  BORDER-RIGHT: #ffffff 1px solid; 
+  COLOR: Black;
+  font-weight:bold;
+}

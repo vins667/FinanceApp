@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="billpassing" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="TH" fontName="Times New Roman" fontSize="10">
+		<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1"/>
+	</style>
+	<subDataset name="Table Dataset 1"/>
+	<subDataset name="empdesc">
+		<parameter name="usrid" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select  initcap(user_name) user_name from seh_web_users where user_id=$P{usrid}]]>
+		</queryString>
+		<field name="USER_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="invoicedt">
+		<parameter name="bill_sl_no" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select inv_no from  m4_bill_add_master where bill_sl_no=$P{bill_sl_no} order by 1]]>
+		</queryString>
+		<field name="INV_NO" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="submitteduser">
+		<parameter name="FORWARD_USER" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select  initcap(user_name) user_name from seh_web_users where user_id=$P{FORWARD_USER}]]>
+		</queryString>
+		<field name="USER_NAME" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="usrid" class="java.lang.String"/>
+	<parameter name="cno" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.SL_NO,BILL_NO,to_char(BILL_DATE,'dd/mm/yyyy') BILL_DATE,SUPPLIER_CODE,BILL_AMOUNT,GROSS_AMOUNT,
+b.DEPT_DESC dept_desc,IDSUNM ,to_char(a.FORWARD_DATE,'dd/mm/yyyy') FORWARD_DATE,FORWARD_USER,ccconm,ccdivi,
+REPORT_NO,DEBIT_AMOUNT DEBIT_AMOUNT,DEBIT_REASON from m4_bill_master a,
+M4_BILL_DEPT_MASTER b,
+prodbi.cidmas@movex.world@movex c ,
+prodbi.mitwhl@movex.world@movex d,prodbi.cmndiv@movex.world@movex e,
+M4_BILL_DEBIT_DETAIL f
+where a.DEPT_SL_NO=b.SL_NO
+and a.sl_no=BILL_SL_NO(+)
+and bill_whlo=MWWHLO and
+MWCONO='111'
+and mwcono=cccono and mwdivi=ccdivi
+and IDCONO=111 and SUPPLIER_CODE=IDSUNO
+and report_no=$P{cno}
+order by SUPPLIER_CODE,BILL_DATE]]>
+	</queryString>
+	<field name="SL_NO" class="java.math.BigDecimal"/>
+	<field name="BILL_NO" class="java.lang.String"/>
+	<field name="BILL_DATE" class="java.lang.String"/>
+	<field name="SUPPLIER_CODE" class="java.lang.String"/>
+	<field name="BILL_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="GROSS_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="DEPT_DESC" class="java.lang.String"/>
+	<field name="IDSUNM" class="java.lang.String"/>
+	<field name="FORWARD_DATE" class="java.lang.String"/>
+	<field name="FORWARD_USER" class="java.lang.String"/>
+	<field name="CCCONM" class="java.lang.String"/>
+	<field name="CCDIVI" class="java.lang.String"/>
+	<field name="REPORT_NO" class="java.math.BigDecimal"/>
+	<field name="DEBIT_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="DEBIT_REASON" class="java.lang.String"/>
+	<variable name="REPORT_NO_1" class="java.math.BigDecimal" resetType="Page" calculation="First">
+		<variableExpression><![CDATA[$F{REPORT_NO}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.math.BigDecimal" resetType="Group" resetGroup="SUPPLIER_CODE" calculation="Sum">
+		<variableExpression><![CDATA[$F{BILL_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="debittotal" class="java.math.BigDecimal" resetType="Group" resetGroup="SUPPLIER_CODE" calculation="Sum">
+		<variableExpression><![CDATA[$F{DEBIT_AMOUNT}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<group name="SUPPLIER_CODE" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{SUPPLIER_CODE}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement style="TH" x="0" y="3" width="60" height="14"/>
+					<textElement/>
+					<text><![CDATA[Control No :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="0" y="17" width="60" height="14"/>
+					<textElement/>
+					<text><![CDATA[Supplier     :]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="TH" x="60" y="17" width="403" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{SUPPLIER_CODE} +"      "+ $F{IDSUNM}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="TH" x="60" y="3" width="403" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{REPORT_NO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="TH" x="0" y="36" width="143" height="14"/>
+					<box>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="183" y="36" width="120" height="14"/>
+					<box>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Bill No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="303" y="36" width="50" height="14"/>
+					<box>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="353" y="36" width="111" height="14"/>
+					<box>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Value]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="143" y="36" width="40" height="14"/>
+					<box>
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Facility]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="464" y="36" width="121" height="14"/>
+					<box topPadding="1" leftPadding="10" bottomPadding="1" rightPadding="1">
+						<bottomPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[Invoice No]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="102">
+				<textField pattern="###0.00;(###0.00)">
+					<reportElement style="TH" x="353" y="0" width="111" height="14"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{debittotal}==null ? $V{total} : $V{total}.subtract($V{debittotal})]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement key="" x="173" y="80" width="170" height="20"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="empdesc">
+							<datasetParameter name="usrid">
+								<datasetParameterExpression><![CDATA[$P{usrid}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="372">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement style="TH" x="0" y="0" width="372" height="20"/>
+									<textElement>
+										<font size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA["( "+$F{USER_NAME}+" )"]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<staticText>
+					<reportElement style="TH" x="173" y="45" width="170" height="14"/>
+					<textElement/>
+					<text><![CDATA[Req. Received By]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="343" y="45" width="120" height="14"/>
+					<textElement/>
+					<text><![CDATA[Checked By]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="463" y="45" width="120" height="14"/>
+					<textElement/>
+					<text><![CDATA[Audited By]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="TH" x="1" y="45" width="168" height="14"/>
+					<textElement/>
+					<text><![CDATA[Pay. Requested By]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" x="0" y="80" width="168" height="20"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="submitteduser">
+							<datasetParameter name="FORWARD_USER">
+								<datasetParameterExpression><![CDATA[$F{FORWARD_USER}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="167">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement style="TH" x="0" y="0" width="167" height="20"/>
+									<textElement>
+										<font size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA["( "+$F{USER_NAME}+" )"]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+				<componentElement>
+					<reportElement key="" x="343" y="80" width="121" height="20"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="empdesc">
+							<datasetParameter name="usrid">
+								<datasetParameterExpression><![CDATA[$P{usrid}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="372">
+							<jr:detailCell height="20" rowSpan="1">
+								<textField>
+									<reportElement style="TH" x="0" y="0" width="372" height="20"/>
+									<textElement>
+										<font size="10"/>
+									</textElement>
+									<textFieldExpression><![CDATA["( "+$F{USER_NAME}+" )"]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="125" y="25" width="338" height="16"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[BILL CHARGES STATUS]]></text>
+			</staticText>
+			<textField pattern="dd-MMM-yyyy HH.mm.ss">
+				<reportElement style="TH" x="0" y="25" width="125" height="16"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="585" height="25"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CCCONM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TH" x="463" y="25" width="90" height="16"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="TH" x="570" y="25" width="15" height="16"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="TH" x="553" y="25" width="17" height="16"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement style="TH" isPrintRepeatedValues="false" x="0" y="0" width="143" height="14" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEPT_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TH" x="183" y="0" width="120" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BILL_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TH" x="303" y="0" width="50" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BILL_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement style="TH" x="352" y="0" width="111" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BILL_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TH" x="143" y="0" width="40" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CCDIVI}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement key="" x="464" y="0" width="121" height="27"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="invoicedt">
+						<datasetParameter name="bill_sl_no">
+							<datasetParameterExpression><![CDATA[$F{SL_NO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="120">
+						<jr:detailCell height="14" rowSpan="1">
+							<textField>
+								<reportElement style="TH" x="0" y="0" width="120" height="14"/>
+								<box topPadding="1" leftPadding="10" bottomPadding="1" rightPadding="1"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{INV_NO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField pattern="###0.00;(-###0.00)" isBlankWhenNull="true">
+				<reportElement style="TH" x="352" y="13" width="111" height="14" isRemoveLineWhenBlank="true"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEBIT_AMOUNT}==null ? "": "- "+$F{DEBIT_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="TH" stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="183" y="14" width="169" height="13" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEBIT_REASON}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

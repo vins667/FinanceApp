@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PreInvExport_IGST_subreport1" language="groovy" pageWidth="230" pageHeight="802" columnWidth="230" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_inv" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  EXCS_INV_NO, substr(hsn_code,1,instr(hsn_code,'-')-1) hsncode,
+nvl(upcharge_per,0) upcharge_per,exp_rate,
+sum(b.qty_endors*price_fc)*exp_rate invamt_INR,
+sum((b.qty_endors*price_fc)*gr_decl_per/100)*EXP_RATE gramt_inr,
+((sum(b.qty_endors*price_fc)-sum((b.qty_endors*(price_fc-nvl(tag_cost,0)))*gr_decl_per/100))*EXP_RATE)*nvl(upcharge_per,0)/100 UPAMT_INR,
+nvl(b.IGST_PER,0) igst
+from ei_endors_mast A,ei_endors_dtls B,ei_exchange_rate_mast c
+where
+a.year=b.year
+and a.company=b.company
+and a.inv_no=b.inv_no
+and a.crncy_code=c.currency
+and nvl(trunc(fwd_custom),a.inv_date) between c.begin_date and c.end_date
+and nvl(b.qty_endors,0)>0 and a.lut_igst='IGST'
+and nvl(surrender_yn,'N')<>'Y' and all_no=$P{p_inv}
+group by excs_inv_no,substr(hsn_code,1,instr(hsn_code,'-')-1),nvl(upcharge_per,0),exp_rate,nvl(b.IGST_PER,0)
+union all
+select  EXCS_INV_NO, '39269069' hsncode,
+nvl(upcharge_per,0) upcharge_per,exp_rate,
+sum(b.qty_endors*(price_misc-nvl(tag_cost,0)))*exp_rate invamt_INR,
+sum((b.qty_endors*(price_misc-nvl(tag_cost,0)))*gr_decl_per/100)*EXP_RATE gramt_inr,
+((sum(b.qty_endors*(price_misc-nvl(tag_cost,0)))-sum((b.qty_endors*(price_misc-nvl(tag_cost,0)))*gr_decl_per/100))*EXP_RATE)*nvl(upcharge_per,0)/100 UPAMT_INR,
+nvl(b.IGST_PER,0) igst
+from ei_endors_mast A,ei_endors_dtls B,ei_exchange_rate_mast c
+where
+a.year=b.year
+and a.company=b.company
+and a.inv_no=b.inv_no
+and a.crncy_code=c.currency and nvl(price_misc,0)>0
+and nvl(trunc(fwd_custom),a.inv_date) between c.begin_date and c.end_date
+and nvl(b.qty_endors,0)>0 and a.lut_igst='IGST'
+and nvl(surrender_yn,'N')<>'Y' and all_no=$P{p_inv}
+group by excs_inv_no,'39269069',nvl(upcharge_per,0),exp_rate,nvl(b.IGST_PER,0)
+union all
+select  EXCS_INV_NO, '85319000' hsncode,
+nvl(upcharge_per,0) upcharge_per,exp_rate,
+sum(b.qty_endors*tag_cost)*exp_rate invamt_INR,
+sum((b.qty_endors*tag_cost)*gr_decl_per/100)*EXP_RATE gramt_inr,
+((sum(b.qty_endors*tag_cost)-sum((b.qty_endors*tag_cost)*gr_decl_per/100))*EXP_RATE)*nvl(upcharge_per,0)/100 UPAMT_INR,
+nvl(b.IGST_PER,0) igst
+from ei_endors_mast A,ei_endors_dtls B,ei_exchange_rate_mast c
+where
+a.year=b.year
+and a.company=b.company
+and a.inv_no=b.inv_no
+and a.crncy_code=c.currency and nvl(tag_cost,0)>0
+and nvl(trunc(fwd_custom),a.inv_date) between c.begin_date and c.end_date
+and nvl(b.qty_endors,0)>0 and a.lut_igst='IGST'
+and nvl(surrender_yn,'N')<>'Y' and all_no=$P{p_inv}
+group by excs_inv_no,'39269069',nvl(upcharge_per,0),exp_rate,nvl(b.IGST_PER,0)]]>
+	</queryString>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="HSNCODE" class="java.lang.String"/>
+	<field name="UPCHARGE_PER" class="java.math.BigDecimal"/>
+	<field name="EXP_RATE" class="java.math.BigDecimal"/>
+	<field name="INVAMT_INR" class="java.math.BigDecimal"/>
+	<field name="GRAMT_INR" class="java.math.BigDecimal"/>
+	<field name="UPAMT_INR" class="java.math.BigDecimal"/>
+	<field name="IGST" class="java.math.BigDecimal"/>
+	<variable name="igst_amt" class="java.lang.Double" resetType="Column">
+		<variableExpression><![CDATA[($F{INVAMT_INR}+$F{UPAMT_INR}-$F{GRAMT_INR})*$F{IGST}/100]]></variableExpression>
+	</variable>
+	<variable name="inv_tax_amt" class="java.lang.Double" resetType="Column">
+		<variableExpression><![CDATA[($F{INVAMT_INR}+$F{UPAMT_INR}-$F{GRAMT_INR})]]></variableExpression>
+	</variable>
+	<variable name="total_tax_amt" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{igst_amt}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="230" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="11" width="230" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="33" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<text><![CDATA[HSN/SAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="1" width="55" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<text><![CDATA[Taxable Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="1" width="26" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<text><![CDATA[IGST %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="1" width="47" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<text><![CDATA[IGST Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="1" width="62" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<text><![CDATA[Total Tax Amount]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="9" splitType="Stretch">
+			<textField pattern="###0.00">
+				<reportElement x="90" y="0" width="27" height="9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IGST}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="121" y="0" width="47" height="9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{igst_amt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="33" height="9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HSNCODE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="33" y="0" width="55" height="9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{inv_tax_amt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="168" y="0" width="62" height="9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{igst_amt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="26" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="230" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="120" y="1" width="48" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Total **]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="92" height="11"/>
+				<textElement>
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tax Amount in Word ]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="12" width="230" height="12"/>
+				<subreportParameter name="p_amt">
+					<subreportParameterExpression><![CDATA[new java.text.DecimalFormat("#.##").format($V{total_tax_amt}.doubleValue())]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameter1">
+					<subreportParameterExpression><![CDATA[new java.text.DecimalFormat("#.##").format($V{total_tax_amt}.doubleValue())]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PreInvExport_IGST_subreport1_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="168" y="1" width="62" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_tax_amt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

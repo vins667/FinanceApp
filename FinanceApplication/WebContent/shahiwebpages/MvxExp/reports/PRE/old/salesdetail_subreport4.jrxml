@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="salesdetail_subreport4" language="groovy" pageWidth="712" pageHeight="802" columnWidth="712" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_invoice" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="basedon" class="java.lang.String"/>
+	<parameter name="s_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select excs_inv_no,co_no,pre_print_no bpo,substr(item_no,1,4) item,
+exports.fun_movex_inrconv115(crncy_code,decode($P{basedon},'TO',t_o_date,awbdate),first_sale) inrconv,
+nvl(price_fc,0) inv_rate, nvl(price_misc,0) misc_rate,
+sum(qty_endors) invqty,sum(qty_endors*(price_fc+nvl(price_misc,0))) fobfc,sum(gr_decl_amt) grdecl,sum(discount_amt) discountamt
+from  ei_endors_mast a,ei_endors_dtls b
+where  a.year=b.year and a.company=b.company and a.inv_no=b.inv_no
+and a.excs_inv_no= $P{p_invoice} $P!{s_query}
+group by excs_inv_no,co_no,pre_print_no,substr(item_no,1,4),t_o_date,crncy_code,awbdate,first_sale,
+nvl(price_fc,0),nvl(price_misc,0)]]>
+	</queryString>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="CO_NO" class="java.lang.String"/>
+	<field name="BPO" class="java.lang.String"/>
+	<field name="ITEM" class="java.lang.String"/>
+	<field name="INRCONV" class="java.math.BigDecimal"/>
+	<field name="INV_RATE" class="java.math.BigDecimal"/>
+	<field name="MISC_RATE" class="java.math.BigDecimal"/>
+	<field name="INVQTY" class="java.math.BigDecimal"/>
+	<field name="FOBFC" class="java.math.BigDecimal"/>
+	<field name="GRDECL" class="java.math.BigDecimal"/>
+	<field name="DISCOUNTAMT" class="java.math.BigDecimal"/>
+	<variable name="fob_inr" class="java.math.BigDecimal" resetType="Column">
+		<variableExpression><![CDATA[$F{FOBFC}*$F{INRCONV}]]></variableExpression>
+	</variable>
+	<variable name="disc_int" class="java.math.BigDecimal" resetType="Column">
+		<variableExpression><![CDATA[$F{DISCOUNTAMT}*$F{INRCONV}]]></variableExpression>
+	</variable>
+	<variable name="grdecl_inr" class="java.math.BigDecimal" resetType="Column">
+		<variableExpression><![CDATA[$F{GRDECL}*$F{INRCONV}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="58" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CO_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="144" y="0" width="32" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="0" width="32" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INVQTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="352" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOBFC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0000">
+				<reportElement x="261" y="0" width="43" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_RATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0000">
+				<reportElement x="304" y="0" width="48" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MISC_RATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{fob_inr}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCOUNTAMT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="592" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRDECL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="532" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{disc_int}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="652" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{grdecl_inr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="176" y="0" width="53" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INRCONV}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="58" y="0" width="86" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BPO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

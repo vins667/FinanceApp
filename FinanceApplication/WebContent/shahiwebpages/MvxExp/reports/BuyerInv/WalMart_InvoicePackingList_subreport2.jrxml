@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WalMart_InvoicePackingList_subreport2" language="groovy" pageWidth="600" pageHeight="80" columnWidth="600" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="ITMNO" class="java.lang.String"/>
+	<field name="BOXNO" class="java.lang.String"/>
+	<field name="PCSBOXNO" class="java.lang.String"/>
+	<field name="NETTOT" class="java.lang.String"/>
+	<field name="GROSTOT" class="java.lang.String"/>
+	<field name="PCST" class="java.lang.String"/>
+	<field name="RATIO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="79" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITMNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="0" width="83" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOXNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="86" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PCSBOXNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="89" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NETTOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="248" y="0" width="88" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GROSTOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="0" width="90" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PCST}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="515" y="0" width="64" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RATIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

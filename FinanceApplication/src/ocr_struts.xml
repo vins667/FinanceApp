@@ -1,0 +1,51 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="ocr" extends="struts-default">  
+        <action name="itemocrsessAction"   class="shahi.Action.CRMAPP.SessionCallAction">
+         <result type="redirect">/shahiwebpages/CRMAPP/getfacilityitemocrAction.action</result>
+    </action>
+     <action name="*itemocrAction"  method="{1}"   class="shahi.Action.CRMAPP.ItemOcrDetailAction">
+         <result name="success">/shahiwebpages/CRMAPP/ItemOcrDetailjsp.jsp</result>
+         <result name="input">/shahiwebpages/CRMAPP/ItemOcrDetailjsp.jsp</result>
+         <result name="error">/shahiwebpages/CRMAPP/ItemOcrDetailjsp.jsp</result>
+    </action>
+    <action name="*itemocrdelAction"  method="{1}"   class="shahi.Action.CRMAPP.ItemOcrClosedDetail">
+	<result name="success">/shahiwebpages/CRMAPP/ItemOcrDelDetail.jsp</result>
+	<result name="input">/shahiwebpages/CRMAPP/ItemOcrDelDetail.jsp</result>
+	<result name="error">/shahiwebpages/CRMAPP/ItemOcrDelDetail.jsp</result>
+	<result name="comm">/shahiwebpages/CRMAPP/ItemOCRComment.jsp</result>	
+        <result name="addinfo">/shahiwebpages/CRMAPP/ItemOCRAddInfo.jsp</result>
+        <result name="userlst">/shahiwebpages/CRMAPP/userlist.jsp</result>
+	<result name="short">/shahiwebpages/CRMAPP/shortsearch.jsp</result>
+    </action>
+
+        <action name="mofasilitylist" class="shahi.Action.MoClose.SessionCallAction" >
+            <result name="error">/shahiwebpages/MoClose/MoHomePage.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/MoHomePage.jsp</result>
+        </action>
+        <action name="mwomatlistActionS" class="shahi.Action.MoClose.mwomatListAction" >
+            <result name="error">/shahiwebpages/MoClose/MoHomePage.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/MoHomePage.jsp</result>
+        </action>
+        <action name="operationlistS" class="shahi.Action.MoClose.OperationListAction" >
+            <result name="error">/shahiwebpages/MoClose/MoHomePage.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/MoHomePage.jsp</result>
+        </action>
+
+       <action name="*ItemOcrQueryDet"  method="{1}"   class="shahi.Action.CRMAPP.ItemOcrQueryDetail">
+            <result name="success">/shahiwebpages/CRMAPP/ItemOcrQueryDetail.jsp</result>
+            <result name="input">/shahiwebpages/CRMAPP/ItemOcrQueryDetail.jsp</result>
+            <result name="error">/shahiwebpages/CRMAPP/ItemOcrQueryDetail.jsp</result>
+            <result name="comm">/shahiwebpages/CRMAPP/ItemOCRComment.jsp</result>    
+                <result name="addinfo">/shahiwebpages/CRMAPP/ItemOCRAddInfo.jsp</result>
+                <result name="userlst">/shahiwebpages/CRMAPP/userlist.jsp</result>
+            <result name="short">/shahiwebpages/CRMAPP/shortsearch.jsp</result>
+       </action>
+ 
+    
+    </package>
+</struts>

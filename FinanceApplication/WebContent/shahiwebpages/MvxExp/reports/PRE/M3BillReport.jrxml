@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="M3BillReport" pageWidth="795" pageHeight="595" orientation="Landscape" columnWidth="755" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="135"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\guddu data\\Projects\\ShahiProject\\sanjeevsir\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dept" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="billtype" class="java.lang.String"/>
+	<parameter name="billsubtype" class="java.lang.String"/>
+	<parameter name="pch" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_from" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_to" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="loc" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  a.type_desc||'-'||a.type_code type,a.sl_no typeslno,b.sub_type_desc||'-'||b.sub_type_code subtype_desc,b.sl_no subtypeslno,b1.product_desc||'-'||
+b1.product_code product_desc,b2.cc_code||'-'||eatx40 unit_Desc,b2.cc_code unit,d.pch,d.product_amount,c.bill_no,c.bill_date,c.supplier_code,d.bill_sl_no
+from shahiweb.m3_bill_type_master a,shahiweb.m3_bill_sub_type_master b, shahiweb.m3_bill_product_master b1,shahiweb.m3_cc_master b2,fchacc b3,
+shahiweb.m3_bill_master c,shahiweb.m3_bill_detail d
+where
+d.type_sl_no=a.sl_no and
+d.sub_type_sl_no=b.sl_no and
+d.PRODUCT_SL_NO=b1.sl_no and
+d.cc_code=b2.sl_no and
+a.dept_sl_no=b2.dept_sl_no and
+b3.eacono=111 and b3.eaaitp=3 and
+b2.cc_code=b3.eaaitm  and
+a.sl_no=b.type_sl_no and
+c.sl_no=d.bill_sl_no and
+c.BILL_WHLO=$P{loc} and
+a.dept_sl_no=$P{dept} and
+trunc(c.forward_date) between $P{date_from} and $P{date_to}
+ $P!{p_query}]]>
+	</queryString>
+	<field name="TYPE" class="java.lang.String"/>
+	<field name="TYPESLNO" class="java.math.BigDecimal"/>
+	<field name="SUBTYPE_DESC" class="java.lang.String"/>
+	<field name="SUBTYPESLNO" class="java.math.BigDecimal"/>
+	<field name="PRODUCT_DESC" class="java.lang.String"/>
+	<field name="UNIT_DESC" class="java.lang.String"/>
+	<field name="UNIT" class="java.lang.String"/>
+	<field name="PCH" class="java.lang.String"/>
+	<field name="PRODUCT_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="BILL_NO" class="java.lang.String"/>
+	<field name="BILL_DATE" class="java.sql.Timestamp"/>
+	<field name="SUPPLIER_CODE" class="java.lang.String"/>
+	<field name="BILL_SL_NO" class="java.math.BigDecimal"/>
+	<variable name="PRODUCT_AMOUNT_1" class="java.math.BigDecimal" resetType="Group" resetGroup="PCH" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="PRODUCT_AMOUNT_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="PRODUCT_AMOUNT_3" class="java.math.BigDecimal" resetType="Group" resetGroup="SUBTYPESLNO" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<group name="SUBTYPESLNO">
+		<groupExpression><![CDATA[$F{SUBTYPESLNO}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="268" y="0" width="100" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[** SubType Total **]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="368" y="0" width="83" height="14"/>
+					<box rightPadding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT_3}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="PCH">
+		<groupExpression><![CDATA[$F{PCH}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" x="368" y="0" width="83" height="14"/>
+					<box rightPadding="2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="268" y="0" width="100" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[** Pch Total **]]></text>
+				</staticText>
+				<line>
+					<reportElement x="268" y="0" width="183" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="20" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="634" y="20" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="714" y="20" width="41" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="20" width="283" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Forward Date from "+$P{date_from}+" to "+$P{date_to}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="20" width="168" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dept : "+$P{dept}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="755" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[M3 Bill Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{loc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="100" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTYPE_DESC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="100" y="0" width="68" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PCH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="168" y="0" width="100" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIT_DESC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="268" y="0" width="100" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCT_DESC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="368" y="0" width="83" height="14" backcolor="#CCCCFF"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCT_AMOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="451" y="0" width="100" height="14" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BILL_NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="551" y="0" width="52" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BILL_DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="603" y="0" width="79" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BUYER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="682" y="0" width="73" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INV NO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="100" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUBTYPE_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="100" y="0" width="68" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PCH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="168" y="0" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UNIT_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="268" y="0" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRODUCT_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="368" y="0" width="83" height="14"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="451" y="0" width="100" height="14"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BILL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="551" y="0" width="52" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BILL_DATE}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="603" y="0" width="152" height="14"/>
+				<subreportParameter name="pch">
+					<subreportParameterExpression><![CDATA[$F{PCH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="billslno">
+					<subreportParameterExpression><![CDATA[$F{BILL_SL_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/M3BillReport_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="268" y="0" width="100" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Report Total **]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="368" y="0" width="83" height="14"/>
+				<box rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

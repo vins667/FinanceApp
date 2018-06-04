@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PendingentryReport_subreport1" language="groovy" pageWidth="350" pageHeight="50" columnWidth="350" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pch1" class="java.lang.String"/>
+	<parameter name="curncy1" class="java.lang.String"/>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_loc" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select ex.COST_CENTRE,a.CURRENCY,count(distinct ex.excs_inv_no) excs_inv_no,sum(a.qty_endors) SHIP_QNTY,
+sum(a.QTY_ENDORS*(price_fc+nvl(price_misc,0))) FOB_AMT
+from ei_endors_dtls a, ei_ENDORS_mast ex where ex.year>2006 and
+a.year=ex.year and a.company=ex.company and a.inv_no=ex.inv_no and
+nvl(surrender_yn,'X')<>'Y' and doc_send is not null and nvl(ex.ship_qty,0)=0  and
+ex.location like $P{p_loc} $P!{p_query}
+group by ex.COST_CENTRE,a.CURRENCY]]>
+	</queryString>
+	<field name="COST_CENTRE" class="java.lang.String"/>
+	<field name="CURRENCY" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="SHIP_QNTY" class="java.math.BigDecimal"/>
+	<field name="FOB_AMT" class="java.math.BigDecimal"/>
+	<variable name="EXCS_INV_NO_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{EXCS_INV_NO}]]></variableExpression>
+	</variable>
+	<variable name="SHIP_QNTY_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SHIP_QNTY}]]></variableExpression>
+	</variable>
+	<variable name="FOB_AMT_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FOB_AMT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15">
+			<line>
+				<reportElement x="0" y="1" width="262" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="14" width="262" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="37" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[PCH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="1" width="31" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Crncy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="68" y="1" width="44" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Inv #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="1" width="66" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Qnty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="184" y="1" width="76" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Fob Amt]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="37" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COST_CENTRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="1" width="31" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CURRENCY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="68" y="1" width="44" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="1" width="66" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIP_QNTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="1" width="81" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOB_AMT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="16">
+			<textField>
+				<reportElement x="68" y="1" width="44" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{EXCS_INV_NO_1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="114" y="1" width="66" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SHIP_QNTY_1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="179" y="1" width="81" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{FOB_AMT_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="68" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Total **]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="14" width="262" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="262" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

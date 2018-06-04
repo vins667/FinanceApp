@@ -1,0 +1,150 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    
+     
+
+    <package name="gvtinc" extends="struts-default">
+        
+          <action name="UploadIOBdbk" class="shahi.Action.MvxExp.GVTINC.UploadIOBdbkAction" >
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param> 
+                <param name="allowedTypes">text/comma-separated-values,text/csv,application/csv,application/excel,application/vnd.ms-excel,application/vnd.msexcel,application/octel-stream</param>
+                   </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref> 
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/UploadIOBdbk.JSP</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/UploadIOBdbk.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/UploadIOBdbk.jsp</result>
+        </action>   
+
+          <action name="UploadDbk" class="shahi.Action.MvxExp.GVTINC.UploadDbkAction" >
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param> 
+                <param name="allowedTypes">text/comma-separated-values,text/csv,application/csv,application/excel,application/vnd.ms-excel,application/vnd.msexcel,application/octel-stream</param>
+                   </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref> 
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/UploadDbk.JSP</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/UploadDbk.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/UploadDbk.jsp</result>
+        </action>   
+
+     <action name="*DbkChqView"  method="{1}" class="shahi.Action.MvxExp.GVTINC.DbkChqViewAction" >
+         <result name="success">/shahiwebpages/MvxExp/GVTINC/DbkChqView1.jsp</result>
+         <result name="input">/shahiwebpages/MvxExp/GVTINC/DbkChqView1.jsp</result>
+         <result name="error">/shahiwebpages/MvxExp/GVTINC/DbkChqView1.jsp</result>
+         <result name="NEW">/shahiwebpages/MvxExp/GVTINC/DbkChqNew1.jsp</result>
+         <result name="updte">/shahiwebpages/MvxExp/GVTINC/DbkChqNew1.jsp</result>
+         <result name="searchsb">/shahiwebpages/MvxExp/GVTINC/SBSearch.jsp</result>
+     </action>
+
+        
+        <action name="*DbkChqInsert"  class="shahi.Action.MvxExp.GVTINC.DbkChqInsertAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/DbkChqInsert.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/DbkChqInsert.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/DbkChqInsert.jsp</result>
+             
+        </action>
+ 
+       <action name="DbkScrollUpdate" class="shahi.Action.MvxExp.GVTINC.DbkScrollUpdateAction" >
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param> 
+                </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/DbkScrollUpdate.JSP</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/DbkScrollUpdate.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/DbkScrollUpdate.jsp</result>
+        </action> 
+
+             <action name="EbrcUpload" class="shahi.Action.MvxExp.GVTINC.EbrcUploadAction" >
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param> 
+               </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/EbrcUpload.JSP</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/EbrcUpload.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/EbrcUpload.jsp</result> 
+        </action> 
+       <action name="EbrcUpdate" class="shahi.Action.MvxExp.GVTINC.EbrcUpdateAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/EbrcUpdate.JSP</result> 
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/EbrcUpdate.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/EbrcUpdate.jsp</result>
+        </action>
+
+         <action name="DBKOBJ" class="shahi.Action.MvxExp.GVTINC.DbkObjectionAction" >
+             <result name="success">/shahiwebpages/MvxExp/GVTINC/DBKObjection.JSP</result>
+             <result name="input">/shahiwebpages/MvxExp/GVTINC/DBKObjection.jsp</result> 
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/DBKObjection.jsp</result> 
+        </action> 
+       <action name="DBKRATE" class="shahi.Action.MvxExp.GVTINC.DbkrateAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/DBKRATE.JSP</result>
+             <result name="input">/shahiwebpages/MvxExp/GVTINC/DBKRATE.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/DBKRATE.jsp</result> 
+        </action>  
+
+        <action name="SiibRep"  class="shahi.Action.MvxExp.Reports.GVTINC.Siib_ReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/SIIB_REPORT.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/SIIB_REPORT.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/SIIB_REPORT.jsp</result>
+        </action>
+
+       <action name="GvtScheme"  class="shahi.Action.MvxExp.GVTINC.GvtIncAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/GvtIncView.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/GvtIncView.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/GvtIncView.jsp</result>
+        </action>
+
+        <action name="MeisEntitlementSummaryA"  class="shahi.Action.MvxExp.Reports.GVTINC.MeisEntitlementSummaryAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/GVTINC/MeisEntitlementSummary.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/GVTINC/MeisEntitlementSummary.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/GVTINC/MeisEntitlementSummary.jsp</result>
+        </action>
+        <action name="MEISDETAIL"  class="shahi.Action.MvxExp.Reports.GVTINC.MEISDetailAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/GVTINC/MEISDetail.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/GVTINC/MEISDetail.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/GVTINC/MEISDetail.jsp</result>
+        </action>
+      <action name="DBKRATEVIEW"  class="shahi.Action.MvxExp.GVTINC.DbkRateViewAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/DbkRateView.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/DbkRateView.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/DbkRateView.jsp</result>
+        </action>
+        
+        <action name="*MEISAPP"  method="{1}" class="shahi.Action.MvxExp.GVTINC.MEISAPPAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/MeisAppView.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/MeisAppNew.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/GVTINC/MeisAppNew.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/GVTINC/MeisAppNew.jsp</result>
+            <result name="SBview">/shahiwebpages/MvxExp/GVTINC/SBSearchMEIS.jsp</result>  
+        </action>
+        <action name="*MEISBRC"  method="{1}" class="shahi.Action.MvxExp.GVTINC.MEISBRCAction" >
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/MEISBRC.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/MEISBRC.jsp</result>
+            <result name="SBview">/shahiwebpages/MvxExp/GVTINC/SBSearchMEIS.jsp</result>  
+        </action> 
+            
+            
+       <action name="*DBKREFUND" method="{1}" class="shahi.Action.MvxExp.GVTINC.DBKREFUNDAction">
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/DBKRefundView.jsp</result>
+            <result name="edit">/shahiwebpages/MvxExp/GVTINC/DBKRefundEntry.jsp</result>
+            <result name="new">/shahiwebpages/MvxExp/GVTINC/DBKRefundEntry.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/DBKRefundView.jsp</result>
+            <result name="save">/shahiwebpages/MvxExp/GVTINC/DBKRefundEntry.jsp</result>
+            <result name="SBview">/shahiwebpages/MvxExp/GVTINC/SBSearchDBK.jsp</result>  
+        </action>     
+         
+       <action name="DbkOutStandingRprt"  class="shahi.Action.MvxExp.Reports.GVTINC.DbkOutStandingReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/GVTINC/DbkOutStandingReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/GVTINC/DbkOutStandingReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/GVTINC/DbkOutStandingReport.jsp</result>
+        </action>   
+       <action name="RelizationPendingRprt"  class="shahi.Action.MvxExp.Reports.GVTINC.RelizationPendingReportAction" >
+            <result name="success">/shahiwebpages/MvxExp/reports/GVTINC/RelizationPendingReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/reports/GVTINC/RelizationPendingReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/reports/GVTINC/RelizationPendingReport.jsp</result>
+        </action>
+        
+         
+    </package> 
+</struts>

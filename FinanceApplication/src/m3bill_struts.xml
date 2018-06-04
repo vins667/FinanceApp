@@ -1,0 +1,144 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="m3bill" extends="struts-default">  
+       <action name="mbillsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/billmastquery.jsp</result>
+        </action>  
+        <action name="*mbillAction" method="{1}"   class="shahi.Action.M3bill.M3billAction">
+            <result name="success">/shahiwebpages/M3Bill/billmastquery.jsp</result>
+            <result name="input">/shahiwebpages/M3Bill/billmastquery.jsp</result>
+            <result name="error">/shahiwebpages/M3Bill/billmastquery.jsp</result>
+            <result name="newpage">/shahiwebpages/M3Bill/billmast.jsp</result>
+            <result name="newtypepage">/shahiwebpages/M3Bill/billtypemast.jsp</result>
+            <result name="searchpage">/shahiwebpages/M3Bill/searchpage.jsp</result>
+            <result name="subtypepage">/shahiwebpages/M3Bill/billsubtypemast.jsp</result>
+            <result name="prodtypepage">/shahiwebpages/M3Bill/billproductmast.jsp</result>
+              
+                  
+        </action> 
+
+ <action name="mbillviewsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/viewbillmastquery.jsp</result>
+        </action>
+        
+         <action name="mbillentsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/entbillmastquery.jsp</result>
+        </action> 
+         <action name="*mbillentAction" method="{1}"   class="shahi.Action.M3bill.M3BillEntryAction">
+          
+            <result name="success">/shahiwebpages/M3Bill/entbillmastquery.jsp</result>
+            <result name="input">/shahiwebpages/M3Bill/entbillmastquery.jsp</result>
+            <result name="error">/shahiwebpages/M3Bill/entbillmastquery.jsp</result>
+            <result name="newpage">/shahiwebpages/M3Bill/billentrymast.jsp</result>
+             <result name="newccpage">/shahiwebpages/M3Bill/billentrycc.jsp</result>
+            <result name="newtypepage">/shahiwebpages/M3Bill/billentrytype.jsp</result>
+            <result name="searchpage">/shahiwebpages/M3Bill/searchpageent.jsp</result>
+            <result name="subtypepage">/shahiwebpages/M3Bill/billentrysubtype.jsp</result>
+            <result name="prodtypepage">/shahiwebpages/M3Bill/billentryprod.jsp</result>
+            <result name="savepage">/shahiwebpages/M3Bill/billentrymast.jsp</result>
+            <result name="ccpage">/shahiwebpages/M3Bill/billentcctype.jsp</result>
+            <result name="formpage">/shahiwebpages/M3Bill/formtype.jsp</result>
+            <result name="costelemt">/shahiwebpages/M3Bill/costelemtdtl.jsp</result>
+            <result name="searchshipbill">/shahiwebpages/M3Bill/searchpageshipbill.jsp</result>
+            <result name="invlistpage">/shahiwebpages/M3Bill/invoicetabledt.jsp</result>
+	     <result name="invlistpagenew">/shahiwebpages/M3Bill/invoicetabledtnew.jsp</result>
+                <result name="accpage">/shahiwebpages/M3Bill/acbillmastquery.jsp</result>
+             <result name="shpbilldate">/shahiwebpages/M3Bill/shpbillupnew.jsp</result>
+            <result name="invpagemast">/shahiwebpages/M3Bill/invmast.jsp</result>
+             <result name="invmastup">/shahiwebpages/M3Bill/invmastup.jsp</result>
+ <result name="rempage">/shahiwebpages/M3Bill/remmastup.jsp</result>
+
+ <result name="importmast">/shahiwebpages/M3Bill/importjsp.jsp</result>
+             <result name="importmastup">/shahiwebpages/M3Bill/importup.jsp</result>
+             <result name="courierup">/shahiwebpages/M3Bill/courierup.jsp</result>
+ <result name="testup">/shahiwebpages/M3Bill/testingup.jsp</result>
+ <result name="debitpage">/shahiwebpages/M3Bill/debitup.jsp</result>
+<result name="bospage">/shahiwebpages/M3Bill/bosmastup.jsp</result>
+ <result name="newinvpage">/shahiwebpages/M3Bill/invnewup.jsp</result>
+<result name="newbosage">/shahiwebpages/M3Bill/bosmastupnew.jsp</result>
+
+ <result name="srvtexpage">/shahiwebpages/M3Bill/srvtexpage.jsp</result>
+<result name="fablr">/shahiwebpages/M3Bill/fabrlr.jsp</result>
+<result name="viewpage">/shahiwebpages/M3Bill/viewbillmastquery.jsp</result>
+               <result name="newpageview">/shahiwebpages/M3Bill/viewbillentrymast.jsp</result>
+               <result name="costelemtview">/shahiwebpages/M3Bill/viewcostelemtdtl.jsp</result>
+                <result name="debitpageview">/shahiwebpages/M3Bill/viewdebitup.jsp</result>
+                 <result name="rempageview">/shahiwebpages/M3Bill/viewremmastup.jsp</result>
+ <result name="chkdt">/shahiwebpages/M3Bill/chkshpbill.jsp</result>
+            
+        </action>  
+        
+
+ <action name="mbillacsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/acbillmastquery.jsp</result>
+        </action>
+
+         <action name="mccentsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/costcenterquery.jsp</result>
+        </action> 
+        <action name="*mccentAction" method="{1}"   class="shahi.Action.M3bill.M3costcenterAction">
+          
+            <result name="success">/shahiwebpages/M3Bill/costcenterquery.jsp</result>
+            <result name="input">/shahiwebpages/M3Bill/costcenterquery.jsp</result>
+            <result name="error">/shahiwebpages/M3Bill/costcenterquery.jsp</result>
+            <result name="newpage">/shahiwebpages/M3Bill/ccentrymast.jsp</result>
+            <result name="searchpage">/shahiwebpages/M3Bill/ccsearchpage.jsp</result>
+              <result name="savepage">/shahiwebpages/M3Bill/ccentrymastnew.jsp</result>
+            <result name="newpagecc">/shahiwebpages/M3Bill/ccentrymastnew.jsp</result>           
+           
+        </action>  
+
+
+       <action name="tmccentsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/temp/costcenterquery.jsp</result>
+        </action>
+ 
+        <action name="*mccenttempAction" method="{1}"   class="shahi.Action.M3bill.Temp.M3costcentertempAction">
+          
+            <result name="success">/shahiwebpages/M3Bill/temp/costcenterquery.jsp</result>
+            <result name="input">/shahiwebpages/M3Bill/temp/costcenterquery.jsp</result>
+            <result name="error">/shahiwebpages/M3Bill/temp/costcenterquery.jsp</result>
+            <result name="newpage">/shahiwebpages/M3Bill/temp/ccentrymast.jsp</result>
+            <result name="searchpage">/shahiwebpages/M3Bill/temp/ccsearchpage.jsp</result>
+            <result name="savepage">/shahiwebpages/M3Bill/temp/ccentrymastnew.jsp</result>
+            <result name="newpagecc">/shahiwebpages/M3Bill/temp/ccentrymastnew.jsp</result>
+           
+           
+        </action>
+
+  <action name="billussessAction"  class="shahi.Action.M3bill.SessionCallAction">
+           <result name="success">/shahiwebpages/M3Bill/userlist.jsp</result>
+        </action> 
+         <action name="*mbilluserAction" method="{1}"   class="shahi.Action.M3bill.M3BillUserAction">
+            <result name="success">/shahiwebpages/M3Bill/userlist.jsp</result>
+            <result name="input">/shahiwebpages/M3Bill/userlist.jsp</result>
+            <result name="error">/shahiwebpages/M3Bill/userlist.jsp</result>
+            <result name="newpage">/shahiwebpages/M3Bill/newuser.jsp</result>
+            <result name="newusbill">/shahiwebpages/M3Bill/userbilltype.jsp</result>
+            
+           
+        </action> 
+
+
+  <action name="brepsessAction"  class="shahi.Action.M3bill.SessionCallAction">
+             <result type="redirect">/shahiwebpages/M3Bill/mbillreportAction.action</result>
+           
+          </action> 
+        <action name="*mbillreportAction" method="{1}"   class="shahi.Action.M3bill.M3BillReport" >
+	<result name="success">/shahiwebpages/M3Bill/M3BillReport.jsp</result>
+	<result name="error">/shahiwebpages/M3Bill/M3BillReport.jsp</result>
+        <result name="billtype">/shahiwebpages/M3Bill/M3billreportbilltype.jsp</result>
+        <result name="subbilltype">/shahiwebpages/M3Bill/M3billreportbillsubtype.jsp</result>
+        <result name="billcc">/shahiwebpages/M3Bill/M3billreportbillcc.jsp</result>
+        <result name="billpro">/shahiwebpages/M3Bill/M3billreportbillpro.jsp</result>
+        
+         </action>
+         <!--End m3 bill--> 
+
+
+    </package>
+</struts>

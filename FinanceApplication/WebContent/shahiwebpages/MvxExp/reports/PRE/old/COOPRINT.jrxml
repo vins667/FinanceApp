@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GSPPRINT" pageWidth="595" pageHeight="842" columnWidth="588" leftMargin="2" rightMargin="5" topMargin="10" bottomMargin="5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_compname" class="java.lang.String"/>
+	<parameter name="p_compaddr" class="java.lang.String"/>
+	<parameter name="p_inv" class="java.lang.String"/>
+	<parameter name="p_bpo" class="java.lang.String"/>
+	<parameter name="p_userid" class="java.lang.String"/>
+	<parameter name="P_CTNS" class="java.lang.Integer"/>
+	<parameter name="p_boxtype" class="java.lang.String"/>
+	<parameter name="p_rem1" class="java.lang.String"/>
+	<parameter name="p_rem2" class="java.lang.String"/>
+	<parameter name="p_boxdesc" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\SHAHIPROJECT\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_place" class="java.lang.String"/>
+	<parameter name="p_report" class="java.lang.String"/>
+	<parameter name="p_style" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select to_char(t.inv_date,'dd/mm/yyyy') inv_date,excs_inv_no,trim(t.buyer) buyer,ltrim(rtrim(buyer_addr)) buyer_addr, ltrim(rtrim(cons_addr)) cons_addr,t.mode_of_ship,trim(t1.cttx40) place_desc,trim(t5.cttx15)||'/INDIA'  loading_desc,t6.cttx40 item_desc,ship_term, t.location,
+discharge,trim(t3.cttx40)||'/'||trim(t4.cttx40) discharge_desc,pay_term, trim(t4.cttx40)  desti_cntry,t7.cttx40 final_destn,t9.cttx15 shipmode,OpCUNM cons_name,trim(OpCUA1)||' '||rtrim(OpCUA2)||'  '||rtrim(OpCUA3)||' '||rtrim(OpCUA4)  cons_address
+from
+ei_endors_mast t,csytab_m4off t1,csytab_m4off t3,csytab_m4off t4,csytab_m4off t5,csytab_m4off t6,csytab_m4off t7,csytab_m4off t9,ocusad_m4off  b1
+where  t.excs_inv_no=$P{p_inv} and
+t1.ctcono=111 and t1.ctstco='EDES' and t1.ctstky=t.place and
+t3.ctcono=111 and t3.ctstco='SDST' AND t3.ctstky=t.discharge and
+t4.ctcono=111 and t4.ctstco='CSCD' and t4.ctstky=t.desti_cntry and
+t5.ctcono=111 and t5.ctstco='HAFE' and t5.ctstky=t.loading and
+t6.ctcono=111 and t6.ctstco='PRGP' and t6.ctstky=t.exp_type  and
+t7.ctcono=111 and t7.ctstco='EDES' and t7.ctstky=t.desti_code  and
+t9.ctcono=111 and t9.ctstco='MODL' and t9.ctstky=t.MODE_OF_SHIP  and
+b1.opcono=111 and b1.OPADRT=1  and b1.OpCUNO=t.buyer and b1.opadid=t.cons_addr]]>
+	</queryString>
+	<field name="INV_DATE" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="BUYER_ADDR" class="java.lang.String"/>
+	<field name="CONS_ADDR" class="java.lang.String"/>
+	<field name="MODE_OF_SHIP" class="java.lang.String"/>
+	<field name="PLACE_DESC" class="java.lang.String"/>
+	<field name="LOADING_DESC" class="java.lang.String"/>
+	<field name="ITEM_DESC" class="java.lang.String"/>
+	<field name="SHIP_TERM" class="java.lang.String"/>
+	<field name="LOCATION" class="java.lang.String"/>
+	<field name="DISCHARGE" class="java.lang.String"/>
+	<field name="DISCHARGE_DESC" class="java.lang.String"/>
+	<field name="PAY_TERM" class="java.lang.String"/>
+	<field name="DESTI_CNTRY" class="java.lang.String"/>
+	<field name="FINAL_DESTN" class="java.lang.String"/>
+	<field name="SHIPMODE" class="java.lang.String"/>
+	<field name="CONS_NAME" class="java.lang.String"/>
+	<field name="CONS_ADDRESS" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="3"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="375">
+			<frame>
+				<reportElement x="4" y="0" width="576" height="146"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="42" y="45" width="250" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{p_compname}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="42" y="57" width="141" height="89"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{p_compaddr}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="146" width="580" height="113"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="42" y="18" width="208" height="95"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CONS_ADDRESS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="42" y="4" width="250" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CONS_NAME}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="65" y="261" width="200" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIPMODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="41" y="276" width="200" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOADING_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="41" y="305" width="200" height="37"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCHARGE_DESC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="288" width="100" height="16"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[TO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="261" width="17" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[BY]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="71" splitType="Stretch">
+			<textField>
+				<reportElement x="483" y="37" width="71" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="53" width="60" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_DATE}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="11" y="38" width="477" height="9"/>
+				<subreportParameter name="p_userid">
+					<subreportParameterExpression><![CDATA[$P{p_userid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_report">
+					<subreportParameterExpression><![CDATA[$P{p_report}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_inv">
+					<subreportParameterExpression><![CDATA[$F{EXCS_INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_boxdesc">
+					<subreportParameterExpression><![CDATA[$P{p_boxdesc}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/COOPRINT_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="158" y="3" width="212" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_rem1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="100" y="2" width="49" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_CTNS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="158" y="17" width="212" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_rem2}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="31">
+			<frame>
+				<reportElement x="348" y="4" width="240" height="18">
+					<printWhenExpression><![CDATA[$P{p_style}.equals("YES")]]></printWhenExpression>
+				</reportElement>
+				<subreport>
+					<reportElement isPrintRepeatedValues="false" x="41" y="2" width="187" height="10"/>
+					<subreportParameter name="p_inv">
+						<subreportParameterExpression><![CDATA[$P{p_inv}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/GSPPRINT_Style.jasper"]]></subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement x="4" y="2" width="37" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Style # ]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="119" y="0" width="215" height="20">
+					<printWhenExpression><![CDATA[$P{p_bpo}.equals("YES")]]></printWhenExpression>
+				</reportElement>
+				<subreport>
+					<reportElement isPrintRepeatedValues="false" x="41" y="3" width="174" height="10"/>
+					<subreportParameter name="p_inv">
+						<subreportParameterExpression><![CDATA[$P{p_inv}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/GSPPRINT_subrepBPO.jasper"]]></subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement x="4" y="4" width="37" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[BPO #]]></text>
+				</staticText>
+			</frame>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="49" y="0" width="67" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_CTNS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="49" y="12" width="67" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_boxtype}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="272" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="334" y="151" width="191" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESTI_CNTRY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="334" y="228" width="103" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_place}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement isPrintRepeatedValues="false" x="460" y="226" width="100" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

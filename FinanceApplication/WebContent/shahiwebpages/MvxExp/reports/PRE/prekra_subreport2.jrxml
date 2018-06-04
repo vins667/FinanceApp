@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prekra_subreport2" language="groovy" pageWidth="578" pageHeight="802" columnWidth="578" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="v_loct" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_inv" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_date_from" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_date_to" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_days_ind" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_days_oth" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="v_basedon" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select A.location,type_desc,buyer,t_o_date, excs_inv_no,mode_of_ship,awbdate,doc_send,ac_holder,(fob_amt*inr_conv)/100000 inr_val
+from ei_endors_mast a,ei_shipment_dtls b,ei_docs_delay_dtls d,ei_grup_type_dtls E
+where
+a.year=d.year and
+a.company=d.company and
+a.inv_no=d.inv_no and
+d.reason_code=e.type_code and
+d.grup_code='EDR' and
+e.grup_type_code='EDR' and
+a.year=b.year and
+a.company=b.company and
+a.inv_no=b.inv_no
+and nvl(surrender_yn,'N')='N'
+and a.location like $P{v_loct}
+and nvl(a.self_tp,'N') like $P{v_inv}
+and decode($P{v_basedon},'TO',t_o_date,doc_send)  between $P{v_date_from} and $P{v_date_to}
+and (doc_send-awbdate)>decode(cntry_origin,'IN',$P{v_days_ind},$P{v_days_oth})
+order by 1,2,3,4]]>
+	</queryString>
+	<field name="LOCATION" class="java.lang.String"/>
+	<field name="TYPE_DESC" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="T_O_DATE" class="java.sql.Timestamp"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="MODE_OF_SHIP" class="java.lang.String"/>
+	<field name="AWBDATE" class="java.sql.Timestamp"/>
+	<field name="DOC_SEND" class="java.sql.Timestamp"/>
+	<field name="AC_HOLDER" class="java.lang.String"/>
+	<field name="INR_VAL" class="java.math.BigDecimal"/>
+	<variable name="p_cnt" class="java.lang.Integer" resetType="Group" resetGroup="TYPE_DESC" calculation="Count">
+		<variableExpression><![CDATA[$F{EXCS_INV_NO}]]></variableExpression>
+	</variable>
+	<variable name="type_inr" class="java.lang.Double" resetType="Group" resetGroup="TYPE_DESC" calculation="Sum">
+		<variableExpression><![CDATA[$F{INR_VAL}]]></variableExpression>
+	</variable>
+	<variable name="loct_inr" class="java.lang.Double" resetType="Group" resetGroup="LOCATION" calculation="Sum">
+		<variableExpression><![CDATA[$F{INR_VAL}]]></variableExpression>
+	</variable>
+	<variable name="r_cnt" class="java.lang.Integer" resetType="Group" resetGroup="LOCATION" calculation="Count">
+		<variableExpression><![CDATA[$F{EXCS_INV_NO}]]></variableExpression>
+	</variable>
+	<group name="LOCATION">
+		<groupExpression><![CDATA[$F{LOCATION}]]></groupExpression>
+		<groupFooter>
+			<band height="13">
+				<line>
+					<reportElement x="0" y="0" width="578" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="175" y="1" width="107" height="11"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[** Loct Total **]]></text>
+				</staticText>
+				<textField pattern="###0.00">
+					<reportElement x="282" y="1" width="52" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{loct_inr}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="0" y="0" width="172" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{r_cnt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="TYPE_DESC">
+		<groupExpression><![CDATA[$F{TYPE_DESC}]]></groupExpression>
+		<groupFooter>
+			<band height="13">
+				<line>
+					<reportElement x="0" y="0" width="578" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<textField pattern="###0.00">
+					<reportElement x="284" y="1" width="52" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{type_inr}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="12" width="578" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="172" y="1" width="110" height="11"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[** Reason wise Total **]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="660" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reason Wise Breakup of  Delay Cases]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="420" y="1" width="55" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Awb Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="1" width="53" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Inv No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="1" width="23" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[MOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="1" width="24" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Loct]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="0" width="54" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Buyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="2" width="57" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[INR {Lac}]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="0" width="577" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="336" y="1" width="58" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[TO Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="2" width="55" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[FTP Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="2" width="48" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Ac Holder]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="16" width="577" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="26" y="2" width="123" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Reason]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="1" width="25" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Sl#]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="1" y="0" width="24" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCATION}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement isPrintRepeatedValues="false" x="26" y="0" width="123" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TYPE_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="149" y="0" width="25" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{p_cnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="175" y="0" width="54" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="228" y="0" width="54" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement isPrintRepeatedValues="false" x="282" y="0" width="54" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INR_VAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="336" y="0" width="54" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_O_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="394" y="0" width="25" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODE_OF_SHIP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="419" y="0" width="54" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWBDATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="475" y="0" width="55" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOC_SEND}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="530" y="0" width="48" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AC_HOLDER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="20" width="567" height="14"/>
+				<subreportParameter name="m_loct">
+					<subreportParameterExpression><![CDATA[$P{v_loct}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="m_inv">
+					<subreportParameterExpression><![CDATA[$P{v_inv}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="m_basedon">
+					<subreportParameterExpression><![CDATA[$P{v_basedon}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="m_date_from">
+					<subreportParameterExpression><![CDATA[$P{v_date_from}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="m_date_to">
+					<subreportParameterExpression><![CDATA[$P{v_date_to}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="m_days_ind">
+					<subreportParameterExpression><![CDATA[$P{v_days_ind}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="m_days_oth">
+					<subreportParameterExpression><![CDATA[$P{v_days_oth}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "prekra_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

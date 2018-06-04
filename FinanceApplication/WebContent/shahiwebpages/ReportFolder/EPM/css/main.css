@@ -1,0 +1,11 @@
+/* 
+    Document   : main
+    Created on : Dec 26, 2011, 1:22:23 PM
+    Author     : Vivek
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+th {
+    background-image:url('../image/table-gradient.jpg');
+}

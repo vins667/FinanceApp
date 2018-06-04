@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="M3BillReport" pageWidth="1030" pageHeight="595" orientation="Landscape" columnWidth="1010" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10">
+	<property name="ireport.zoom" value="1.948717100000002"/>
+	<property name="ireport.x" value="1242"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="wareshouepa" class="java.lang.String"/>
+	<parameter name="monthp" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\NetBeans\\ShahiApplication\\web\\shahiwebpages\\M3Bill\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct a.DEPT_SL_NO,c.DEPT_DESC,b.type_sl_no,d.TYPE_DESC ||'-'|| d.TYPE_CODE TYPE_DESC,
+b.SUB_TYPE_SL_NO,e.SUB_TYPE_DESC  ||'-'|| e.SUB_TYPE_CODE SUB_TYPE_DESC,b.PCH,f.CC_CODE ||'-'|| g.EATX40 ||'-'|| b.CC_CODE CC_CODE_DESC,
+b.PRODUCT_SL_NO,h.PRODUCT_DESC ||'-'|| h.PRODUCT_CODE PRODUCT_DESC,b.PRODUCT_AMOUNT
+from m3_bill_master a,m3_bill_detail b,m3_bill_dept_master c,M3_BILL_type_MASTER d,M3_BILL_SUB_TYPE_MASTER e,
+m3_cc_master f,prodbi.fchacc@movex.world@movex g,M3_BILL_PRODUCT_MASTER h
+ where a.sl_no=b.bill_sl_no and a.DEPT_SL_NO=c.SL_NO and b.type_sl_no=d.SL_NO AND b.SUB_TYPE_SL_NO=e.SL_NO
+ and b.CC_CODE=f.sl_no and f.cc_code=g.EAAITM and g.EAAITP=3 and g.eaat12=0 and b.PRODUCT_SL_NO=h.SL_NO
+  and a.DEPT_SL_NO=25
+  order by c.DEPT_DESC,d.TYPE_DESC ||'-'|| d.TYPE_CODE,e.SUB_TYPE_DESC  ||'-'|| e.SUB_TYPE_CODE,b.PCH,
+  f.CC_CODE ||'-'|| g.EATX40 ||'-'|| b.CC_CODE,h.PRODUCT_DESC ||'-'|| h.PRODUCT_CODE]]>
+	</queryString>
+	<field name="DEPT_SL_NO" class="java.lang.String"/>
+	<field name="DEPT_DESC" class="java.lang.String"/>
+	<field name="TYPE_SL_NO" class="java.lang.String"/>
+	<field name="TYPE_DESC" class="java.lang.String"/>
+	<field name="SUB_TYPE_SL_NO" class="java.lang.String"/>
+	<field name="SUB_TYPE_DESC" class="java.lang.String"/>
+	<field name="PCH" class="java.lang.String"/>
+	<field name="CC_CODE_DESC" class="java.lang.String"/>
+	<field name="PRODUCT_SL_NO" class="java.lang.String"/>
+	<field name="PRODUCT_DESC" class="java.lang.String"/>
+	<field name="PRODUCT_AMOUNT" class="java.lang.Double"/>
+	<field name="BILL_NO" class="java.lang.String"/>
+	<field name="INV_LIST" class="java.util.List"/>
+	<variable name="PRODUCT_AMOUNT" class="java.lang.Double" resetType="Group" resetGroup="SubTypeGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="PRODUCT_AMOUNT_1" class="java.lang.Double" resetType="Group" resetGroup="BillTypeGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="PRODUCT_AMOUNT_2" class="java.lang.Double" resetType="Group" resetGroup="DEPTGroup" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="PRODUCT_AMOUNT_3" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></variableExpression>
+	</variable>
+	<group name="DEPTGroup">
+		<groupExpression><![CDATA[$F{DEPT_SL_NO}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField>
+					<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" mode="Opaque" x="0" y="0" width="940" height="14" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" backcolor="#CCCCFF"/>
+					<box topPadding="1" leftPadding="2">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DEPT_DESC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="940" y="0" width="70" height="14" backcolor="#CCCCFF"/>
+					<box topPadding="1" leftPadding="0" rightPadding="2">
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT_2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="BillTypeGroup">
+		<groupExpression><![CDATA[$F{TYPE_SL_NO}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField>
+					<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" mode="Opaque" x="97" y="0" width="843" height="14" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="DEPTGroup" backcolor="#CCCCFF"/>
+					<box topPadding="1" leftPadding="2">
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TYPE_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="97" height="14"/>
+					<box>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="940" y="0" width="70" height="14" backcolor="#CCCCFF"/>
+					<box topPadding="1" leftPadding="0" rightPadding="2">
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="SubTypeGroup">
+		<groupExpression><![CDATA[$F{SUB_TYPE_SL_NO}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField>
+					<reportElement mode="Opaque" x="247" y="0" width="693" height="14" backcolor="#CCCCFF"/>
+					<box topPadding="1" leftPadding="2">
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SUB_TYPE_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="97" height="14"/>
+					<box>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement stretchType="RelativeToTallestObject" x="97" y="0" width="150" height="14"/>
+					<box>
+						<leftPen lineWidth="0.25"/>
+					</box>
+					<textElement/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="940" y="0" width="70" height="14" backcolor="#CCCCFF"/>
+					<box topPadding="1" leftPadding="0" rightPadding="2">
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="247" y="0" width="335" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[M3Bill Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="582" y="0" width="428" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{wareshouepa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="247" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{monthp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="97" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="97" y="0" width="150" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Bill Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="397" y="0" width="35" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[PCH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="432" y="0" width="150" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Cost Center]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="582" y="0" width="150" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Product Group]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="940" y="0" width="70" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="0" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="247" y="0" width="150" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Bill Sub Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="732" y="0" width="80" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Bill No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="812" y="0" width="128" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="432" y="0" width="150" height="14"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="432" y="0" width="150" height="14"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CC_CODE_DESC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="582" y="0" width="150" height="14"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="397" y="0" width="35" height="14"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="247" y="0" width="150" height="14"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="97" height="14"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="0" width="150" height="14"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="97" y="0" width="150" height="14" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="DEPTGroup"/>
+				<box topPadding="1" leftPadding="2">
+					<topPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TYPE_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="397" y="0" width="35" height="14"/>
+				<box topPadding="1" leftPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PCH}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="582" y="0" width="150" height="14"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRODUCT_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="940" y="0" width="70" height="14"/>
+				<box topPadding="1" leftPadding="0" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRODUCT_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="247" y="0" width="150" height="14" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" printWhenGroupChanges="BillTypeGroup"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUB_TYPE_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="97" height="14" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true"/>
+				<box topPadding="1" leftPadding="2">
+					<topPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEPT_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="732" y="0" width="80" height="14"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BILL_NO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="812" y="0" width="128" height="14"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{INV_LIST})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/M3BillNoReport_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="540" y="0" width="470" height="14"/>
+				<box topPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="540" height="14"/>
+				<box topPadding="1" leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="940" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Summary]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="940" y="0" width="70" height="14" backcolor="#CCCCFF"/>
+				<box topPadding="1" leftPadding="0" rightPadding="2">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PRODUCT_AMOUNT_3}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BOE[Movex]_subreport1" language="groovy" printOrder="Horizontal" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="locc" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="datefrom" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="trm" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.year,a.company,a.inv_no,b.awb_no,b.h_awb_no,to_char(b.AWB_DATE,'dd/mm/yyyy') awb_date,b.link_no,shp_bill_no,to_char(DOC_SEND,'dd/mm/yyyy') fwd_post,
+fob_amt*nvl(upcharge_per,0)/100 up_amt,
+ a.currency CURR,a.lc_no,doc_send,B.edi_date,PLAN_NO,to_char(ref_date,'dd/mm/yyyy') ref_date,
+ ex.excs_inv_no,ex.buyer,self_tp,tax_percent,fob_amt,sum(c.qty_endors) invqty,sum(nvl(gr_decl_amt,0)) gr_decl,sum(nvl(c.DISCOUNT_AMT,0)) disc_amt,nvl(e.bed,0) bed,
+ (((nvl(fob_amt,0)+nvl(bed,0))-sum(nvl(gr_decl_amt,0)))*nvl(tax_percent,0))/100 tax_amt,
+((nvl(fob_amt,0)-sum(nvl(gr_decl_amt,0)))*(nvl(cgst_per,0)+nvl(sgst_per,0)+nvl(igst_per,0)))/100 gst_amt
+ from ei_shipment_dtls a, ei_shipment_mast b,ei_ENDORS_mast ex,ei_lc_lic_mast l1,ei_ENDORS_dtls c ,(select ex_track_no,sum(nvl(amt,0)) bed
+from ei_ship_data where type_code='BED' group by ex_track_no) e
+where
+ a.year = b.year
+ and a.link_no = b.link_no
+ and a.year=ex.year
+ and a.company=ex.company
+ and a.lc_no=l1.ref_no(+)
+ and a.inv_no=ex.inv_no and
+   ex.year=c.year and
+   ex.company=c.company and
+   ex.inv_no=c.inv_no and
+   ex.excs_inv_no=e.ex_track_no(+) and
+ trunc(doc_send_date)=$P{datefrom} and ac_send_term =$P{trm}
+ group by  a.year,b.awb_no,b.h_awb_no,to_char(b.AWB_DATE,'dd/mm/yyyy'),b.link_no,shp_bill_no,to_char(DOC_SEND,'dd/mm/yyyy'),nvl(fob_amt,0),
+ upcharge_per,a.currency,lc_no,doc_send,B.edi_date,to_char(ref_date,'dd/mm/yyyy'),
+ a.company,a.inv_no ,PLAN_NO,ex.excs_inv_no,ex.buyer,self_tp,tax_percent,fob_amt ,e.bed,nvl(cgst_per,0),nvl(sgst_per,0),nvl(igst_per,0)]]>
+	</queryString>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="AWB_NO" class="java.lang.String"/>
+	<field name="H_AWB_NO" class="java.lang.String"/>
+	<field name="AWB_DATE" class="java.lang.String"/>
+	<field name="LINK_NO" class="java.math.BigDecimal"/>
+	<field name="SHP_BILL_NO" class="java.lang.String"/>
+	<field name="FWD_POST" class="java.lang.String"/>
+	<field name="UP_AMT" class="java.math.BigDecimal"/>
+	<field name="CURR" class="java.lang.String"/>
+	<field name="LC_NO" class="java.lang.String"/>
+	<field name="DOC_SEND" class="java.sql.Timestamp"/>
+	<field name="EDI_DATE" class="java.sql.Timestamp"/>
+	<field name="PLAN_NO" class="java.math.BigDecimal"/>
+	<field name="REF_DATE" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="SELF_TP" class="java.lang.String"/>
+	<field name="TAX_PERCENT" class="java.math.BigDecimal"/>
+	<field name="FOB_AMT" class="java.math.BigDecimal"/>
+	<field name="INVQTY" class="java.math.BigDecimal"/>
+	<field name="GR_DECL" class="java.math.BigDecimal"/>
+	<field name="DISC_AMT" class="java.math.BigDecimal"/>
+	<field name="BED" class="java.math.BigDecimal"/>
+	<field name="TAX_AMT" class="java.math.BigDecimal"/>
+	<field name="GST_AMT" class="java.math.BigDecimal"/>
+	<variable name="invvalue" class="java.math.BigDecimal" resetType="Column">
+		<variableExpression><![CDATA[($F{FOB_AMT}+$F{DISC_AMT}+$F{BED}+$F{TAX_AMT}+$F{GST_AMT}+$F{UP_AMT})-($F{GR_DECL})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="411" y="0" width="57" height="14"/>
+				<textElement rotation="None">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="194" y="0" width="54" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="94" y="0" width="100" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{H_AWB_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="94" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="248" y="0" width="109" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LC_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="357" y="0" width="54" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REF_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="468" y="0" width="27" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CURR}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="495" y="0" width="60" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{invvalue}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

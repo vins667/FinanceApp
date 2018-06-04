@@ -1,0 +1,1187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PREKRA" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_loct" class="java.lang.String"/>
+	<parameter name="p_inv" class="java.lang.String"/>
+	<parameter name="p_basedon" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_date_from" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_date_to" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_days_ind" class="java.lang.String"/>
+	<parameter name="p_days_oth" class="java.lang.String"/>
+	<parameter name="p_hd1" class="java.lang.String"/>
+	<parameter name="p_hd2" class="java.lang.String"/>
+	<parameter name="p_hd3" class="java.lang.String"/>
+	<parameter name="p_dis1" class="java.lang.String"/>
+	<parameter name="p_dis2" class="java.lang.String"/>
+	<parameter name="p_dis3" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  $P!{p_hd1} h1,$P!{p_hd2} h2,$P!{p_hd3} h3,
+sum(decode(doc_send,null ,1,0))  notfwd,
+sum(decode(awbdate,null,0,1))  invhandle,
+sum(case when doc_send is not null and awbdate is null  then 1 else 0 end) notship,
+sum(case when awbdate is not null and fin_date is null  then 1 else 0 end) notfin,
+sum(case when awbdate is not null and (doc_send-awbdate)<=decode(cntry_origin,'IN',$P{p_days_ind},$P{p_days_oth}) then 1 else 0 end) onime,
+sum(case when awbdate is not null and (doc_send-awbdate)>decode(cntry_origin,'IN',$P{p_days_ind},$P{p_days_oth}) then 1 else 0 end) delay,
+sum(case when awbdate is not null and (doc_send-awbdate)<=decode(cntry_origin,'IN',$P{p_days_ind},$P{p_days_oth}) then  b.fob_amt*B.inr_conv/1000000 else 0 end) ONTIME_INR,
+sum(case when awbdate is not null and (doc_send-awbdate)>decode(cntry_origin,'IN',$P{p_days_ind},$P{p_days_oth}) then  b.fob_amt*B.inr_conv/1000000 else 0 end) DELAY_INR
+from ei_endors_mast a,ei_shipment_dtls b
+where a.year=b.year(+) and a.company=b.company(+) and a.inv_no=b.inv_no(+) and
+nvl(surrender_yn,'N')='N'
+and a.location like $P{p_loct}
+and  nvl(self_tp,'N') like $P{p_inv}
+and decode($P{p_basedon},'TO',t_o_date,doc_send)  between $P{p_date_from} and $P{p_date_to}
+group by  $P!{p_hd1},$P!{p_hd2},$P!{p_hd3}
+order by 1,2,3]]>
+	</queryString>
+	<field name="H1" class="java.lang.String"/>
+	<field name="H2" class="java.lang.String"/>
+	<field name="H3" class="java.lang.String"/>
+	<field name="NOTFWD" class="java.math.BigDecimal"/>
+	<field name="INVHANDLE" class="java.math.BigDecimal"/>
+	<field name="NOTSHIP" class="java.math.BigDecimal"/>
+	<field name="ONIME" class="java.math.BigDecimal"/>
+	<field name="DELAY" class="java.math.BigDecimal"/>
+	<field name="NOTFIN" class="java.math.BigDecimal"/>
+	<field name="ONTIME_INR" class="java.math.BigDecimal"/>
+	<field name="DELAY_INR" class="java.math.BigDecimal"/>
+	<variable name="b_inv" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{INVHANDLE}]]></variableExpression>
+	</variable>
+	<variable name="ontime_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{ONIME}.floatValue()/$F{INVHANDLE}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="delay_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{DELAY}.floatValue()/$F{INVHANDLE}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="b_ontime" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONIME}]]></variableExpression>
+	</variable>
+	<variable name="b_delay" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{DELAY}]]></variableExpression>
+	</variable>
+	<variable name="b_notfwd" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTFWD}]]></variableExpression>
+	</variable>
+	<variable name="b_notship" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTSHIP}]]></variableExpression>
+	</variable>
+	<variable name="b_ontime_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($V{b_ontime}.floatValue()/$V{b_inv}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="b_delay_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($V{b_delay}.floatValue()/$V{b_inv}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="p_inv" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{INVHANDLE}]]></variableExpression>
+	</variable>
+	<variable name="p_ontime" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONIME}]]></variableExpression>
+	</variable>
+	<variable name="p_delay" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{DELAY}]]></variableExpression>
+	</variable>
+	<variable name="p_ontime_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($V{p_ontime}.floatValue()/$V{p_inv}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="p_delay_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($V{p_delay}.floatValue()/$V{p_inv}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="p_notfwd" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTFWD}]]></variableExpression>
+	</variable>
+	<variable name="p_notship" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTSHIP}]]></variableExpression>
+	</variable>
+	<variable name="b_cnt" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Count">
+		<variableExpression><![CDATA[$F{H3}]]></variableExpression>
+	</variable>
+	<variable name="r_inv" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{INVHANDLE}]]></variableExpression>
+	</variable>
+	<variable name="r_ontime" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONIME}]]></variableExpression>
+	</variable>
+	<variable name="r_delay" class="java.lang.Double" calculation="Sum"/>
+	<variable name="r_notship" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTSHIP}]]></variableExpression>
+	</variable>
+	<variable name="r_notfwd" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTFWD}]]></variableExpression>
+	</variable>
+	<variable name="r_delay_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($V{r_delay}.floatValue()/$V{r_inv}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="r_ontime_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($V{r_ontime}.floatValue()/$V{r_inv}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="b_notfin" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTFIN}]]></variableExpression>
+	</variable>
+	<variable name="p_notfin" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTFIN}]]></variableExpression>
+	</variable>
+	<variable name="r_notfin" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOTFIN}]]></variableExpression>
+	</variable>
+	<variable name="ontime_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{ONTIME_INR}.floatValue()/($F{ONTIME_INR}.floatValue()+$F{DELAY_INR}.floatValue()))*100]]></variableExpression>
+	</variable>
+	<variable name="delay_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{DELAY_INR}.floatValue()/($F{ONTIME_INR}.floatValue()+$F{DELAY_INR}.floatValue()))*100]]></variableExpression>
+	</variable>
+	<variable name="b_ontime_inr" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONTIME_INR}]]></variableExpression>
+	</variable>
+	<variable name="b_delay_inr" class="java.lang.Double" resetType="Group" resetGroup="hd2" calculation="Sum">
+		<variableExpression><![CDATA[$F{DELAY_INR}]]></variableExpression>
+	</variable>
+	<variable name="p_inr_ontime" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONTIME_INR}]]></variableExpression>
+	</variable>
+	<variable name="p_delay_inr" class="java.lang.Double" resetType="Group" resetGroup="ord1" calculation="Sum">
+		<variableExpression><![CDATA[$F{DELAY_INR}]]></variableExpression>
+	</variable>
+	<variable name="r_ontime_inr" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ONTIME_INR}]]></variableExpression>
+	</variable>
+	<variable name="r_delay_inr" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{DELAY_INR}]]></variableExpression>
+	</variable>
+	<variable name="b_ontime_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{b_ontime_inr}.floatValue()/($V{b_ontime_inr}.floatValue()+$V{b_delay_inr}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="b_delay_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{b_delay_inr}.floatValue()/($V{b_ontime_inr}.floatValue()+$V{b_delay_inr}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="p_ontime_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{p_inr_ontime}.floatValue()/($V{p_inr_ontime}.floatValue()+$V{p_delay_inr}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="p_delay_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{p_delay_inr}.floatValue()/($V{p_inr_ontime}.floatValue()+$V{p_delay_inr}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="r_ontime_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{r_ontime_inr}.floatValue()/($V{r_ontime_inr}.floatValue()+$V{r_delay_inr}.floatValue())*100]]></variableExpression>
+	</variable>
+	<variable name="r_delay_inr_per" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{r_delay_inr}.floatValue()/($V{r_ontime_inr}.floatValue()+$V{r_delay_inr}.floatValue())*100]]></variableExpression>
+	</variable>
+	<group name="ord1">
+		<groupExpression><![CDATA[$F{H1}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="13">
+				<staticText>
+					<reportElement x="176" y="0" width="33" height="12" forecolor="#FF00CC"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total **]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="93" y="0" width="79" height="12" forecolor="#FF00CC"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{p_dis1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0" isBlankWhenNull="true">
+					<reportElement x="212" y="0" width="35" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_inv}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0" isBlankWhenNull="true">
+					<reportElement x="247" y="0" width="32" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_ontime}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="279" y="0" width="32" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_ontime_per}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0" isBlankWhenNull="true">
+					<reportElement x="377" y="0" width="35" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_delay}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="412" y="0" width="35" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_delay_per}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0" isBlankWhenNull="true">
+					<reportElement x="514" y="0" width="35" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_notship}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0" isBlankWhenNull="true">
+					<reportElement x="549" y="0" width="35" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_notfwd}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="12" width="585" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField pattern="###0.0" isBlankWhenNull="true">
+					<reportElement x="311" y="0" width="42" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_inr_ontime}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.0" isBlankWhenNull="true">
+					<reportElement x="447" y="0" width="44" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_delay_inr}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.0" isBlankWhenNull="true">
+					<reportElement x="491" y="0" width="23" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_delay_inr_per}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.0" isBlankWhenNull="true">
+					<reportElement x="353" y="0" width="24" height="12" forecolor="#FF00CC" backcolor="#FFFFFF"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{p_ontime_inr_per}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="hd2">
+		<groupExpression><![CDATA[$F{H2}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="13">
+				<line>
+					<reportElement x="0" y="12" width="585" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="585" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<frame>
+					<reportElement x="0" y="0" width="585" height="13">
+						<printWhenExpression><![CDATA[$V{b_cnt}>1]]></printWhenExpression>
+					</reportElement>
+					<textField pattern="###0">
+						<reportElement x="377" y="1" width="35" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_delay}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="139" y="1" width="33" height="12" forecolor="#3300FF"/>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<text><![CDATA[Total **]]></text>
+					</staticText>
+					<textField pattern="###0.00" isBlankWhenNull="true">
+						<reportElement x="412" y="1" width="35" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_delay_per}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0">
+						<reportElement x="514" y="1" width="35" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_notship}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0">
+						<reportElement x="212" y="1" width="35" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_inv}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0">
+						<reportElement x="247" y="1" width="32" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_ontime}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0">
+						<reportElement x="549" y="1" width="35" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_notfwd}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="116" y="0" width="54" height="12" forecolor="#3300FF"/>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$P{p_dis2}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0.00" isBlankWhenNull="true">
+						<reportElement x="279" y="1" width="32" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_ontime_per}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0.0" isBlankWhenNull="true">
+						<reportElement x="311" y="1" width="42" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_ontime_inr}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0.0" isBlankWhenNull="true">
+						<reportElement x="447" y="1" width="44" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_delay_inr}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0.0" isBlankWhenNull="true">
+						<reportElement x="353" y="1" width="24" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_ontime_inr_per}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###0.0" isBlankWhenNull="true">
+						<reportElement x="491" y="1" width="23" height="12" forecolor="#0000CC" backcolor="#FFFFFF"/>
+						<box>
+							<topPen lineWidth="0.25"/>
+							<leftPen lineWidth="0.25"/>
+							<bottomPen lineWidth="0.25"/>
+							<rightPen lineWidth="0.25"/>
+						</box>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{b_delay_inr_per}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="167" y="0" width="236" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pre Shipment KRA Performance]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="5" y="7" width="100" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="7" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="545" y="7" width="40" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="45" width="585" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="72" width="585" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="212" y="46" width="35" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Inv Process]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="46" width="32" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ontime  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="19" width="29" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Loct :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="33" y="20" width="48" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_loct}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="192" y="20" width="51" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Date From :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="245" y="20" width="59" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_date_from}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="307" y="20" width="18" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[To  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="326" y="20" width="69" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_date_to}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="19" width="41" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_basedon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="544" y="20" width="41" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_inv}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="498" y="19" width="46" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Inv Type :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="46" width="32" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ontime % ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="46" width="35" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Delayed  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="46" width="35" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Delayed  % ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="514" y="46" width="35" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pending At Post]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="549" y="46" width="35" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pending At Pre]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="46" width="99" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_dis1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="46" width="58" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_dis2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="46" width="55" height="26"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_dis3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="32" width="146" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Ontime Calc on FTP Date - Awb Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="32" width="97" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Days for Origin Cntry IN :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="525" y="32" width="10" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_days_ind}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="535" y="32" width="33" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[,Others :-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="568" y="32" width="15" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_days_oth}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="311" y="46" width="66" height="14"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ontime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="60" width="66" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[INR [Lac]     %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="46" width="67" height="14"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Delayed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="60" width="67" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[INR [Lac]     %]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="0" y="0" width="99" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{H1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="549" y="0" width="35" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOTFWD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="514" y="0" width="35" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOTSHIP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="247" y="0" width="32" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ONIME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="377" y="0" width="35" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELAY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="212" y="0" width="35" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INVHANDLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="99" y="0" width="58" height="12" isPrintInFirstWholeBand="true" printWhenGroupChanges="ord1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{H2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="55" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{H3}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="279" y="0" width="32" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ontime_per}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="412" y="0" width="35" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{delay_per}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="311" y="0" width="42" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ONTIME_INR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="447" y="0" width="44" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELAY_INR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="24" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ontime_inr_per}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="491" y="0" width="23" height="12"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{delay_inr_per}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="106">
+			<staticText>
+				<reportElement x="100" y="0" width="109" height="12" forecolor="#FF0000"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[** Report Total **]]></text>
+			</staticText>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="212" y="0" width="35" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_inv}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="247" y="0" width="32" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_ontime}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="377" y="0" width="35" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_delay}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="549" y="0" width="35" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_notfwd}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="514" y="0" width="35" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_notship}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="279" y="0" width="32" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_ontime_per}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="412" y="0" width="35" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_delay_per}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="14" width="585" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="311" y="0" width="42" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_ontime_inr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="447" y="0" width="44" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_delay_inr}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="24" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_ontime_inr_per}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="491" y="0" width="23" height="12" forecolor="#FF0000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{r_delay_inr_per}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TOSTATUS_subreport3" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT  decode('M','M',mode_of_ship,'P',cost_centre,'B',buyer,'A',ac_holder,'M') ord_by, to_char(nvl(a.etd_date,a.t_o_date),'YYYYMM') mnth,to_char(nvl(a.etd_date,a.t_o_date),'MON-YY') mawb,crncy_code,sum(QTY_ENDORS) invqty,sum(QTY_ENDORS * (PRICE_FC+NVL(PRICE_MISC,0)))  FOB FROM EI_ENDORS_MAST A,EI_ENDORS_DTLS B
+WHERE A.YEAR=B.YEAR AND A.COMPANY=B.COMPANY AND A.INV_NO=B.INV_NO
+AND NVL(B.QTY_ENDORS,0)<>0
+AND A.T_O_date IS NOT NULL
+AND NVL(A.SHIP_QTY,0)=0
+and doc_send is null and t_o_date>='01-may-2015'
+and nvl(surrender_yn,'X')<>'Y'
+group by
+decode('M','M',mode_of_ship,'P',cost_centre,'B',buyer,'A',ac_holder,'M'), to_char(nvl(a.etd_date,a.t_o_date),'YYYYMM'),to_char(nvl(a.etd_date,a.t_o_date),'MON-YY'),crncy_code]]>
+	</queryString>
+	<field name="ORD_BY" class="java.lang.String"/>
+	<field name="MNTH" class="java.lang.String"/>
+	<field name="MAWB" class="java.lang.String"/>
+	<field name="CRNCY_CODE" class="java.lang.String"/>
+	<field name="INVQTY" class="java.math.BigDecimal"/>
+	<field name="FOB" class="java.math.BigDecimal"/>
+	<group name="ORD_BY">
+		<groupExpression><![CDATA[$F{ORD_BY}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

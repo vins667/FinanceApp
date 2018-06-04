@@ -1,0 +1,197 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="planning" extends="struts-default">  
+        <action name="unitforcastSession" class="shahi.Action.UnitForeCast.SessionCallAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/UnitForeCastList.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/UnitForeCastList.jsp</result>
+        </action>
+        <action name="unitforcastListAction" class="shahi.Action.UnitForeCast.UnitForeCastListAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/UnitForeCastList.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/UnitForeCastList.jsp</result>
+        </action>
+        <action name="unitforecastsave" class="shahi.Action.UnitForeCast.UnitForeCastListAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/UnitForeCastList.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/UnitForeCastList.jsp</result>
+        </action>
+        <action name="unitcapitySession" class="shahi.Action.UnitForeCast.SessionCallAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/Unitcapacitylist.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/Unitcapacitylist.jsp</result>
+        </action>
+        <action name="unitcapacityListAction" class="shahi.Action.UnitForeCast.UnitCapacityListAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/Unitcapacitylist.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/Unitcapacitylist.jsp</result>
+        </action>
+        <action name="unitcapacitysave" class="shahi.Action.UnitForeCast.UnitCapacityListAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/Unitcapacitylist.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/Unitcapacitylist.jsp</result>
+        </action>
+
+        <action name="unitprojectionSession" class="shahi.Action.UnitForeCast.SessionCallAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/UnitProjection.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/UnitProjection.jsp</result>
+        </action>
+        <action name="unitprojectionListAction" class="shahi.Action.UnitForeCast.UnitProjectionAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/UnitProjection.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/UnitProjection.jsp</result>
+        </action>
+
+        <action name="unitprojectiontsave" class="shahi.Action.UnitForeCast.UnitProjectionAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/UnitProjection.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/UnitProjection.jsp</result>
+        </action>
+
+        <action name="transfersamPageAction" class="shahi.Action.UnitForeCast.UnitCapacityTransferAction" >
+            <result name="error">/shahiwebpages/UnitForeCast/TransferSam.jsp</result>
+            <result name="success" >/shahiwebpages/UnitForeCast/TransferSam.jsp</result>
+        </action>
+        <action name="PlanOrderViewStyle" method="getPlan" class="shahi.Action.PcdEntry.OrderListStyleAction" >
+            <result>/shahiwebpages/PcdEntry/orderhomeStyle.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhomeStyle.jsp</result>
+        </action>
+
+
+        <action name="UpdateAllOrderView" class="shahi.Action.PcdEntry.OrderListAction" >
+            <result>/shahiwebpages/PcdEntry/coviewsub.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhome.jsp</result>
+        </action>
+
+        <action name="OrderViewStyle" class="shahi.Action.PcdEntry.OrderListStyleAction" >
+            <result>/shahiwebpages/PcdEntry/coviewsubStyle.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhomeStyle.jsp</result>
+        </action>
+        <action name="pcdhomeStyle" class="shahi.Action.PcdEntry.homepageAction" >
+            <result>/shahiwebpages/PcdEntry/orderhomeStyle.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhomeStyle.jsp</result>
+        </action>
+        <action name="orderListStyleSave" class="shahi.Action.PcdEntry.orderListStyleSaveAction" >
+            <result>/shahiwebpages/PcdEntry/coviewsubStyle.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/coviewsubStyle.jsp</result>
+        </action>
+        <action name="OrderapprovalViewquery" method="coapprovalmethodquery" class="shahi.Action.PcdEntry.OrderListAction" >
+            <result>/shahiwebpages/PcdEntry/Approvalcoviewsubquery.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderapprovalqueryhome.jsp</result>
+        </action>
+        
+
+        <action name="OrderView" class="shahi.Action.PcdEntry.OrderListAction" >
+            <result>/shahiwebpages/PcdEntry/coviewsub.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhome.jsp</result>
+        </action>
+
+        <action name="OrderViewLink" class="shahi.Action.PcdEntry.OrderCreateAction" method ="lineview">
+            <result>/shahiwebpages/PcdEntry/co_editline.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/coviewsub.jsp</result>
+        </action>
+        <action name="updateOrderView" class="shahi.Action.PcdEntry.OrderCreateAction" method ="updateOrder">
+            <result>/shahiwebpages/PcdEntry/co_editline.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/co_editline.jsp</result>
+        </action>
+        <action name="pcdhome" class="shahi.Action.PcdEntry.homepageAction" >
+            <result>/shahiwebpages/PcdEntry/orderhome.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhome.jsp</result>
+        </action>
+        <action name="unitwiseqtydetailList" class="shahi.Action.PcdEntry.unitwiseqtydetailAction" >
+            <result>/shahiwebpages/PcdEntry/unitwiseqtydetail.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/unitwiseqtydetail.jsp</result>
+        </action>
+
+
+        <action name="OrderView1" class="shahi.Action.PcdEntry.unitwiseqtyAlldetailAction" >
+            <result>/shahiwebpages/PcdEntry/unitwiseqtyAlldetail.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/unitwiseqtyAlldetail.jsp</result>
+        </action>
+
+        <action name="unitwiseqtyAlldetailList" class="shahi.Action.PcdEntry.unitwiseqtyAlldetailAction" >
+            <result>/shahiwebpages/PcdEntry/unitwiseqtyAlldetail.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/unitwiseqtyAlldetail.jsp</result>
+        </action>
+        <action name="styleprocessflowhome" class="shahi.Action.PcdEntry.homepageAction" >
+            <result>/shahiwebpages/PcdEntry/orderhomeStyleprocess.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhomeStyleprocess.jsp</result>
+        </action> 
+        <action name="styleprocessflowoperationdt" class="shahi.Action.PcdEntry.StyleViewOperationsAction" >
+            <result>/shahiwebpages/PcdEntry/opviewStyleprocess.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderhomeStyleprocess.jsp</result>
+        </action>
+
+        <action name="pcddelaysess" class="shahi.Action.PcdEntry.PcdDelay.SessionCallAction" >
+            <result type="redirectAction">pcddelayAction.action</result>
+        </action> 
+      
+        <action name="*pcddelayAction" method="{1}" class="shahi.Action.PcdEntry.PcdDelay.PcdDelayAction" >
+            <result>/shahiwebpages/PcdEntry/PcdDelay/pcddelayjsp.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/PcdDelay/pcddelayjsp.jsp</result>
+            <result name="searchjsp">/shahiwebpages/PcdEntry/PcdDelay/pcddelayjsp.jsp</result>
+        </action> 
+        
+        
+ <action name="coapprovalhome" class="shahi.Action.PcdEntry.homepageAction" >
+      <result name="success" type="redirectAction">
+             <param name="actionName">Orderapprovalstylelist</param>
+             <param name="APPROVETYPE">${APPROVETYPE}</param>
+         </result>
+       <result name="error">/shahiwebpages/PcdEntry/Approvalcoviewsub.jsp</result>
+        </action>
+        
+         <action name="OrderapprovalView" method="coapprovalmethod" class="shahi.Action.PcdEntry.OrderListAction" >
+            <result>/shahiwebpages/PcdEntry/Approvalcoviewsub.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/Approvalcoviewsub.jsp</result>
+        </action>
+        
+        <action name="OrderapprovalViewquery" method="coapprovalmethodquery" class="shahi.Action.PcdEntry.OrderListAction" >
+            <result>/shahiwebpages/PcdEntry/Approvalcoviewsubquery.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/orderapprovalqueryhome.jsp</result>
+        </action>
+        
+        <action name="Orderapprovalstylelist" method="getstylemethod" class="shahi.Action.PcdEntry.OrderListAction" >
+            <result>/shahiwebpages/PcdEntry/Approvalcostylelist.jsp</result>
+            <result name="error">/shahiwebpages/PcdEntry/Approvalorderhome.jsp</result>
+        </action>
+        
+         <action name="*SpecSketchDescAction" method="{1}" class="shahi.Action.SamplingPattern.SpecSketchDescAction">
+            <result name="success">/shahiwebpages/SamplingPattern/SpecSketchDescQuery.jsp</result>
+            <result name="input">/shahiwebpages/SamplingPattern/SpecSketchDescQuery.jsp</result>
+            <result name="error">/shahiwebpages/SamplingPattern/error.jsp</result>
+            <result name="size">/shahiwebpages/SamplingPattern/SizeMaster.jsp</result>
+            <result name="newpg">/shahiwebpages/SamplingPattern/SpecSketchDesc.jsp</result>
+            <result name="style">/shahiwebpages/SamplingPattern/sampleimagelistjsp.jsp</result>
+            <result name="grmt">/shahiwebpages/SamplingPattern/grmtlst.jsp</result>
+            <result name="tail">/shahiwebpages/SamplingPattern/specpattlst.jsp</result>
+            <result name="done">/shahiwebpages/SamplingPattern/SpecSketchDesc.jsp</result>
+            <result name="stylst">/shahiwebpages/SamplingPattern/stylelist.jsp</result>
+        </action>
+        
+         <action name="sstAnalysysAction"  class="shahi.Action.shipment.SessionCallAction">
+         <result name="success">/shahiwebpages/shipment/StyleAnalysQueryjsp.jsp</result>
+         </action>
+        
+        
+     <action name="*stAnalysisAction" method="{1}" class="shahi.Action.shipment.StAnalysisAction">
+            <result name="success">/shahiwebpages/shipment/StyleAnalysQueryjsp.jsp</result>
+            <result name="newpage">/shahiwebpages/shipment/StyleAnalysMastjsp.jsp</result>
+            <result name="error">/shahiwebpages/shipment/StyleAnalysQueryjsp.jsp</result>
+            <result name="input">/shahiwebpages/shipment/StyleAnalysQueryjsp.jsp</result>
+            <result name="searchcodt">/shahiwebpages/shipment/searchcodtforplanjsp.jsp</result>
+            <result name="byr">/shahiwebpages/shipment/searchbuyeraddjsp.jsp</result>
+            <result name="inv">/shahiwebpages/shipment/searchinvjsp.jsp</result>
+            <result name="pack">/shahiwebpages/shipment/searchpackjsp.jsp</result>
+            
+            
+        </action>
+         <action name="styleanafileUploadAction" class="shahi.Action.shipment.fileUploadAction">
+           <interceptor-ref name="fileUpload">
+            <param name="maximumSize">5000000</param>
+       
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+            <result name="success">/shahiwebpages/shipment/fileupload.jsp</result>
+            <result name="input">/shahiwebpages/shipment/fileupload.jsp</result>
+             <result name="error">/shahiwebpages/shipment/fileupload.jsp</result>
+        </action>
+
+    </package>
+</struts>

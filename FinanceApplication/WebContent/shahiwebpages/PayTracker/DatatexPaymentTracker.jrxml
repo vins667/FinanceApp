@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentTracker" language="groovy" pageWidth="1300" pageHeight="595" orientation="Landscape" columnWidth="1300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="309"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="partyName" class="java.lang.String"/>
+	<field name="divisionCode" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="gateDate" class="java.lang.String"/>
+	<field name="mrnDate" class="java.lang.String"/>
+	<field name="recvAtAcct" class="java.lang.String"/>
+	<field name="piCreation" class="java.lang.String"/>
+	<field name="piInvno" class="java.lang.String"/>
+	<field name="piInvDate" class="java.lang.String"/>
+	<field name="purchaseOrderCode" class="java.lang.String"/>
+	<field name="invoiceCurrencyCode" class="java.lang.String"/>
+	<field name="invoiceAmount" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="responsible" class="java.lang.String"/>
+	<variable name="p_cnt" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{divisionCode}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="65" width="22" height="14"/>
+				<textElement/>
+				<text><![CDATA[S.N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="65" width="140" height="14"/>
+				<textElement/>
+				<text><![CDATA[Party Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="65" width="40" height="14"/>
+				<textElement/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Gate Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[MRN Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="65" width="107" height="14"/>
+				<textElement/>
+				<text><![CDATA[Received At Account]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[PI Creation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="609" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Invoice Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="684" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[PO No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="759" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Bill Currency	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="834" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Bill Amt.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="909" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Remarks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="984" y="65" width="75" height="14"/>
+				<textElement/>
+				<text><![CDATA[Responsible
+]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="394" y="0" width="140" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{partyName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="22" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{p_cnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="0" width="40" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="62" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{gateDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="137" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{mrnDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="212" y="0" width="107" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{recvAtAcct}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="319" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{piCreation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="534" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{piInvno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="609" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{piInvDate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="684" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{purchaseOrderCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="759" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{invoiceCurrencyCode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="834" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{invoiceAmount}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="909" y="0" width="74" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="984" y="0" width="75" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{responsible}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="44" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

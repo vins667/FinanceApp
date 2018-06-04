@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DispatchReport" pageWidth="860" pageHeight="650" orientation="Landscape" columnWidth="820" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="loc" class="java.lang.String"/>
+	<parameter name="date_from" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="date_to" class="java.lang.String"/>
+	<parameter name="port_1" class="java.lang.String"/>
+	<parameter name="date_from1" class="java.lang.String"/>
+	<parameter name="date_to1" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select trim(t5.cttx40) port_desc,trim(cha) cha,trim(cha_addr) chaaddr,UPPER(a.vehicle_no) vehicle_no,a.bos_no,a.bos_date,a.lr_no,a.lr_date,a.transporter,decode(fy_user,null,b.pkgs,b.fy_pkgs) pkgs,b.excs_inv_no,
+driver_mobile,trim(dispatch_via) dispatch_via,opcunm buyer_name,
+trim(buyer) buyer,trim(buyer_addr) buyer_addr,trunc(vch_dep_date) dep_date,port,
+seal_no,b.year,b.company,b.inv_no,actual_size
+from ei_bos_mast a,ei_Bos_dtls b,csytab_m4off t5,OCUSAD_M4OFF T6
+where a.bos_no=b.bos_no and
+a.bos_loct=b.bos_location and
+vch_dep_date between to_date($P{date_from1},'dd-mm-yyyy hh24:mi') and to_date($P{date_to1},'dd-mm-yyyy hh24:mi') and
+a.bos_loct like $P{loc} and
+nvl(b.dispatch_yn,'Y')<>'N' and
+vch_dep_date is not null and
+OPCONO = 111 AND OPADRT=1 and  trim(OPCUNO)=trim(buyer) and  trim(opadid)=trim(buyer_addr) and
+ t5.ctcono=111 and t5.ctstco='HAFE' and t5.ctstky=trim(a.port) $P!{p_query}
+order by 1,2,3,4]]>
+	</queryString>
+	<field name="PORT_DESC" class="java.lang.String"/>
+	<field name="CHA" class="java.lang.String"/>
+	<field name="CHAADDR" class="java.lang.String"/>
+	<field name="VEHICLE_NO" class="java.lang.String"/>
+	<field name="BOS_NO" class="java.math.BigDecimal"/>
+	<field name="BOS_DATE" class="java.sql.Timestamp"/>
+	<field name="LR_NO" class="java.lang.String"/>
+	<field name="LR_DATE" class="java.sql.Timestamp"/>
+	<field name="TRANSPORTER" class="java.lang.String"/>
+	<field name="PKGS" class="java.math.BigDecimal"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="DRIVER_MOBILE" class="java.lang.String"/>
+	<field name="DISPATCH_VIA" class="java.lang.String"/>
+	<field name="BUYER_NAME" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="BUYER_ADDR" class="java.lang.String"/>
+	<field name="DEP_DATE" class="java.sql.Timestamp"/>
+	<field name="PORT" class="java.lang.String"/>
+	<field name="SEAL_NO" class="java.lang.String"/>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="ACTUAL_SIZE" class="java.math.BigDecimal"/>
+	<variable name="PKGS_1" class="java.math.BigDecimal" resetType="Group" resetGroup="CHA" calculation="Sum">
+		<variableExpression><![CDATA[$F{PKGS}]]></variableExpression>
+	</variable>
+	<variable name="PKGS_2" class="java.math.BigDecimal" resetType="Group" resetGroup="PORT" calculation="Sum">
+		<variableExpression><![CDATA[$F{PKGS}]]></variableExpression>
+	</variable>
+	<variable name="PKGS_3" class="java.math.BigDecimal" resetType="Group" resetGroup="vehicle" calculation="Sum">
+		<variableExpression><![CDATA[$F{PKGS}]]></variableExpression>
+	</variable>
+	<group name="PORT" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{PORT}+$F{CHA}+$F{CHAADDR}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="15" width="55" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Vehicle No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="55" y="15" width="42" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LR No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="97" y="15" width="44" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LR Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="140" y="15" width="19" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Size]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="215" y="14" width="178" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Transporter]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="393" y="14" width="75" height="14" backcolor="#CCCCFF"/>
+					<box leftPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Driver Mobile #]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="468" y="15" width="166" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Buyer]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="668" y="15" width="61" height="14" backcolor="#CCCCFF"/>
+					<box leftPadding="2"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Inv No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="729" y="15" width="91" height="14" backcolor="#CCCCFF"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Po_No]]></text>
+				</staticText>
+				<subreport>
+					<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="141" y="0" width="207" height="14" isPrintInFirstWholeBand="true"/>
+					<subreportParameter name="cha1addr">
+						<subreportParameterExpression><![CDATA[$F{CHAADDR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CHA1">
+						<subreportParameterExpression><![CDATA[$F{CHA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/DispatchReport_subreport1.jasper"]]></subreportExpression>
+				</subreport>
+				<textField>
+					<reportElement x="0" y="0" width="141" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PORT_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="159" y="14" width="56" height="14" backcolor="#CCCCFF"/>
+					<box leftPadding="2"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Seal No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="634" y="15" width="34" height="14" backcolor="#CCCCFF"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ctns #]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="61">
+				<textField>
+					<reportElement x="634" y="0" width="34" height="14"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PKGS_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="531" y="0" width="103" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[** Port Total **]]></text>
+				</staticText>
+				<subreport>
+					<reportElement x="0" y="23" width="820" height="38"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="port">
+						<subreportParameterExpression><![CDATA[$F{PORT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ch2addr">
+						<subreportParameterExpression><![CDATA[$F{CHAADDR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ch2">
+						<subreportParameterExpression><![CDATA[$F{CHA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="date_from">
+						<subreportParameterExpression><![CDATA[$P{date_from1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="date_to">
+						<subreportParameterExpression><![CDATA[$P{date_to1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="loc">
+						<subreportParameterExpression><![CDATA[$P{loc}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="s_query">
+						<subreportParameterExpression><![CDATA[$P{p_query}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/DispatchReport_summary2.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="CHA">
+		<groupExpression><![CDATA[$F{CHA}]]></groupExpression>
+	</group>
+	<group name="vehicle">
+		<groupExpression><![CDATA[$F{VEHICLE_NO}]]></groupExpression>
+		<groupFooter>
+			<band height="14">
+				<textField>
+					<reportElement x="634" y="1" width="34" height="13"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PKGS_3}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="531" y="1" width="103" height="13"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[** VehicleTotal **]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="0" width="820" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="13" width="820" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="44" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="41" width="820" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="26" width="97" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="709" y="26" width="71" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="780" y="26" width="40" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="true">
+				<reportElement x="97" y="26" width="612" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date From : "+$P{date_from1}+" To :"+$P{date_to1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="820" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dispatch Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="94" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Loc : "+$P{loc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="55" y="0" width="42" height="14" isPrintInFirstWholeBand="true" printWhenGroupChanges="vehicle"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LR_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="97" y="0" width="44" height="14" isPrintInFirstWholeBand="true" printWhenGroupChanges="vehicle"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LR_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="140" y="0" width="19" height="14" isPrintInFirstWholeBand="true" printWhenGroupChanges="vehicle"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACTUAL_SIZE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="215" y="0" width="178" height="14" printWhenGroupChanges="vehicle"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISPATCH_VIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="393" y="0" width="75" height="14" isPrintInFirstWholeBand="true" printWhenGroupChanges="vehicle"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DRIVER_MOBILE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="668" y="0" width="61" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="0" y="0" width="55" height="14" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VEHICLE_NO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="729" y="0" width="91" height="14"/>
+				<subreportParameter name="p_inv">
+					<subreportParameterExpression><![CDATA[$F{EXCS_INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DispatchReport_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="468" y="0" width="166" height="14" isPrintInFirstWholeBand="true" printWhenGroupChanges="vehicle"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="634" y="0" width="34" height="14"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PKGS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="159" y="0" width="56" height="14" isPrintInFirstWholeBand="true" printWhenGroupChanges="vehicle"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SEAL_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="820" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_query}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="38" splitType="Stretch"/>
+	</summary>
+</jasperReport>

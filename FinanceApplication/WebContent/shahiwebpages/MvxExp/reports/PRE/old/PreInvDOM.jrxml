@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PreInvPrint" pageWidth="570" pageHeight="842" columnWidth="550" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="365"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\SHAHIPROJECT\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_INV" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="excs_inv_no" class="java.lang.String"/>
+	<field name="inv_date" class="java.lang.String"/>
+	<field name="MANUF_DESC" class="java.lang.String"/>
+	<field name="MANUF_ADDRESS" class="java.lang.String"/>
+	<field name="buyer_name" class="java.lang.String"/>
+	<field name="buyer_address" class="java.lang.String"/>
+	<field name="cons_name" class="java.lang.String"/>
+	<field name="DESTI_CNTRY_DESC" class="java.lang.String"/>
+	<field name="cons_addr" class="java.lang.String"/>
+	<field name="buyer_addr" class="java.lang.String"/>
+	<field name="CNTRY_ORIGIN_DESC" class="java.lang.String"/>
+	<field name="pre_carriage" class="java.lang.String"/>
+	<field name="PLACE_DESC" class="java.lang.String"/>
+	<field name="mode_of_ship" class="java.lang.String"/>
+	<field name="LOADING_PORT_DESC" class="java.lang.String"/>
+	<field name="DISCHARGE_DESC" class="java.lang.String"/>
+	<field name="payment_term" class="java.lang.String"/>
+	<field name="ship_term" class="java.lang.String"/>
+	<field name="CRNCY_CODE" class="java.lang.String"/>
+	<field name="exp_type_desc" class="java.lang.String"/>
+	<field name="hs_code" class="java.lang.String"/>
+	<field name="fwd_custom" class="java.lang.String"/>
+	<field name="ERR_MSG" class="java.lang.String"/>
+	<field name="BPOLIST" class="java.util.List"/>
+	<field name="INVLINELIST" class="java.util.List"/>
+	<field name="STYLIST" class="java.util.List"/>
+	<field name="cons_address" class="java.lang.String"/>
+	<field name="TINVQTY" class="java.lang.Double"/>
+	<field name="TNETWT" class="java.lang.Double"/>
+	<field name="TFOB" class="java.lang.Double"/>
+	<field name="cost_centre" class="java.lang.String"/>
+	<field name="plan_no" class="java.lang.String"/>
+	<field name="MSG2" class="java.lang.String"/>
+	<field name="MSG1" class="java.lang.String"/>
+	<field name="SHIP_DESC" class="java.lang.String"/>
+	<field name="comm_per" class="java.lang.String"/>
+	<field name="TINR" class="java.lang.Integer"/>
+	<field name="INV_FC" class="java.lang.Double"/>
+	<field name="AMT_IN_WORD" class="java.lang.String"/>
+	<field name="HNGRLIST" class="java.util.List"/>
+	<field name="DESTI_CNTRY" class="java.lang.String"/>
+	<field name="CTNS" class="java.lang.String"/>
+	<field name="location" class="java.lang.String"/>
+	<field name="FACILITY" class="java.lang.String"/>
+	<field name="TAX_PERCENT" class="java.lang.Double"/>
+	<field name="MANUF_CST" class="java.lang.String"/>
+	<field name="MANUF_TIN" class="java.lang.String"/>
+	<field name="TAX_TYPE" class="java.lang.String"/>
+	<field name="TAX_CAL_PER" class="java.lang.Double"/>
+	<field name="upcharge_per" class="java.lang.Double"/>
+	<field name="UP_AMT" class="java.lang.Double"/>
+	<field name="TAXABLE_VALUE" class="java.lang.Double"/>
+	<field name="TAX_AMT" class="java.lang.Double"/>
+	<field name="TGRDECL" class="java.lang.Double"/>
+	<field name="GRPER" class="java.lang.Double"/>
+	<field name="transport_cost" class="java.lang.Double"/>
+	<field name="con_cst" class="java.lang.String"/>
+	<field name="con_tin" class="java.lang.String"/>
+	<field name="MITYPE" class="java.lang.String"/>
+	<field name="exp_type" class="java.lang.String"/>
+	<variable name="cf_comm" class="java.lang.String">
+		<variableExpression><![CDATA["Commission "+$F{comm_per}+" % on total FOB Value :"+$F{CRNCY_CODE}+" "+$F{TFOB}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="INVHEAD" class="java.lang.String">
+		<variableExpression><![CDATA[($F{location}.equals("100") ?"COMMERCIAL TAX INVOICE" :
+    "BILL OF SALE")]]></variableExpression>
+	</variable>
+	<variable name="TOTALAMT" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{TFOB}+$F{UP_AMT}-$F{TGRDECL}]]></variableExpression>
+	</variable>
+	<variable name="NET_VALUE" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{TAX_AMT}+$F{TAXABLE_VALUE}+($F{TINVQTY}*$F{transport_cost})]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{UP_AMT}+$F{TFOB}]]></variableExpression>
+	</variable>
+	<variable name="gr_text" class="java.lang.String">
+		<variableExpression><![CDATA["Discount "+$F{GRPER}+"% of "+$F{ship_term}+"Value  - "]]></variableExpression>
+	</variable>
+	<variable name="tptcost" class="java.lang.Float">
+		<variableExpression><![CDATA[$F{transport_cost}.floatValue()*$F{TINVQTY}.floatValue()]]></variableExpression>
+	</variable>
+	<variable name="tpt_desc" class="java.lang.String">
+		<variableExpression><![CDATA["Transport Cost @"+$F{transport_cost}+" INR Per Pcs"]]></variableExpression>
+	</variable>
+	<background>
+		<band height="822" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="550" height="822"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement mode="Transparent" x="166" y="404" width="147" height="58">
+						<printWhenExpression><![CDATA[$F{fwd_custom}==null]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Times New Roman" size="13" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Not Good For Custom Submission]]></text>
+				</staticText>
+				<line>
+					<reportElement x="493" y="283" width="1" height="296"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="452" y="283" width="1" height="296"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="400" y="283" width="1" height="296"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<frame>
+					<reportElement x="13" y="731" width="70" height="45">
+						<printWhenExpression><![CDATA[$F{DESTI_CNTRY}.equals("BG")]]></printWhenExpression>
+					</reportElement>
+					<staticText>
+						<reportElement x="43" y="29" width="16" height="14"/>
+						<textElement textAlignment="Left">
+							<font fontName="Times New Roman" size="12" isBold="true"/>
+						</textElement>
+						<text><![CDATA[PL]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="1" y="29" width="16" height="14"/>
+						<textElement textAlignment="Center">
+							<font fontName="Times New Roman" size="12" isBold="true"/>
+						</textElement>
+						<text><![CDATA[E]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="17" y="1" width="24" height="14"/>
+						<textElement textAlignment="Center">
+							<font fontName="Times New Roman" size="12" isBold="true"/>
+						</textElement>
+						<text><![CDATA[S]]></text>
+					</staticText>
+					<line>
+						<reportElement x="13" y="36" width="30" height="1"/>
+						<graphicElement>
+							<pen lineWidth="0.5"/>
+						</graphicElement>
+					</line>
+					<line>
+						<reportElement x="31" y="13" width="14" height="18"/>
+						<graphicElement>
+							<pen lineWidth="0.5"/>
+						</graphicElement>
+					</line>
+					<line direction="BottomUp">
+						<reportElement mode="Opaque" x="12" y="13" width="14" height="18"/>
+						<graphicElement>
+							<pen lineWidth="0.5"/>
+						</graphicElement>
+					</line>
+				</frame>
+			</frame>
+		</band>
+	</background>
+	<title>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement x="471" y="4" width="18" height="11"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cost_centre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="489" y="4" width="47" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plan_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="186" y="0" width="176" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{location}.equals("100") ?"COMMERCIAL TAX INVOICE" :
+   ( $F{TAX_PERCENT}>0 ? "TAX INVOICE " :  "BILL OF SALE") )]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="84" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="550" height="84"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.25" lineColor="#000000"/>
+					<leftPen lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement isPrintRepeatedValues="false" mode="Opaque" x="245" y="0" width="305" height="84"/>
+					<box>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<staticText>
+						<reportElement x="12" y="3" width="72" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Invoice No & Date]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="217" y="3" width="77" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Exporter Ref #               ]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="12" y="16" width="62" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{excs_inv_no}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="73" y="16" width="56" height="12"/>
+						<textElement>
+							<font size="8"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{inv_date}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="12" y="30" width="59" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Buyer Order No.  ]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="12" y="58" width="111" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Other References(s)]]></text>
+					</staticText>
+					<line>
+						<reportElement x="154" y="0" width="1" height="28"/>
+						<graphicElement>
+							<pen lineWidth="0.25"/>
+						</graphicElement>
+					</line>
+					<line>
+						<reportElement x="0" y="28" width="305" height="1"/>
+						<graphicElement>
+							<pen lineWidth="0.25"/>
+						</graphicElement>
+					</line>
+					<line>
+						<reportElement x="0" y="55" width="305" height="1"/>
+						<graphicElement>
+							<pen lineWidth="0.25"/>
+						</graphicElement>
+					</line>
+					<subreport>
+						<reportElement x="10" y="70" width="282" height="11"/>
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{STYLIST})]]></dataSourceExpression>
+						<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PreInvPrint_subreport3.jasper"]]></subreportExpression>
+					</subreport>
+					<staticText>
+						<reportElement x="223" y="14" width="29" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<text><![CDATA[ N.A.]]></text>
+					</staticText>
+					<subreport>
+						<reportElement x="11" y="42" width="282" height="11"/>
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{BPOLIST})]]></dataSourceExpression>
+						<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PreInvPrint_subreport3.jasper"]]></subreportExpression>
+					</subreport>
+					<textField>
+						<reportElement x="164" y="11" width="100" height="20"/>
+						<textElement/>
+						<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="95" y="1" width="100" height="20"/>
+						<textElement/>
+						<text><![CDATA[exp_type]]></text>
+					</staticText>
+				</frame>
+				<staticText>
+					<reportElement x="3" y="2" width="52" height="10">
+						<printWhenExpression><![CDATA[$F{MANUF_DESC}!=null]]></printWhenExpression>
+					</reportElement>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Manufacturer:  ]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="56" y="15" width="180" height="43"/>
+					<textElement>
+						<font fontName="Times New Roman" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MANUF_ADDRESS}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="55" y="4" width="157" height="10"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MANUF_DESC}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="12" y="60" width="27" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[OLD ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="12" y="71" width="28" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[CST/]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="43" y="60" width="113" height="10"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MANUF_CST}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="43" y="71" width="125" height="10"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MANUF_TIN}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="158" y="60" width="73" height="11"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[[FOR REFERENCE]]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="93">
+			<frame>
+				<reportElement isPrintRepeatedValues="false" x="255" y="14" width="253" height="51">
+					<printWhenExpression><![CDATA[!$F{cons_addr}.equals($F{buyer_addr})]]></printWhenExpression>
+				</reportElement>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="1" y="0" width="233" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{buyer_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="1" y="13" width="234" height="38"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{buyer_address}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="255" y="1" width="128" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Buyer ( If other than consignee )          ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="67" width="138" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Country of Origin of Goods ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="67" width="150" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Country of Final Destination ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="245" y="65" width="305" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="394" y="66" width="1" height="26"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="258" y="80" width="133" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CNTRY_ORIGIN_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="400" y="80" width="150" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESTI_CNTRY_DESC}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="0" width="245" height="93"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="55" y="12" width="181" height="41"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cons_address}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="2" width="43" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Consignee]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement isPrintRepeatedValues="false" x="55" y="2" width="170" height="10"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cons_name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="80" y="59" width="152" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{con_cst}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="80" y="71" width="152" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{con_tin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="58" y="58" width="22" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[CST :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="58" y="70" width="22" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[LST :]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="313" y="16" width="212" height="20">
+					<printWhenExpression><![CDATA[$F{cons_addr}.equals($F{buyer_addr})]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SAME AS CONSIGNEE]]></text>
+			</staticText>
+		</band>
+		<band height="85">
+			<frame>
+				<reportElement x="245" y="0" width="305" height="85"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="9" y="7" width="143" height="14"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Terms of Delivery and Payment                 ]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="2" y="25" width="263" height="20">
+						<printWhenExpression><![CDATA[$F{payment_term}!=null]]></printWhenExpression>
+					</reportElement>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="73" y="3" width="177" height="12"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{payment_term}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="6" y="3" width="64" height="14"/>
+						<textElement>
+							<font fontName="Times New Roman" size="8" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Payment Term : ]]></text>
+					</staticText>
+				</frame>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="1" y="58" width="304" height="26"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MSG1}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="245" height="85"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="5" y="16" width="107" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pre_carriage}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="28" width="244" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="4" y="30" width="108" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Vessel/Flight No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="124" y="30" width="108" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Place of Loading]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="57" width="244" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="4" y="59" width="108" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Port of Discharge ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="124" y="59" width="108" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Port of Destination   ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="125" y="16" width="117" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PLACE_DESC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="4" y="43" width="117" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mode_of_ship}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="127" y="43" width="117" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{LOADING_PORT_DESC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="4" y="72" width="117" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DISCHARGE_DESC}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="125" y="72" width="117" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DESTI_CNTRY_DESC}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="116" y="0" width="1" height="84"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="5" y="3" width="108" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Pre-Carriage By]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="125" y="3" width="108" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Place of Receipt by Pre-Carrier]]></text>
+				</staticText>
+			</frame>
+		</band>
+		<band height="53">
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="113" y="41" width="435" height="10" isPrintWhenDetailOverflows="true"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{INVLINELIST})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PreInvPrint_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="54" y="41" width="29" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pkgs ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="29" width="38" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[HS Code :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="153" y="29" width="98" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hs_code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="29" width="64" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CORR.BOXES.]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="0" width="550" height="25"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="4" y="1" width="44" height="21"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Marks & Nos.               ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="54" y="1" width="47" height="21"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[No. & Kind of Pkgs]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="112" y="1" width="137" height="11"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Description of Goods ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="410" y="1" width="35" height="21"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Quantity  ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="464" y="1" width="24" height="13"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Rate ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="499" y="1" width="45" height="13"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Amount]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="501" y="13" width="22" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ship_term}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="523" y="13" width="24" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CRNCY_CODE}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="113" y="13" width="203" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{exp_type_desc}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<elementGroup/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="12" y="41" width="34" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CTNS}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="9">
+			<subreport>
+				<reportElement x="113" y="0" width="242" height="9"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{HNGRLIST})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "PreInvPrint_subreport4.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="11">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="10" y="0" width="530" height="11"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ERR_MSG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="7" y="0" width="527" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIP_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="12" y="13" width="304" height="12">
+					<printWhenExpression><![CDATA[$F{comm_per}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cf_comm}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="339" y="12" width="210" height="12">
+					<printWhenExpression><![CDATA[$F{TGRDECL}>0]]></printWhenExpression>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement x="29" y="0" width="140" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{gr_text}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="171" y="0" width="35" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TGRDECL}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="256">
+			<frame>
+				<reportElement x="0" y="0" width="550" height="13"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<staticText>
+					<reportElement x="7" y="1" width="59" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Net Net Weight: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="355" y="1" width="39" height="12"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL # ]]></text>
+				</staticText>
+				<textField pattern="###0.000" isBlankWhenNull="true">
+					<reportElement x="68" y="1" width="53" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TNETWT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0">
+					<reportElement x="394" y="1" width="40" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TINVQTY}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="490" y="1" width="53" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{INV_FC}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="286" y="57" width="263" height="43">
+					<printWhenExpression><![CDATA[$F{TAX_PERCENT}>0]]></printWhenExpression>
+				</reportElement>
+				<textField pattern="###0.00">
+					<reportElement x="202" y="26" width="55" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{NET_VALUE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="85" y="26" width="117" height="14"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Invoice Value :]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="52" y="1" width="149" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TAX_TYPE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="200" y="1" width="57" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TAX_AMT}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement x="0" y="13" width="261" height="13">
+						<printWhenExpression><![CDATA[$F{transport_cost}>0]]></printWhenExpression>
+					</reportElement>
+					<textField pattern="">
+						<reportElement x="0" y="1" width="199" height="12"/>
+						<textElement textAlignment="Right">
+							<font fontName="Times New Roman" size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{tpt_desc}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<textField pattern="###0.00">
+					<reportElement x="200" y="14" width="57" height="11">
+						<printWhenExpression><![CDATA[$F{transport_cost}>0]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{tptcost}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="388" y="239" width="148" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[For   SHAHI EXPORTS PVT LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="198" width="115" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Signature and Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="226" width="54" height="14">
+					<printWhenExpression><![CDATA[!$F{exp_type}.equals("JOB")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Declaration : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="226" width="307" height="27">
+					<printWhenExpression><![CDATA[!$F{exp_type}.equals("JOB")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[1. We declare that this invoice shows the actual price of goods described and correct. ]]></text>
+			</staticText>
+			<frame>
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="308" y="14" width="239" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{upcharge_per}>0]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="90" y="0" width="54" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[Upcharge ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="164" y="0" width="13" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<text><![CDATA[%]]></text>
+				</staticText>
+				<textField pattern="###0.00">
+					<reportElement x="145" y="0" width="17" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{upcharge_per}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="177" y="0" width="57" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{UP_AMT}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="310" y="43" width="239" height="13">
+					<printWhenExpression><![CDATA[$F{TAX_CAL_PER}>=1 && $F{TAX_CAL_PER}<=99]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="98" y="0" width="75" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Taxable Value :]]></text>
+				</staticText>
+				<textField pattern="###0.00">
+					<reportElement x="174" y="0" width="57" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TAXABLE_VALUE}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="5" y="108" width="75" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Values in Words :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="86" y="108" width="463" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMT_IN_WORD}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="334" y="26" width="212" height="17"/>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="155" y="4" width="53" height="11"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTALAMT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="80" y="4" width="75" height="12"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Value :]]></text>
+				</staticText>
+				<line>
+					<reportElement x="73" y="2" width="136" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</frame>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,115 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="m4shipment" extends="struts-default">  
+         <action name="sessshipplanm4Action"  class="shahi.Action.m4shipment.SessionCallAction">
+		    <result name="success">/shahiwebpages/m4shipment/shipmentplanqueryjsp.jsp</result>
+	 </action>
+         <action name="*shipmentm4PlanAction" method="{1}" class="shahi.Action.m4shipment.ShipmentPlanAction">
+	            <result name="success">/shahiwebpages/m4shipment/shipmentplanqueryjsp.jsp</result>
+        	    <result name="newpage">/shahiwebpages/m4shipment/shipmentplanmastjsp.jsp</result>
+	            <result name="error">/shahiwebpages/m4shipment/shipmentplanqueryjsp.jsp</result>
+        	    <result name="input">/shahiwebpages/m4shipment/shipmentplanqueryjsp.jsp</result>
+	            <result name="searchcodt">/shahiwebpages/m4shipment/searchcodtforplanjsp.jsp</result>
+        	    <result name="byr">/shahiwebpages/m4shipment/searchbuyeraddjsp.jsp</result>
+	            <result name="inv">/shahiwebpages/m4shipment/searchinvjsp.jsp</result>
+        	    <result name="pack">/shahiwebpages/m4shipment/searchpackjsp.jsp</result>                      
+	  </action>
+            
+             <action name="*ShipAjaxm4Action" method="{1}" class="shahi.Action.shipment.ShipmentPlanAction">
+		            <result type="stream">
+                      <param name="contentType">text/html</param>
+                      <param name="inputName">inputStream</param>
+                   </result>
+           </action>
+             
+               <action name="*m4sessCallAction" method="{1}" class="shahi.Action.m4shipment.SessionChallanCallAction">
+		     <result name="success">/shahiwebpages/m4shipment/delchalanquery.jsp</result>
+                     <result name="error">/shahiwebpages/m4shipment/delchalanquery.jsp</result>
+                     <result name="division">/shahiwebpages/m4shipment/division.jsp</result>
+		</action>
+
+
+		<action name="m4unitViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="unitView">
+		     <result name="unitview">/shahiwebpages/m4shipment/unitsearch.jsp</result>
+		</action>
+                <action name="m4unitToViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="unitToView">
+		     <result name="unitviewto">/shahiwebpages/m4shipment/unitsearchTO.jsp</result>
+		</action>
+                 <action name="m4bosviewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="BosView">
+		     <result name="bosview">/shahiwebpages/m4shipment/BosList.jsp</result>
+		</action>
+                
+
+		<action name="m4agentViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="agentView">
+		     <result name="agentview">/shahiwebpages/m4shipment/agentsearch.jsp</result>
+		</action>
+
+		<action name="m4vendorViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="agentView">
+		     <result name="agentview">/shahiwebpages/m4shipment/vendsearch.jsp</result>
+		</action>
+
+		<action name="m4buyerViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="buyerView">
+		     <result name="buyerview">/shahiwebpages/m4shipment/buyersearch.jsp</result>
+		</action>
+
+		<action name="m4deliveryChalanViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="deliveryChalanView">
+		     <result name="deliveryview">/shahiwebpages/m4shipment/chalandetailsearch.jsp</result>
+		</action>
+               
+                <action name="m4attachedChalanViewAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="attachedchalanview">
+		     <result name="attachedview">/shahiwebpages/m4shipment/challanattacheddetail.jsp</result>
+		</action>
+
+		<action name="m4chalanEntryUpdateAction" class="shahi.Action.m4shipment.DeliveryChalanAction">
+		     <result>/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+		</action>
+
+		<action name="m4viewShipmentChalanEntryAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="getDataEntry">
+		     <result name="entryview">/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+		</action>
+
+		<action name="m4viewDelChalanQueryAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="getDataDeliverChalanDetail">
+		     <result name="detailView">/shahiwebpages/m4shipment/delchalanquery.jsp</result>
+		</action>
+
+		<action name="m4editDelChalanAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="getDataEdit">
+		     <result name="editView">/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+		</action>
+
+	      <action name="m4clearAction" class="shahi.Action.m4shipment.DeliveryChalanAction" method="getClear">
+		     <result name="clear">/shahiwebpages/m4shipment/delchalanquery.jsp</result>
+                     <result name="error">/shahiwebpages/m4shipment/delchalanquery.jsp</result>
+              </action>
+
+		  <action name="*m4AJXAction" method="{1}" class="shahi.Action.m4shipment.DeliveryChalanAction">
+		   <result type="stream">
+                      <param name="contentType">text/html</param>
+                      <param name="inputName">inputStream</param>
+                   </result>
+                </action>
+
+            <action name="m4chalanReUpdateAction" method="reupdate" class="shahi.Action.m4shipment.DeliveryChalanAction">
+		     <result>/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+                       <result name="success">/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+        	       <result name="error">/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+        	    <result name="input">/shahiwebpages/m4shipment/shipmentchalanentry.jsp</result>
+	   </action>
+
+		<!--  End Shipment Chalan Module -->
+               
+              
+              <action name="*m4shipmentConfAction" method="{1}" class="shahi.Action.m4shipmentConf.UpdShipmentConfDateAction">
+                    <result name="success">/shahiwebpages/m4shipmentConf/UpdShipmentConfDate.jsp</result>
+                    <result name="error">/shahiwebpages/m4shipmentConf/UpdShipmentConfDate.jsp</result>
+                    <result name="input">/shahiwebpages/m4shipmentConf/UpdShipmentConfDate.jsp</result>
+              </action>
+              
+               <action name="m4chalanStockQty" method="qtystocklist" class="shahi.Action.m4shipment.DeliveryChalanAction">
+                    <result name="qtystocklist">/shahiwebpages/m4shipment/chalanStockQty.jsp</result>
+                </action>
+     </package>
+</struts>

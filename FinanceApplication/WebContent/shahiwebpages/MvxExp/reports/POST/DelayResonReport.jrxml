@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DelayResonReport" pageWidth="2300" pageHeight="650" orientation="Landscape" columnWidth="2280" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="215"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\guddu data\\Projects\\ShahiProject\\sanjeevsir\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="loc" class="java.lang.String"/>
+	<parameter name="date_from" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="date_to" class="java.lang.String"/>
+	<parameter name="port_1" class="java.lang.String"/>
+	<parameter name="date_from1" class="java.lang.String"/>
+	<parameter name="date_to1" class="java.lang.String"/>
+	<parameter name="p_head" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.BUYER,decode(a1.portal_app,'Y','Portal','Non Portal') portal_buyer, a.excs_inv_no,a.DESTI_CNTRY,a.mode_of_ship,a.COST_CENTRE,a.CRNCY_CODE,a.ship_TERM,to_char(a.T_O_DATE,'dd-Mon-yyyy') T_O_DATE,to_char(a.TTO_DATE,'dd-Mon-yyyy') TTO_DATE,to_char(t_o_date,'yyyymmdd') to_int,trunc(tto_date)-trunc(t_o_date) delay_to,to_char(a.pre_docs_sent,'dd-Mon-yyyy') pre_docs_sent,trunc(pre_docs_sent)-trunc(t_o_date) delay_predocs,
+to_char(a.ETD_DATE,'dd-Mon-yyyy') ETD_DATE,to_char(a.DOC_SEND,'dd-Mon-yyyy') ftpdate,trunc(doc_send)-trunc(t_o_date) delay_ftp,
+to_char(a.fin_date,'dd-Mon-yyyy') fin_date,trunc(fin_date)-trunc(t_o_date) fin_delay,min(to_char(g.tr_date,'dd/mm/yyyy')) FBA,min(to_char(g.tr_date,'yyyymmdd')) fba_int,
+a.AC_HOLDER,a.MERCHANT_NAME,decode(nvl(self_tp,'N'),'N','Bulk','Sampmle') invtype,pre_print_no,sum(qty_endors) invqty,sum(qty_endors*(price_fc+nvl(price_misc,0)))-sum(gr_decl_amt) fob_value,min(to_char(C.tr_date,'dd/mm/yyyy')) pu_date,min(to_char(C.tr_date+nvl(DUE_CAL_DAYS,0),'dd/mm/yyyy')) due_date,
+min(to_char(D.tr_date,'dd/mm/yyyy')) PD1,min(to_char(E.tr_date,'dd/mm/yyyy')) PD2,min(to_char(E.tr_date,'dd/mm/yyyy')) PDA
+ from ei_endors_mast a,ei_endors_dtls b ,ei_truckout_track c,ei_truckout_track d,ei_truckout_track e,
+ei_truckout_track F,EI_TRUCKOUT_TRACK G,ei_buyer_req_mast a1
+where a.year=b.year and a.company=b.company and a.inv_no=b.inv_no and
+ a.year=c.year(+) and a.company=c.company(+) and a.inv_no=c.inv_no(+) and c.tr_type(+)='PU'  and
+ a.year=d.year(+) and a.company=d.company(+) and a.inv_no=d.inv_no(+) and d.tr_type(+)='PD1' and
+ a.year=E.year(+) and a.company=E.company(+) and a.inv_no=E.inv_no(+) and E.tr_type(+)='PD2' and
+ a.year=F.year(+) and a.company=F.company(+) and a.inv_no=F.inv_no(+) and F.tr_type(+)='PDA' and
+ a.year=G.year(+) and a.company=G.company(+) and a.inv_no=G.inv_no(+) and G.tr_type(+)='FBA' and
+ a.LOCATION=$P{loc} and a.T_O_DATE between $P{date_from} and $P{date_to}
+and a.buyer=a1.buyer(+)
+   $P!{p_query}
+group by
+ a.BUYER,decode(a1.portal_app,'Y','Portal','Non Portal'),a.excs_inv_no,a.DESTI_CNTRY,a.mode_of_ship,a.COST_CENTRE,a.CRNCY_CODE,a.ship_TERM,to_char(a.T_O_DATE,'dd-Mon-yyyy') ,to_char(tto_date,'dd-Mon-yyyy'),trunc(tto_date)-trunc(t_o_date),to_char(t_o_date,'yyyymmdd'),to_char(a.pre_docs_sent,'dd-Mon-yyyy'),trunc(pre_docs_sent)-trunc(t_o_date),
+to_char(a.ETD_DATE,'dd-Mon-yyyy'),to_char(a.DOC_SEND,'dd-Mon-yyyy'),trunc(doc_send)-trunc(t_o_date),to_char(fin_date,'dd-Mon-yyyy'),trunc(fin_date)-trunc(t_o_date),a.AC_HOLDER,a.MERCHANT_NAME,pre_print_no,
+decode(nvl(self_tp,'N'),'N','Bulk','Sampmle')
+order by 1,2]]>
+	</queryString>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="PORTAL_BUYER" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="DESTI_CNTRY" class="java.lang.String"/>
+	<field name="MODE_OF_SHIP" class="java.lang.String"/>
+	<field name="COST_CENTRE" class="java.lang.String"/>
+	<field name="CRNCY_CODE" class="java.lang.String"/>
+	<field name="SHIP_TERM" class="java.lang.String"/>
+	<field name="T_O_DATE" class="java.lang.String"/>
+	<field name="TTO_DATE" class="java.lang.String"/>
+	<field name="TO_INT" class="java.lang.Integer"/>
+	<field name="DELAY_TO" class="java.math.BigDecimal"/>
+	<field name="PRE_DOCS_SENT" class="java.lang.String"/>
+	<field name="DELAY_PREDOCS" class="java.math.BigDecimal"/>
+	<field name="ETD_DATE" class="java.lang.String"/>
+	<field name="FTPDATE" class="java.lang.String"/>
+	<field name="DELAY_FTP" class="java.math.BigDecimal"/>
+	<field name="FIN_DATE" class="java.lang.String"/>
+	<field name="FIN_DELAY" class="java.math.BigDecimal"/>
+	<field name="FBA" class="java.lang.String"/>
+	<field name="FBA_INT" class="java.lang.Integer"/>
+	<field name="AC_HOLDER" class="java.lang.String"/>
+	<field name="MERCHANT_NAME" class="java.lang.String"/>
+	<field name="INVTYPE" class="java.lang.String"/>
+	<field name="PRE_PRINT_NO" class="java.lang.String"/>
+	<field name="INVQTY" class="java.math.BigDecimal"/>
+	<field name="FOB_VALUE" class="java.math.BigDecimal"/>
+	<field name="PU_DATE" class="java.lang.String"/>
+	<field name="DUE_DATE" class="java.lang.String"/>
+	<field name="PD1" class="java.lang.String"/>
+	<field name="PD2" class="java.lang.String"/>
+	<field name="PDA" class="java.lang.String"/>
+	<variable name="FBA_DELAY" class="java.lang.Integer" resetType="Column">
+		<variableExpression><![CDATA[$F{FBA_INT}-$F{TO_INT}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="54">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="26" width="125" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2185" y="26" width="54" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="2239" y="26" width="40" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="true">
+				<reportElement x="125" y="26" width="2060" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date From : "+$P{date_from}+" To :"+$P{date_to}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="2279" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documents Submission Report]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="125" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Loc : "+$P{loc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="40" width="59" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Buyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="199" y="40" width="59" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destination]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="325" y="40" width="108" height="14" backcolor="#CCCCFF"/>
+				<box rightPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PO #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="473" y="40" width="37" height="14" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Currency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="510" y="40" width="67" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="617" y="40" width="48" height="14" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bulk/Sample]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="725" y="40" width="65" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="125" y="40" width="74" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inv No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="294" y="40" width="31" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PCH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="433" y="40" width="40" height="14" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="577" y="40" width="40" height="14" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pay Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="665" y="40" width="60" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ETD  Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1129" y="40" width="63" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FTP  Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1343" y="40" width="62" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doc Rect Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1405" y="40" width="64" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1st sub]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1469" y="40" width="56" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2nd sub]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1525" y="40" width="60" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PU Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1585" y="40" width="60" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Due Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1645" y="40" width="157" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A/C Holder]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1802" y="40" width="149" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Merchant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1951" y="40" width="45" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delays days]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1996" y="40" width="143" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay Short Reason]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2139" y="40" width="140" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reason for Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="59" y="40" width="66" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Portal/Non Portal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="790" y="40" width="65" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TTO Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="855" y="40" width="54" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="909" y="40" width="65" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PreDocs Sent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="974" y="40" width="43" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1017" y="40" width="65" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Forwdr Inv Rct]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1082" y="40" width="47" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1192" y="40" width="47" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1239" y="40" width="62" height="14" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[77  Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1301" y="40" width="42" height="14" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="258" y="40" width="36" height="14" backcolor="#CCCCFF"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mode]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="59" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="199" y="0" width="59" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESTI_CNTRY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="325" y="0" width="108" height="14"/>
+				<box rightPadding="4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRE_PRINT_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="294" y="0" width="31" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COST_CENTRE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="473" y="0" width="37" height="14"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRNCY_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="725" y="0" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_O_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="433" y="0" width="40" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INVQTY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="577" y="0" width="40" height="14"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIP_TERM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="665" y="0" width="60" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ETD_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1343" y="0" width="62" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="1645" y="0" width="157" height="14"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AC_HOLDER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="1802" y="0" width="149" height="14"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MERCHANT_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="617" y="0" width="48" height="14"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INVTYPE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="510" y="0" width="67" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOB_VALUE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1525" y="0" width="60" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PU_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="0" width="74" height="14"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1405" y="0" width="64" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PD1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1469" y="0" width="56" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PD2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1343" y="0" width="62" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PDA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1585" y="0" width="60" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DUE_DATE}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="1951" y="0" width="328" height="14"/>
+				<subreportParameter name="P_INV">
+					<subreportParameterExpression><![CDATA[$F{EXCS_INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/DelayResonReport_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="59" y="0" width="66" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PORTAL_BUYER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="790" y="0" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TTO_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="855" y="0" width="54" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELAY_TO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="909" y="0" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRE_DOCS_SENT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="974" y="0" width="43" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELAY_PREDOCS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1017" y="0" width="65" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FBA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1082" y="0" width="47" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{FBA_DELAY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1129" y="0" width="63" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FTPDATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1192" y="0" width="47" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DELAY_FTP}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="1239" y="0" width="62" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FIN_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1301" y="0" width="42" height="14"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FIN_DELAY}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="258" y="0" width="36" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODE_OF_SHIP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="1560" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_head}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

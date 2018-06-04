@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epcopy_report" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_loct" class="java.lang.String"/>
+	<parameter name="p_date_from" class="java.lang.String"/>
+	<parameter name="p_date_to" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\SHAHIPROJECTNEW\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_query" class="java.lang.String"/>
+	<parameter name="p_selftp" class="java.lang.String"/>
+	<parameter name="p_origin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_exptype" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_type" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  distinct  a.awb_no,S.shp_bill_no,to_char(S.shp_bill_date,'dd/mm/yyyy') shp_bill_date,S.LET_EXP_DATE, NVL(C1.idsunm,nvl(FWD_CODE,'NA')) FWD_CODE,c.buyer,c.CONS_ADDR,c.loading,cttx40 dis_cntry,C3.opcunm
+    from ei_shipment_mast a,ei_shipment_dtls b,ei_endors_mast c,ei_gvtinc_cntry f,ei_sbill_master S,ei_bos_transit E,
+    CIDMAS_VIEW_67  c1,CSYTAB C2,OCUSAD C3
+    where a.year=b.year  and
+    a.link_no=b.link_no and
+    b.year=c.year and
+    b.company=c.company and
+    b.inv_no=c.inv_no and
+    b.shp_bill_no=S.shp_bill_no and
+    b.shp_bill_date=S.shp_bill_date and
+    dis_cntry=F.cntry_code and
+    s.let_exp_date between F.eff_date and nvl(end_date,sysdate) and
+    s.let_exp_date between  $P{p_date_from} and  $P{p_date_to}
+    and c.loading =E.port_code
+    and E.mlfs_loct= $P{p_loct}
+    and nvl(c.cntry_origin,'IN') like $P{p_origin}
+    and exp_type like $P{p_exptype}
+    and nvl(self_tp,'N') like $P{p_selftp}
+    and  s.lcert_appl is null
+    and c1.idcono(+)=111  and  c1.idsuno(+)=fwd_code
+    and c2.ctcono=111  and c2.ctstco='CSCD' and c2.ctstky=DIS_CNTRY
+    and c3.OPCONO = 111 AND c3.OPADRT=1 and c3.opcuno=buyer and c3.opadid=CONS_ADDR
+    and not exists (select s.shp_bill_no,s.shp_bill_Date  from ei_mlfs_dtls x where x.shp_Bill_no=b.shp_Bill_no and x.shp_bill_date=b.shp_bill_date )
+ and 1 = (case when $P{p_type}='EP' then  case when s.flight_date is null then 1 else 0 end
+                    when $P{p_type}='LP' then case when  s.lcert_appl is null then 1 else 0 end
+                    when $P{p_type}='LA' then case when  (s.lcert_appl is not null and s.lcert_recv is null) then 1 else 0 end
+                    when $P{p_type}='BP' then  case when s.brc_date is null  then 1 else 0 end
+                    when $P{p_type}='RD' then case when (s.flight_date is not null and s.lcert_recv is not null and s.brc_date is not null) then 1 else 0 end
+                    else 1  end) $P!{p_query}
+    order by fwd_code,loading,s.shp_bill_no]]>
+	</queryString>
+	<field name="AWB_NO" class="java.lang.String"/>
+	<field name="SHP_BILL_NO" class="java.lang.String"/>
+	<field name="SHP_BILL_DATE" class="java.lang.String"/>
+	<field name="LET_EXP_DATE" class="java.sql.Timestamp"/>
+	<field name="FWD_CODE" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="CONS_ADDR" class="java.lang.String"/>
+	<field name="LOADING" class="java.lang.String"/>
+	<field name="DIS_CNTRY" class="java.lang.String"/>
+	<field name="OPCUNM" class="java.lang.String"/>
+	<group name="MNTH">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupFooter>
+			<band height="13"/>
+		</groupFooter>
+	</group>
+	<group name="LOADING">
+		<groupExpression><![CDATA[$F{LOADING}]]></groupExpression>
+		<groupFooter>
+			<band height="1"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="12">
+			<staticText>
+				<reportElement x="0" y="0" width="190" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Forwarder]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="0" width="145" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Awb/FCR No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="0" width="67" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="0" width="65" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/B No ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="0" width="50" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/B Date ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="0" width="88" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Destination Cntry]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="605" y="0" width="222" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Consignee]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="190" y="0" width="65" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHP_BILL_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="50" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHP_BILL_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="605" y="0" width="222" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OPCUNM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="0" width="88" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIS_CNTRY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="0" width="67" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOADING}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="190" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FWD_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="393" y="0" width="145" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="4"/>
+	</summary>
+</jasperReport>

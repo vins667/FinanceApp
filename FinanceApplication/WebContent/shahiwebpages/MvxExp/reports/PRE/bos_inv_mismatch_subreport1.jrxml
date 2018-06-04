@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bos_inv_mismatch_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_LOCT" class="java.lang.String"/>
+	<parameter name="DATE_FROM" class="java.lang.String"/>
+	<parameter name="DATE_TO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  ac_holder,a.excs_inv_no,b.bos_no,to_char(b.bos_date,'dd/mm/yyyy') bos_date,a.loading invport,b.port BosPort,a.buyer
+       from ei_endors_mast a,ei_bos_mast b,ei_bos_dtls c
+            where a.year=c.year and a.company=c.company and a.inv_no=c.inv_no
+                 and b.bos_no=c.bos_no and b.bos_loct=c.bos_location
+                 and a.location like  $P{P_LOCT}
+                 and bos_date between  $P{DATE_FROM} and  $P{DATE_TO}
+                  and trim(b.port)<>trim(a.loading) and nvl(dispatch_yn,'N')='Y'
+                  order by 1,2]]>
+	</queryString>
+	<field name="AC_HOLDER" class="java.lang.String"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="BOS_NO" class="java.math.BigDecimal"/>
+	<field name="BOS_DATE" class="java.lang.String"/>
+	<field name="INVPORT" class="java.lang.String"/>
+	<field name="BOSPORT" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<variable name="p_slno" class="java.lang.Integer" resetType="Group" resetGroup="acholder" calculation="Count">
+		<variableExpression><![CDATA[$F{EXCS_INV_NO}]]></variableExpression>
+	</variable>
+	<group name="acholder">
+		<groupExpression><![CDATA[$F{AC_HOLDER}]]></groupExpression>
+		<groupFooter>
+			<band height="1">
+				<line>
+					<reportElement x="0" y="0" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="555" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Port of Clearance Mismatch]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="2" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="14" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="1" width="180" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[AC Holder]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="2" width="77" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Invoice No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="2" width="34" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sl#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="291" y="2" width="55" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bos No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="2" width="58" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bos Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="1" width="56" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Buyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="1" width="47" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Inv POC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="507" y="1" width="48" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BOS Port]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="180" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AC_HOLDER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="34" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{p_slno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="214" y="0" width="77" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="291" y="0" width="55" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOS_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="346" y="0" width="55" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOS_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="0" width="59" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="47" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INVPORT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="507" y="0" width="47" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BOSPORT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

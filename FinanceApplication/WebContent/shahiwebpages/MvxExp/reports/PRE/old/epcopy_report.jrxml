@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="epcopy_report" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="827" leftMargin="10" rightMargin="5" topMargin="5" bottomMargin="5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_loct" class="java.lang.String"/>
+	<parameter name="p_head" class="java.lang.String"/>
+	<parameter name="p_date_from" class="java.lang.String"/>
+	<parameter name="p_date_to" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\SHAHIPROJECT\\ShahiApplication\\web\\shahiwebpages\\MvxExp\\reports\\PRE\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_epst" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_query" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_licquery" class="java.lang.String"/>
+	<parameter name="p_licstat" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_selftp" class="java.lang.String"/>
+	<parameter name="p_origin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select to_char(s.shp_bill_date,'YYYYMM') mnth,e.loading,to_char(s.shp_bill_date,'MON-YY') cmon, e.place,e.year,a.awb_no,to_char(a.awb_date,'dd/mm/yy') awb_date,b.all_no,b.shp_bill_no,to_char(b.shp_bill_date,'dd/mm/yy') shp_bill_date,s.flight_no,to_char(s.flight_date,'dd/mm/yyyy') flight_date,e.buyer,ac_holder,
+b.company,b.inv_no, excs_inv_no,idsunm AGENT from
+ei_shipment_mast a,ei_shipment_dtls b,ei_endors_mast e,ei_sbill_master S,ei_bos_transit M,cidmas_m4 ag
+where E.crncy_code<>'INR' and
+E.loading=M.port_code and
+a.year=b.year
+and a.link_no=b.link_no
+and b.shp_bill_no=S.shp_bill_no
+and b.shp_bill_Date=S.shp_bill_date
+and b.year = e.year
+and b.company = e.company
+and b.inv_no = e.inv_no
+and M.mlfs_loct like $P{p_loct}
+and CNTRY_ORIGIN like $P{p_origin}
+AND NVL(e.SELF_TP,'N') LIKE $P{p_selftp}
+and S.shp_bill_date between $P{p_date_from} and $P{p_date_to}
+and ag.IDCONO(+)=111
+and trim(e.agent)=ag.IDSUNO(+)
+$P!{p_query} $P!{p_licstat} $P!{p_epst}
+order by 1,2]]>
+	</queryString>
+	<field name="MNTH" class="java.lang.String"/>
+	<field name="LOADING" class="java.lang.String"/>
+	<field name="CMON" class="java.lang.String"/>
+	<field name="PLACE" class="java.lang.String"/>
+	<field name="YEAR" class="java.math.BigDecimal"/>
+	<field name="AWB_NO" class="java.lang.String"/>
+	<field name="AWB_DATE" class="java.lang.String"/>
+	<field name="ALL_NO" class="java.lang.String"/>
+	<field name="SHP_BILL_NO" class="java.lang.String"/>
+	<field name="SHP_BILL_DATE" class="java.lang.String"/>
+	<field name="FLIGHT_NO" class="java.lang.String"/>
+	<field name="FLIGHT_DATE" class="java.lang.String"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="AC_HOLDER" class="java.lang.String"/>
+	<field name="COMPANY" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="EXCS_INV_NO" class="java.math.BigDecimal"/>
+	<field name="AGENT" class="java.lang.String"/>
+	<group name="MNTH">
+		<groupExpression><![CDATA[$F{MNTH}]]></groupExpression>
+		<groupFooter>
+			<band height="4">
+				<line>
+					<reportElement x="0" y="3" width="837" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LOADING">
+		<groupExpression><![CDATA[$F{LOADING}]]></groupExpression>
+		<groupFooter>
+			<band height="1">
+				<line>
+					<reportElement x="43" y="0" width="784" height="1"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="315" y="0" width="88" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EP Copy Status ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="403" y="0" width="65" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_head}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="693" y="8" width="80" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="773" y="6" width="40" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="5" width="100" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="20" width="70" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/B Date From :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="350" y="20" width="65" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_date_from}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="415" y="20" width="25" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[TO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="440" y="20" width="64" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_date_to}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="35" width="827" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="49" width="827" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="20" width="43" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[EP Loct :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="20" width="100" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_loct}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="34" width="43" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Mnth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="35" width="112" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Awb No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="36" width="48" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Awb Date ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="36" width="57" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Port]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="36" width="62" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/B No ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="36" width="48" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[S/B Date ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="36" width="49" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Flt Date ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="35" width="54" height="12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Inv No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="497" y="36" width="48" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Buyer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="556" y="36" width="63" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Agent]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="655" y="37" width="63" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[AC Holder]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="757" y="37" width="54" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Licence #]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="811" y="20" width="16" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_selftp}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="783" y="20" width="28" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Inv :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="718" y="20" width="36" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[O/Cntry :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="754" y="20" width="26" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_origin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="632" y="23" width="75" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<text><![CDATA[Crncy<>INR]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="43" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CMON}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="43" y="0" width="57" height="12" isPrintInFirstWholeBand="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOADING}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="100" y="0" width="112" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="212" y="0" width="48" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AWB_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="260" y="0" width="62" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHP_BILL_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="0" width="48" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHP_BILL_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="377" y="0" width="56" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FLIGHT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="0" width="56" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EXCS_INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="497" y="0" width="59" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="560" y="-1" width="89" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="652" y="0" width="102" height="12" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AC_HOLDER}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="755" y="0" width="72" height="11"/>
+				<subreportParameter name="p_company">
+					<subreportParameterExpression><![CDATA[$F{COMPANY}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_inv_no">
+					<subreportParameterExpression><![CDATA[$F{INV_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="p_year">
+					<subreportParameterExpression><![CDATA[$F{YEAR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/epcopy_report_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="23">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="556" y="0" width="271" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_licquery}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="545" height="12"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{p_query}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

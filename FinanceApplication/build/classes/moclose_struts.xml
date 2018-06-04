@@ -1,0 +1,51 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="moclose" extends="struts-default"> 
+        <action name="mofasilitylist" class="shahi.Action.MoClose.SessionCallAction" >
+            <result name="error">/shahiwebpages/MoClose/MoHomePage.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/MoHomePage.jsp</result>
+        </action>
+        <action name="mwomatlistActionS" class="shahi.Action.MoClose.mwomatListAction" >
+            <result name="error">/shahiwebpages/MoClose/MoHomePage.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/MoHomePage.jsp</result>
+        </action>
+        <action name="operationlistS" class="shahi.Action.MoClose.OperationListAction" >
+            <result name="error">/shahiwebpages/MoClose/MoHomePage.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/MoHomePage.jsp</result>
+        </action>
+
+
+        <action name="ocrsession" class="shahi.Action.MoClose.SessionCallAction" >
+            <result name="error">/shahiwebpages/MoClose/OcrClose.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/OcrClose.jsp</result>
+        </action>
+        <action name="searchrecitno" class="shahi.Action.MoClose.ocrCloseAction" >
+            <result name="error">/shahiwebpages/MoClose/OcrClose.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/OcrClose.jsp</result>
+        </action>
+
+        <action name="saveocrdateActionS" class="shahi.Action.MoClose.ocrCloseAction" >
+            <result name="error">/shahiwebpages/MoClose/OcrClose.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/OcrClose.jsp</result>
+        </action>
+
+
+        <action name="Docrsession" class="shahi.Action.MoClose.SessionCallAction" >
+            <result name="error">/shahiwebpages/MoClose/OcrCloseOD.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/OcrCloseOD.jsp</result>
+        </action>
+        <action name="Dsearchrecitno" class="shahi.Action.MoClose.ocrCloseAction" >
+            <result name="error">/shahiwebpages/MoClose/OcrCloseOD.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/OcrCloseOD.jsp</result>
+        </action>
+
+        <action name="DsaveocrdateActionS" class="shahi.Action.MoClose.ocrCloseAction" >
+            <result name="error">/shahiwebpages/MoClose/OcrCloseOD.jsp</result>
+            <result name="success" >/shahiwebpages/MoClose/OcrCloseOD.jsp</result>
+        </action>
+    </package>
+</struts>

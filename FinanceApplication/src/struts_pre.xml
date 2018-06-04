@@ -1,0 +1,34 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+     <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+    <include file="example.xml"/>
+    
+    <include file="pre_struts.xml"/>
+    <include file="gvtinc_struts.xml"/> 
+    <include file="BuyerInv_struts.xml"/>
+    <include file="post_struts.xml"/> 
+     
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+
+
+        <action name="MEISLCP"  class="shahi.Action.MvxExp.Reports.GVTINC.MEISLCPReportAction">
+            <result name="success">/shahiwebpages/MvxExp/GVTINC/MEISLCPReport.jsp</result>
+            <result name="input">/shahiwebpages/MvxExp/GVTINC/MEISLCPReport.jsp</result>
+            <result name="error">/shahiwebpages/MvxExp/GVTINC/MEISLCPReport.jsp</result>
+        </action> 
+        
+          <!-- 
+            <action name="*MeisLicenceSaleAjax" method="{1}" class="shahi.Action.MvxExp.POST.MeisLicenceSaleAction">
+            <result type="json">
+                <param name="excludeNullProperties">true</param>
+                <param name="encoding">UTF-8</param>
+                <param name="noCache">true</param>
+            </result>
+        </action>   -->
+
+    </package>
+</struts>

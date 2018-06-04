@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="bos_prn_100_subreport2" pageWidth="200" pageHeight="802" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_cha" class="java.lang.String"/>
+	<parameter name="p_cha_addr" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select sasuno cha_code, saadid,sasunm cha_name,trim(saadr1)||' '||rtrim(saadr2)||' '||rtrim(saadr3)||' '||rtrim(saadr4) cha_address from cidadr_m4off   b
+where  sacono=111
+and SAADTE='1'
+and sasuno=$P{p_cha}
+and saadid=$P{p_cha_addr}]]>
+	</queryString>
+	<field name="CHA_CODE" class="java.lang.String"/>
+	<field name="SAADID" class="java.lang.String"/>
+	<field name="CHA_NAME" class="java.lang.String"/>
+	<field name="CHA_ADDRESS" class="java.lang.String"/>
+	<variable name="chaname" class="java.lang.String" resetType="None">
+		<variableExpression><![CDATA[$F{CHA_NAME}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="4" y="0" width="196" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHA_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="6" y="13" width="194" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHA_ADDRESS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

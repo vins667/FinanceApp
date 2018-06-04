@@ -1,0 +1,381 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <package name="cutting" extends="struts-default">  
+        <action name="cuttablesessionAction"  class="shahi.Action.Cut.SessionCallAction">
+            <result name="success">/shahiwebpages/Cut/cuttabledt.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttabledt.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttabledt.jsp</result>
+        </action>
+        <action name="*tableinforAction" method="{1}"   class="shahi.Action.Cut.CutTablemsAction">
+            <result name="success">/shahiwebpages/Cut/cuttableunitlist.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttabledt.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttablems.jsp</result>
+            <result name="newinput">/shahiwebpages/Cut/cuttablems.jsp</result>
+            <result name="searchlocinput">/shahiwebpages/Cut/cuttablelinelist.jsp</result>
+            <result name="saveinput">/shahiwebpages/Cut/cuttablems.jsp</result>
+            <result name="listinput">/shahiwebpages/Cut/cuttabledt.jsp</result>
+        </action> 
+        <action name="*CuttingPlanSizeMasterAction" method="{1}" class="shahi.Action.Cut.CutNew.CutPlanSizeMasterAction">
+            <result name="success">/shahiwebpages/Cut/CutNew/CutPlanSizeMaster.jsp</result>
+            <result name="search">/shahiwebpages/Cut/CutNew/CutPlanSizeMasterQuery.jsp</result>
+            <result name="gmtlst">/shahiwebpages/Cut/CutNew/ColorMasterPage.jsp</result>
+            <result name="qty">/shahiwebpages/Cut/CutNew/QtyMasterPage.jsp</result>
+            <result name="fabcolor">/shahiwebpages/Cut/CutNew/FabrColorHidd.jsp</result>
+            <result name="input">/shahiwebpages/Cut/CutNew/CutPlanSizeMaster.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CutNew/CutPlanSizeMaster.jsp</result>
+        </action>
+        <action name="*CutPlanPercentMsAction" method="{1}" class="shahi.Action.Cut.CutPlanPercentMsAction">
+            <result name="success">/shahiwebpages/Cut/CutPlanPercentMs.jsp</result>
+            <result name="save">/shahiwebpages/Cut/CutPlanPercentMs.jsp</result>
+            <result name="input">/shahiwebpages/Cut/CutPlanPercentMs.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CutPlanPercentMs.jsp</result>
+        </action>
+        <action name="cutusersessionAction" method="makesession"  class="shahi.Action.Cut.cutusermsAction">
+            <result name="success">/shahiwebpages/Cut/cutuserlist.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cutuserlist.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cutuserlist.jsp</result>
+        </action>
+        <action name="*cutusershahiinforAction" method="{1}"   class="shahi.Action.Cut.cutusermsAction">
+            <result name="success">/shahiwebpages/Cut/cutusermsloct.jsp</result>
+            <result name="input">/shahiwebpages/Cut/error.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cutusermsloct.jsp</result>
+            <result name="newinput">/shahiwebpages/Cut/cutuserms.jsp</result>
+            <result name="searchlocinput">/shahiwebpages/Cut/cutusersearchloct.jsp</result>
+            <result name="saveinput">/shahiwebpages/Cut/cutuserms.jsp</result>
+            <result name="listinput">/shahiwebpages/Cut/cutuserlist.jsp</result>
+        </action> 
+        <action name="*StyleListPageAction" method="{1}" class="shahi.Action.Cut.StyleListPageAction">
+            <result name="success">/shahiwebpages/Cut/StyleListPage.jsp</result>
+            <result name="save">/shahiwebpages/Cut/StyleListPage.jsp</result>
+            <result name="input">/shahiwebpages/Cut/StyleListPage.jsp</result>
+            <result name="error">/shahiwebpages/Cut/StyleListPage.jsp</result>
+        </action>        
+        <action name="*LayerstatusinfoAction" method="{1}"   class="shahi.Action.Cut.cuttingLayerstatusAction">
+            <result name="success">/shahiwebpages/Cut/cuttingLayerstatus.jsp</result>
+            <result name="endbit">/shahiwebpages/Cut/cuttingEndBitQty.jsp</result>
+        </action>
+        <action name="spreadenttimesessionAction"  class="shahi.Action.Cut.SessionCallAction">
+            <result name="success">/shahiwebpages/Cut/SPREAD_END_TIME_UPDATION.jsp</result>
+            <result name="input">/shahiwebpages/Cut/SPREAD_END_TIME_UPDATION.jsp</result>
+            <result name="error">/shahiwebpages/Cut/SPREAD_END_TIME_UPDATION.jsp</result>
+        </action>
+        <action name="spreadenttimeupAction"  class="shahi.Action.Cut.SpreadendtimeUpdationAction">
+            <result name="success">/shahiwebpages/Cut/SPREAD_END_TIME_UPDATION.jsp</result>
+            <result name="input">/shahiwebpages/Cut/SPREAD_END_TIME_UPDATION.jsp</result>
+            <result name="error">/shahiwebpages/Cut/SPREAD_END_TIME_UPDATION.jsp</result>
+        </action>
+        <action name="*CuttingLayerNumberAction" method="{1}" class="shahi.Action.Cut.CuttingLayerNumberAction">
+            <result name="success">/shahiwebpages/Cut/CuttingLayerNumber.jsp</result>
+            <result name="save">/shahiwebpages/Cut/CuttingLayerNumber.jsp</result>
+            <result name="input">/shahiwebpages/Cut/CuttingLayerNumber.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CuttingLayerNumber.jsp</result>
+        </action>
+        <action name="cutscnusersessionAction"  class="shahi.Action.Cut.kbscan.cutusermsAction">
+            <result name="success">/shahiwebpages/Cut/kbscan/cutuserlist.jsp</result>
+            <result name="input">/shahiwebpages/Cut/kbscan/cutuserlist.jsp</result>
+            <result name="error">/shahiwebpages/Cut/kbscan/cutuserlist.jsp</result>
+        </action>
+        <action name="*cutscnusershahiinforAction" method="{1}"   class="shahi.Action.Cut.kbscan.cutusermsAction">
+            <result name="success">/shahiwebpages/Cut/kbscan/cutusermsloct.jsp</result>
+            <result name="input">/shahiwebpages/Cut/kbscan/error.jsp</result>
+            <result name="error">/shahiwebpages/Cut/kbscan/cutusermsloct.jsp</result>
+            <result name="newinput">/shahiwebpages/Cut/kbscan/cutuserms.jsp</result>
+            <result name="searchlocinput">/shahiwebpages/Cut/kbscan/cutusersearchloct.jsp</result>
+            <result name="saveinput">/shahiwebpages/Cut/kbscan/cutuserms.jsp</result>
+            <result name="listinput">/shahiwebpages/Cut/kbscan/cutuserlist.jsp</result>
+        </action>
+        <action name="*kbcardmasteraction" method="{1}" class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KBCardmasterqueryJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KBCardmasterqueryJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KBCardmasterqueryJsp.jsp</result>
+        </action>
+        <action name="kbcardmasternewaction" method="newexecute"  class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+        </action>
+        <action name="kbcardmasterdeleteaction"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KBCardmasterqueryJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KBCardmasterqueryJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KBCardmasterqueryJsp.jsp</result>
+        </action>
+        <action name="kbcardmasterdetail" method="kbcardmaster"  class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+        </action>
+        <action name="searchsizelistAction" method="sizemethod"  class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/sizelistjsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/sizelistjsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/sizelistjsp.jsp</result>
+        </action>
+    
+        <action name="kbcardsaveAction" method="createcardmethod"  class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+        </action>
+        <action name="kbcardmasterdetailaction" method="updatepage"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+        </action>
+    
+        <action name="updatekbcardsaveAction" method="updatecardmethod"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+        </action>
+    
+        <action name="allocatecardAction" method="allocatemethod"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/allocateCardjsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterUPJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/allocateCardjsp.jsp</result>
+        </action>
+ 
+        <action name="kbcardmasteractionrep"  method="reportemethod"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KBCardmasterqueryReportingJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KBCardmasterqueryReportingJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KBCardmasterqueryReportingJsp.jsp</result>
+        </action>
+    
+        <action name="kbcardmasterdetailactionrep" method="updatepage"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPReportingJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KBCardmasterqueryReportingJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KBCardmasterqueryReportingJsp.jsp</result>
+        </action>
+        <action name="updatekbcardsaveActionrep" method="updatecardmethodrep"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPReportingJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterUPReportingJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterUPReportingJsp.jsp</result>
+        </action>
+
+        <action name="updatekbcardsaveActionm" method="updatecardmethodmanual"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterJsp.jsp</result>
+        </action>
+
+        <action name="kbcardmasteractionprint" method="printmethod"  class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KBCardmasterqueryPrintingJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KBCardmasterqueryPrintingJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KBCardmasterqueryPrintingJsp.jsp</result>
+        </action>
+    
+        <action name="kbcardmasterdetailactionprint" method="updatepage"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPPrintingJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterUPPrintingJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterUPPrintingJsp.jsp</result>
+        </action>
+    
+        <action name="kbcardsaveActionprint" method="printpdfmethod"   class="shahi.Action.Cut.KBCardMasterAction">
+            <result name="success">/shahiwebpages/Cut/KbCardMasterUPPrintingJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/KbCardMasterUPPrintingJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/KbCardMasterUPPrintingJsp.jsp</result>
+        </action>
+        <action name="*LayerstatusM3infoAction" method="{1}"   class="shahi.Action.Cut.cuttingLayerM3updStatusAction">
+            <result name="success">/shahiwebpages/Cut/cuttingLayerM3updStatus.jsp</result> 
+        </action>
+        <action name="*CuttingLayerBundlingActionNew" method="{1}" class="shahi.Action.Cut.CuttingLayerBundlingActionNew">
+            <result name="success">/shahiwebpages/Cut/CuttingLayerBundlingNew.jsp</result>
+            <result name="input">/shahiwebpages/Cut/CuttingLayerBundlingNew.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CuttingLayerBundlingNew.jsp</result>
+        </action>     
+        <action name="*CuttingLayerBundlingEntryAtionNew" method="{1}" class="shahi.Action.Cut.CuttingLayerBundlingEntryAtionNew">
+            <result name="success">/shahiwebpages/Cut/CuttingLayerBundlingEntryNew.jsp</result>  
+            <result name="input">/shahiwebpages/Cut/CuttingLayerBundlingEntryNew.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CuttingLayerBundlingEntryNew.jsp</result>          
+        </action>
+        <action name="*CuttingLayerBundlingActionSplit" method="{1}" class="shahi.Action.Cut.CuttingLayerBundlingActionSplit">
+            <result name="success">/shahiwebpages/Cut/CuttingLayerBundlingSplit.jsp</result>
+            <result name="input">/shahiwebpages/Cut/CuttingLayerBundlingSplit.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CuttingLayerBundlingSplit.jsp</result>
+        </action>     
+        <action name="*CuttingLayerBundlingEntryAtionSplit" method="{1}" class="shahi.Action.Cut.CuttingLayerBundlingEntryAtionSplit">
+            <result name="success">/shahiwebpages/Cut/CuttingLayerBundlingEntrySplit.jsp</result>  
+            <result name="input">/shahiwebpages/Cut/CuttingLayerBundlingEntrySplit.jsp</result>
+            <result name="error">/shahiwebpages/Cut/CuttingLayerBundlingEntrySplit.jsp</result>          
+        </action>
+        <action name="*RollwiseBundlingAction" method="{1}" class="shahi.Action.Cut.RollwiseBundlingAction">
+            <result name="success">/shahiwebpages/Cut/RollwiseBundling.jsp</result>
+            <result name="input">/shahiwebpages/Cut/RollwiseBundling.jsp</result>
+            <result name="error">/shahiwebpages/Cut/RollwiseBundling.jsp</result>
+        </action>     
+        <action name="*RollwiseBundlingEntryAtion" method="{1}" class="shahi.Action.Cut.RollwiseBundlingEntryAtion">
+            <result name="success">/shahiwebpages/Cut/RollwiseBundlingEntry.jsp</result>  
+            <result name="input">/shahiwebpages/Cut/RollwiseBundlingEntry.jsp</result>
+            <result name="error">/shahiwebpages/Cut/RollwiseBundlingEntry.jsp</result>          
+        </action>
+        <action name="microcuttingplanquerynew" class="shahi.Action.CutNew.CallSessionAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">pchlstcuttingplanquerynew</param>                
+                <param name="PLANNO">${PLANNO}</param>
+            </result>
+        </action>
+        
+        <action name="*cuttingplanquerynew" method="{1}" class="shahi.Action.CutNew.CuttingPlanQueryAction">
+            <result name="success">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+            <result name="input">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+            <result name="error">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+        </action>
+         
+         
+        <action name="*cuttingplanquerynew" method="{1}" class="shahi.Action.CutNew.CuttingPlanQueryAction">
+            <result name="success">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+            <result name="input">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+            <result name="error">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+        </action>
+        <action name="cuttingplandelactionnew" class="shahi.Action.CutNew.MicroCuttingPlanSaveAction">
+            <result name="success">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+            <result name="input">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+            <result name="error">/shahiwebpages/CutNew/CutPlanEditListNew.jsp</result>
+        </action>
+        
+        <action name="*cuttinglistactionnew" method="{1}" class="shahi.Action.CutNew.MicroCuttingPlanListAction">
+            <result name="success">/shahiwebpages/CutNew/MicroCutPlanNew.jsp</result>
+            <result name="clist">/shahiwebpages/CutNew/ColorListPageNew.jsp</result>
+            <result name="qty">/shahiwebpages/CutNew/QtyPageNew.jsp</result>
+            <result name="fcolor">/shahiwebpages/CutNew/FabrColorNew.jsp</result>
+            <result name="wareholst">/shahiwebpages/CutNew/WarehouseListPageNew.jsp</result>
+            <result name="allocate">/shahiwebpages/CutNew/LineAllocateNew.jsp</result>
+            <result name="tableno">/shahiwebpages/CutNew/TableListPageNew.jsp</result>
+
+            <result name="detail">/shahiwebpages/CutNew/MicroCutDetailspageNew.jsp</result>
+            <result name="save">/shahiwebpages/CutNew/MicroCutDetailspageNew.jsp</result>
+            <result name="update">/shahiwebpages/CutNew/MicroCutDetailsNew.jsp</result>
+            <result name="detailupdate">/shahiwebpages/CutNew/MicroCutDetailsUpdatepageNew.jsp</result>
+            <result name="newexecute">/shahiwebpages/CutNew/MicroCutDetailsNew.jsp</result>
+            <result name="input">/shahiwebpages/CutNew/MicroCutPlanNew.jsp</result>
+            <result name="error">/shahiwebpages/CutNew/MicroCutPlanNew.jsp</result>
+            <result name="relink">/shahiwebpages/CutNew/relinkNew.jsp</result>
+            <result name="linelst">/shahiwebpages/CutNew/LineListNew.jsp</result>
+        </action>
+        <action name="*cuttingplansaveactionnew" method="{1}" class="shahi.Action.CutNew.MicroCuttingPlanSaveAction">
+            <result name="success"  type="redirectAction">
+                <param name="ITEM">%{ITEM}</param>
+                <param name="PLAN_NO">%{PLAN_NO}</param>
+                <param name="actionName">updatecuttinglistactionnew</param>            
+            </result>
+            <result name="search">/shahiwebpages/CutNew/MicroCutDetailsNew.jsp</result>
+            <result name="input">/shahiwebpages/CutNew/MicroCutPlanNew.jsp</result>
+            <result name="error">/shahiwebpages/CutNew/MicroCutPlanNew.jsp</result>
+        </action>
+        <action name="TouchIndex"     class="">
+            <result name="success">shahiwebpages/Cut/TouchIndex.jsp</result>
+            <result name="input">shahiwebpages/Cut/TouchIndex.jsp</result>
+            <result name="error">shahiwebpages/Cut/TouchIndex.jsp</result>
+        </action>
+        <action name="userlistAction"     class="shahi.Action.Cut.cuttouchqueryAction">
+            <result name="success">/shahiwebpages/Cut/cuttouchquery.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttouchquery.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttouchquery.jsp</result>
+        </action> 
+        <action name="categorylistAction" method="getcategory"     class="shahi.Action.Cut.cuttouchqueryAction">
+            <result name="success">/shahiwebpages/Cut/cuttouchplanno.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttouchplanno.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttouchplanno.jsp</result>
+        </action> 
+        <action name="cuttouchlayerchartdtAction"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/layertouchchart.jsp</result>
+            <result name="input">/shahiwebpages/Cut/layertouchchart.jsp</result>
+            <result name="error">/shahiwebpages/Cut/layertouchchart.jsp</result>
+        </action> 
+    
+        <action name="cuttouchlayerchartqtyAction" method="qty"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/layertouchmarker.jsp</result>
+            <result name="input">/shahiwebpages/Cut/layertouchmarker.jsp</result>
+            <result name="error">/shahiwebpages/Cut/layertouchmarker.jsp</result>                 
+        </action> 
+    
+        <action name="cuttouchfabricqtyAction" method="fabqty"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/cutlayerfabricdetails.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cutlayerfabricdetails.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cutlayerfabricdetails.jsp</result>                 
+        </action> 
+    
+        <action name="cuttouchcutnoAction" method="cutno"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/cuttouchno.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttouchno.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttouchno.jsp</result>                 
+        </action> 
+        <action name="cuttouchlayercharttableAction" method="tableno"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/layertouchtabledt.jsp</result>
+            <result name="input">/shahiwebpages/Cut/layertouchtabledt.jsp</result>
+            <result name="error">/shahiwebpages/Cut/layertouchtabledt.jsp</result>                 
+        </action> 
+        <!-- mobile cutting application -->
+        <action name="touchindexm"     class="">
+            <result name="success" type="redirectAction">
+                <param name="actionName">shahiwebpages/Cut/userlistActionM</param>            
+            </result>
+        </action> 
+        <action name="userlistActionM"     class="shahi.Action.Cut.cuttouchqueryAction">
+            <result name="success">/shahiwebpages/Cut/cuttouchqueryM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttouchqueryM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttouchqueryM.jsp</result>
+        </action> 
+        <action name="categorylistActionM" method="getcategory"     class="shahi.Action.Cut.cuttouchqueryAction">
+            <result name="success">/shahiwebpages/Cut/cuttouchplannoM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttouchplannoM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttouchplannoM.jsp</result>
+        </action> 
+        <action name="cuttouchlayerchartdtActionM"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/layertouchchartM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/layertouchchartM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/layertouchchartM.jsp</result>
+        </action> 
+    
+        <action name="cuttouchlayerchartqtyActionM" method="qty"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/layertouchmarkerM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/layertouchmarkerM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/layertouchmarkerM.jsp</result>                 
+        </action> 
+    
+        <action name="cuttouchfabricqtyActionM" method="fabqty"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/cutlayerfabricdetailsM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cutlayerfabricdetailsM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cutlayerfabricdetailsM.jsp</result>                 
+        </action>     
+        <action name="cuttouchcutnoActionM" method="cutno"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/cuttouchnoM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cuttouchnoM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cuttouchnoM.jsp</result>                 
+        </action> 
+
+        <action name="cuttouchfabricqtyActionMK" method="fabqty"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/cutlayerfabricdetailsMK.jsp</result>
+            <result name="input">/shahiwebpages/Cut/cutlayerfabricdetailsMK.jsp</result>
+            <result name="error">/shahiwebpages/Cut/cutlayerfabricdetailsMK.jsp</result>                 
+        </action> 
+        <action name="cuttouchlayercharttableActionM" method="tableno"  class="shahi.Action.Cut.cuttouchlayerchartAction">
+            <result name="success">/shahiwebpages/Cut/layertouchtabledtM.jsp</result>
+            <result name="input">/shahiwebpages/Cut/layertouchtabledtM.jsp</result>
+            <result name="error">/shahiwebpages/Cut/layertouchtabledtM.jsp</result>                 
+        </action>  
+        <action name="KbTouchIndex"     class="">
+            <result name="success">shahiwebpages/Cut/kbscan/TouchIndex.jsp</result>
+            <result name="input">shahiwebpages/Cut/kbscan/TouchIndex.jsp</result>
+            <result name="error">shahiwebpages/Cut/kbscan/TouchIndex.jsp</result>
+        </action> 
+        <action name="kbuserlistAction"     class="shahi.Action.Cut.kbscan.cuttouchqueryAction">
+            <result name="success">/shahiwebpages/Cut/kbscan/cuttouchquery.jsp</result>
+            <result name="input">/shahiwebpages/Cut/kbscan/cuttouchquery.jsp</result>
+            <result name="error">/shahiwebpages/Cut/kbscan/cuttouchquery.jsp</result>
+        </action> 
+        <action name="kbcategorylistAction" method="getcategory"     class="shahi.Action.Cut.kbscan.cuttouchqueryAction">
+            <result name="success">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+        </action>     
+        <action name="*touchscankbcardinfoAction"  method="{1}"   class="shahi.Action.Cut.kbscan.cuttouchscanAction">
+            <result name="success">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+            <result name="input">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+            <result name="error">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+            <result name="updateinput">/shahiwebpages/Cut/kbscan/KbCardMasterUPScanJsp.jsp</result>
+        </action>
+    </package>
+</struts>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="M4BillReport_subreport1" language="groovy" pageWidth="275" pageHeight="802" columnWidth="275" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pch" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="billslno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="billamt" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select a.pch,a.inv_no,a.bill_sl_no,a.inv_weight,a.buyer,substr(item_no,1,4) item,sum(qty_endors) invqty,c.tqty from seplweb.m4_bill_add_master a, ei_endors_dtls b,
+(select sum(inv_qty) tqty from ei_endors_mast a1,seplweb.m4_bill_add_master b1 where  A1.EXCS_INV_NO=B1.INV_NO  AND PCH=$P{pch} and BILL_SL_NO=$P{billslno}) c
+ where
+ to_char(a.inv_no)=b.all_no  and PCH=$P{pch} and BILL_SL_NO=$P{billslno}
+and A.inv_no is not null and ALL_NO IS NOT NULL
+group by  a.pch,a.inv_no,a.bill_sl_no,a.inv_weight,a.buyer,substr(item_no,1,4),c.tqty]]>
+	</queryString>
+	<field name="PCH" class="java.lang.String"/>
+	<field name="INV_NO" class="java.math.BigDecimal"/>
+	<field name="BILL_SL_NO" class="java.math.BigDecimal"/>
+	<field name="INV_WEIGHT" class="java.math.BigDecimal"/>
+	<field name="BUYER" class="java.lang.String"/>
+	<field name="ITEM" class="java.lang.String"/>
+	<field name="INVQTY" class="java.math.BigDecimal"/>
+	<field name="TQTY" class="java.math.BigDecimal"/>
+	<variable name="brk_amt" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[($P{billamt}/$F{TQTY})*$F{INVQTY}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="14">
+			<textField isBlankWhenNull="true">
+				<reportElement x="55" y="0" width="55" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="110" y="0" width="40" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INV_WEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="150" y="0" width="32" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="182" y="0" width="38" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INVQTY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="55" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BUYER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="220" y="0" width="59" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{brk_amt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

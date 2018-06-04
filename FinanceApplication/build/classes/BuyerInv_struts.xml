@@ -1,0 +1,75 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+      <!-- Configuration for the default package. -->
+    <package name="BuyerInv" extends="struts-default">
+
+        <action name="*BUYERAjaxA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.BuyerInvAjaxAction">
+            <result type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">inputStream</param>
+            </result> 
+        </action>
+         
+       <action name="*KohlsStoreA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.KohlsStoreAction"> 
+         <result name="success">/shahiwebpages/MvxExp/BuyerInv/KohlsStore.jsp</result>
+          <result name="updte">/shahiwebpages/MvxExp/BuyerInv/KohlsStore.jsp</result>
+           <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/KohlsStore.jsp</result>
+           <result name="srch">/shahiwebpages/MvxExp/BuyerInv/search.jsp</result>
+      </action>
+          
+        <action name="*FRLInvA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.FRLInvoiceAction"> 
+            <result name="success">/shahiwebpages/MvxExp/BuyerInv/FRLInv.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/BuyerInv/FRLInv.jsp</result>
+             <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/FRLInv.jsp</result>
+        </action>  
+    
+       <action name="*DecathlaneA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.DecathlaneAction"> 
+           <result name="success">/shahiwebpages/MvxExp/BuyerInv/DecathlaneNew.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/BuyerInv/DecathlaneNew.jsp</result>
+             <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/DecathlaneNew.jsp</result>
+             <result name="srch">/shahiwebpages/MvxExp/BuyerInv/search_Decathlane.jsp</result>
+        </action>
+        
+        <action name="*WalMart_InvA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.WalMart_InvAction"> 
+           <result name="success">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="updte">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="srch">/shahiwebpages/MvxExp/BuyerInv/search_Walmart1.jsp</result>
+           <result name="srch1">/shahiwebpages/MvxExp/BuyerInv/search_Walmart.jsp</result>
+           <result name="brakup">/shahiwebpages/MvxExp/BuyerInv/Walmart_ItemIdBrkup.jsp</result>
+           <result name="brakupsave">/shahiwebpages/MvxExp/BuyerInv/Walmart_ItemIdBrkup.jsp</result>
+        </action>
+        
+        <action name="*PvhCommercialA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.PvhCommercialAction"> 
+           <result name="success">/shahiwebpages/MvxExp/BuyerInv/Pvh_Commer.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/BuyerInv/Pvh_Commer.jsp</result>
+             <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/Pvh_Commer.jsp</result>
+             <result name="srch">/shahiwebpages/MvxExp/BuyerInv/search_Pvh.jsp</result>
+             <result name="srch1">/shahiwebpages/MvxExp/BuyerInv/search_Pvh1.jsp</result>
+             <result name="srch2">/shahiwebpages/MvxExp/BuyerInv/search_Pvh2.jsp</result>
+        </action>
+        
+        <action name="*WalMart_InvA" method="{1}" class="shahi.Action.MvxExp.BuyerInv.WalMart_InvAction"> 
+           <result name="success">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="updte">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="srch">/shahiwebpages/MvxExp/BuyerInv/search_Walmart1.jsp</result>
+           <result name="srch1">/shahiwebpages/MvxExp/BuyerInv/search_Walmart.jsp</result>
+           <result name="brakup">/shahiwebpages/MvxExp/BuyerInv/Walmart_ItemIdBrkup.jsp</result>
+           <result name="brakupsave">/shahiwebpages/MvxExp/BuyerInv/Walmart_ItemIdBrkup.jsp</result>
+           <result name="clr">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="pckng">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+           <result name="scd">/shahiwebpages/MvxExp/BuyerInv/WalMart_Inv.jsp</result>
+        </action>
+
+         <action name="*DSIInv" method="{1}" class="shahi.Action.MvxExp.BuyerInv.DSIInvoiceAction"> 
+            <result name="success">/shahiwebpages/MvxExp/BuyerInv/DSIInv.jsp</result>
+            <result name="updte">/shahiwebpages/MvxExp/BuyerInv/DSIInv.jsp</result>
+             <result name="prnt">/shahiwebpages/MvxExp/BuyerInv/DSIInv.jsp</result>
+        </action>  
+        
+    </package>
+</struts>
